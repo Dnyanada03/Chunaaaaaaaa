@@ -217,7 +217,7 @@ export default function DocumentsView() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       {/* Header Page Banner */}
       <div className="page-banner">
         <div className="page-title-group">
@@ -338,89 +338,128 @@ export default function DocumentsView() {
       </div>
 
       {/* DOCUMENT LIST GRID / CARDS */}
-      <div className="card">
-        <div className="card-header">
-          <div className="card-title">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ fontSize: '15px', fontWeight: 800, color: '#0F172A', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <FolderArchive size={18} style={{ color: '#0B4726' }} />
             DOCUMENT REPOSITORY ARCHIVE ({filteredDocuments.length} DOCUMENTS FOUND)
           </div>
         </div>
 
         {filteredDocuments.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '40px', color: '#64748B' }}>
+          <div style={{ textAlign: 'center', padding: '40px', color: '#64748B', background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0' }}>
             <FileText size={40} style={{ margin: '0 auto 10px auto', opacity: 0.4 }} />
             <div>No matching documents found in repository for current filter parameters.</div>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '22px' }}>
             {filteredDocuments.map(doc => (
               <div
                 key={doc.id}
                 style={{
-                  border: '1.5px solid #CBD5E1',
-                  borderRadius: '12px',
-                  padding: '16px',
+                  border: '1.5px solid #E2E8F0',
+                  borderRadius: '16px',
+                  padding: '20px 22px',
                   background: '#FFFFFF',
                   display: 'flex',
                   flexDirection: 'column',
                   justify: 'space-between',
-                  gap: '12px',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-                  transition: 'transform 0.15s ease, box-shadow 0.15s ease'
+                  gap: '16px',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+                  transition: 'all 0.2s ease'
                 }}
               >
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {/* Top Bar: Category Pill & Status */}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{
-                      fontSize: '10.5px',
+                      fontSize: '11px',
                       fontWeight: 800,
                       color: '#0B4726',
                       background: '#E6F4EA',
-                      padding: '2px 8px',
-                      borderRadius: '4px',
+                      padding: '4px 10px',
+                      borderRadius: '6px',
+                      letterSpacing: '0.4px',
                       textTransform: 'uppercase'
                     }}>
                       {doc.category}
                     </span>
 
-                    <span className={`badge ${doc.statusBadge}`} style={{ fontSize: '10px' }}>
+                    <span className={`badge ${doc.statusBadge}`} style={{ fontSize: '11px', padding: '5px 12px' }}>
                       {doc.status}
                     </span>
                   </div>
 
                   {/* Document Title */}
-                  <h4 style={{ fontSize: '14px', fontWeight: 800, color: '#0F172A', margin: '4px 0 0 0', lineHeight: 1.3 }}>
+                  <h4 style={{ fontSize: '15px', fontWeight: 800, color: '#0F172A', margin: '4px 0 0 0', lineHeight: 1.35 }}>
                     {doc.title}
                   </h4>
 
-                  {/* Parcel Details Metadata */}
-                  <div style={{ background: '#F8FAFC', padding: '10px', borderRadius: '8px', fontSize: '11.5px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <div><strong>Parcel ID:</strong> <span className="mono-code">{doc.parcelId}</span> | <strong>Survey #:</strong> {doc.surveyNumber}</div>
-                    <div><strong>Landowner:</strong> {doc.landowner}</div>
-                    <div><strong>Village:</strong> {doc.village} • <strong>Project:</strong> {doc.project}</div>
+                  {/* Parcel Details Metadata - Each Point on a Separate Line */}
+                  <div style={{
+                    background: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
+                    padding: '14px 16px',
+                    borderRadius: '12px',
+                    fontSize: '12.5px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ color: '#64748B', fontWeight: 600 }}>Parcel ID:</span>
+                      <span className="mono-code" style={{ color: '#008E4F', fontWeight: 700, fontSize: '13px' }}>{doc.parcelId}</span>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ color: '#64748B', fontWeight: 600 }}>Survey #:</span>
+                      <span className="mono-code" style={{ color: '#1F2937', fontWeight: 600, fontSize: '13px' }}>{doc.surveyNumber}</span>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ color: '#64748B', fontWeight: 600 }}>Landowner:</span>
+                      <span style={{ color: '#1F2937', fontWeight: 700 }}>{doc.landowner}</span>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ color: '#64748B', fontWeight: 600 }}>Village:</span>
+                      <span style={{ color: '#1F2937', fontWeight: 600 }}>{doc.village}</span>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', paddingTop: '8px', borderTop: '1px dashed #CBD5E1' }}>
+                      <span style={{ color: '#64748B', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Project:</span>
+                      <span style={{ color: '#0F172A', fontWeight: 600, fontSize: '12.5px', lineHeight: 1.4 }}>{doc.project}</span>
+                    </div>
                   </div>
 
                   {doc.remarks && (
-                    <div style={{ fontSize: '11px', color: '#64748B', borderLeft: '2px solid #0B4726', paddingLeft: '8px' }}>
+                    <div style={{
+                      fontSize: '12px',
+                      color: doc.remarks.toLowerCase().includes('suit') || doc.remarks.toLowerCase().includes('protest') ? '#C5221F' : '#334155',
+                      background: doc.remarks.toLowerCase().includes('suit') || doc.remarks.toLowerCase().includes('protest') ? '#FCE8E6' : '#F0FDF4',
+                      borderLeft: `3px solid ${doc.remarks.toLowerCase().includes('suit') || doc.remarks.toLowerCase().includes('protest') ? '#C5221F' : '#008E4F'}`,
+                      padding: '9px 12px',
+                      borderRadius: '6px',
+                      lineHeight: '1.4'
+                    }}>
                       {doc.remarks}
                     </div>
                   )}
                 </div>
 
                 {/* Footer Metadata & Actions */}
-                <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ fontSize: '10.5px', color: '#64748B' }}>
-                    Issued: {doc.dateIssued}<br />
-                    Auth: <strong>{doc.verifiedBy}</strong>
+                <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '14px', marginTop: '4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                  <div style={{ fontSize: '11px', color: '#64748B', lineHeight: '1.45' }}>
+                    <div>Issued: <strong style={{ color: '#334155' }}>{doc.dateIssued}</strong></div>
+                    <div>Auth: <strong style={{ color: '#334155' }}>{doc.verifiedBy}</strong></div>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '6px' }}>
+                  <div style={{ display: 'flex', gap: '8px' }}>
                     <button
                       className="btn btn-secondary btn-sm"
                       onClick={() => handleOpenDocPreview(doc)}
                       title="Preview Document Extract"
-                      style={{ padding: '6px 10px' }}
+                      style={{ padding: '7px 12px', borderRadius: '8px' }}
                     >
                       <Eye size={14} /> View
                     </button>
@@ -428,7 +467,7 @@ export default function DocumentsView() {
                       className="btn btn-secondary btn-sm"
                       onClick={() => handleOpenDocPreview(doc)}
                       title="Print Document"
-                      style={{ padding: '6px 8px' }}
+                      style={{ padding: '7px 10px', borderRadius: '8px' }}
                     >
                       <Printer size={14} />
                     </button>
@@ -436,7 +475,7 @@ export default function DocumentsView() {
                       className="btn btn-primary btn-sm"
                       onClick={() => alert(`Downloading official PDF copy for ${doc.title}`)}
                       title="Download PDF File"
-                      style={{ background: '#0B4726', padding: '6px 10px' }}
+                      style={{ background: 'var(--color-primary-gradient)', padding: '7px 12px', borderRadius: '8px', border: 'none' }}
                     >
                       <Download size={14} /> PDF
                     </button>

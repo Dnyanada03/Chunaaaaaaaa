@@ -39,7 +39,7 @@ const ObjectionListView = () => {
     };
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
         <button
           className="btn btn-secondary btn-sm"
           onClick={() => setSelectedObjection(null)}
@@ -48,13 +48,13 @@ const ObjectionListView = () => {
           <ArrowLeft size={15} /> Back to Objection Register
         </button>
 
-        <div className="page-banner" style={{ background: '#0B4726' }}>
+        <div className="page-banner">
           <div className="page-title-group">
             <h1 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <ShieldAlert size={22} style={{ color: '#FFD700' }} />
+              <ShieldAlert size={22} style={{ color: '#D97706' }} />
               Objection Review & Dispute Verification
             </h1>
-            <p>Reference: <span className="mono-code" style={{ color: '#FFFFFF', fontWeight: '700' }}>{o.id}</span> • Parcel ID: <span className="mono-code" style={{ color: '#FFFFFF', fontWeight: '700' }}>{o.parcelId}</span> • Landowner: {o.landowner}</p>
+            <p>Reference: <span className="mono-code" style={{ color: '#008E4F', fontWeight: '700' }}>{o.id}</span> • Parcel ID: <span className="mono-code" style={{ color: '#008E4F', fontWeight: '700' }}>{o.parcelId}</span> • Landowner: {o.landowner}</p>
           </div>
           <StatusBadge status={o.status} />
         </div>
@@ -76,7 +76,7 @@ const ObjectionListView = () => {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', fontSize: '13.5px' }}>
                 <div><span style={{ color: '#64748B' }}>Project Name:</span> <strong style={{ color: '#0F172A' }}>{o.projectName}</strong></div>
                 <div><span style={{ color: '#64748B' }}>Project ID:</span> <span className="mono-code" style={{ color: '#1A73E8', fontWeight: '700' }}>{o.projectId}</span></div>
-                <div><span style={{ color: '#64748B' }}>Revenue Village:</span> <strong style={{ color: '#0F172A' }}>{o.village}</strong></div>
+                <div><span style={{ color: '#64748B' }}>Village:</span> <strong style={{ color: '#0F172A' }}>{o.village}</strong></div>
                 <div><span style={{ color: '#64748B' }}>Parcel ID:</span> <span className="mono-code">{o.parcelId}</span></div>
                 <div><span style={{ color: '#64748B' }}>Survey / Gut No:</span> <span className="mono-code">{o.surveyNumber}</span></div>
                 <div><span style={{ color: '#64748B' }}>Primary Landowner:</span> <strong style={{ color: '#0B4726' }}>{o.landowner}</strong></div>
@@ -219,7 +219,7 @@ const ObjectionListView = () => {
 
   // Register Main View (Screen 5) - Dual View Cards & Table
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       {/* Banner */}
       <div className="page-banner">
         <div className="page-title-group">
@@ -231,86 +231,84 @@ const ObjectionListView = () => {
         </div>
       </div>
 
-      {/* Controls Header Card */}
-      <div className="card" style={{ padding: '14px 18px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', alignItems: 'center', justifyContent: 'space-between' }}>
-          {/* Search Box */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: '280px' }}>
-            <div style={{ position: 'relative', width: '100%' }}>
-              <input
-                type="text"
-                className="form-control"
-                style={{ paddingLeft: '36px', height: '38px', fontSize: '13.5px', borderRadius: '8px' }}
-                placeholder="Search by Objection ID, Landowner, Village, Parcel ID, Category..."
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-              />
-              <Search size={15} style={{ position: 'absolute', left: '12px', top: '11px', color: '#64748B' }} />
-            </div>
+      {/* Controls Header Toolbar */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+        {/* Search Box */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: '280px' }}>
+          <div style={{ position: 'relative', width: '100%' }}>
+            <input
+              type="text"
+              className="form-control"
+              style={{ paddingLeft: '36px', height: '40px', fontSize: '13.5px', borderRadius: '10px', background: '#FFFFFF', border: '1px solid #CBD5E1', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}
+              placeholder="Search by Objection ID, Landowner, Village, Parcel ID, Category..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+            <Search size={15} style={{ position: 'absolute', left: '12px', top: '12px', color: '#64748B' }} />
           </div>
+        </div>
 
-          {/* Status Filter Buttons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <Filter size={13} /> STATUS:
-            </span>
-            {['All', 'New', 'Under Review', 'Sent Back', 'Resolved'].map(st => (
-              <button
-                key={st}
-                className={`btn btn-sm ${statusFilter === st ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => setStatusFilter(st)}
-                style={{ borderRadius: '6px', fontSize: '12px' }}
-              >
-                {st}
-              </button>
-            ))}
-          </div>
+        {/* Status Filter Buttons */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <Filter size={13} /> STATUS:
+          </span>
+          {['All', 'New', 'Under Review', 'Sent Back', 'Resolved'].map(st => (
+            <button
+              key={st}
+              className={`btn btn-sm ${statusFilter === st ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setStatusFilter(st)}
+              style={{ borderRadius: '20px', fontSize: '12px', padding: '5px 14px' }}
+            >
+              {st}
+            </button>
+          ))}
+        </div>
 
-          {/* Layout Toggle: Cards vs Table */}
-          <div style={{ display: 'flex', background: '#F1F5F9', padding: '3px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
-            <button
-              type="button"
-              onClick={() => setViewMode('cards')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                padding: '4px 12px',
-                borderRadius: '6px',
-                border: 'none',
-                fontSize: '12px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                background: viewMode === 'cards' ? '#FFFFFF' : 'transparent',
-                color: viewMode === 'cards' ? '#0B4726' : '#64748B',
-                boxShadow: viewMode === 'cards' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              <LayoutGrid size={14} /> Cards
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode('table')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                padding: '4px 12px',
-                borderRadius: '6px',
-                border: 'none',
-                fontSize: '12px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                background: viewMode === 'table' ? '#FFFFFF' : 'transparent',
-                color: viewMode === 'table' ? '#0B4726' : '#64748B',
-                boxShadow: viewMode === 'table' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              <List size={14} /> Table
-            </button>
-          </div>
+        {/* Layout Toggle: Cards vs Table */}
+        <div style={{ display: 'flex', background: '#F1F5F9', padding: '3px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+          <button
+            type="button"
+            onClick={() => setViewMode('cards')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              padding: '4px 12px',
+              borderRadius: '6px',
+              border: 'none',
+              fontSize: '12px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              background: viewMode === 'cards' ? '#FFFFFF' : 'transparent',
+              color: viewMode === 'cards' ? '#0B4726' : '#64748B',
+              boxShadow: viewMode === 'cards' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <LayoutGrid size={14} /> Cards
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('table')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              padding: '4px 12px',
+              borderRadius: '6px',
+              border: 'none',
+              fontSize: '12px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              background: viewMode === 'table' ? '#FFFFFF' : 'transparent',
+              color: viewMode === 'table' ? '#0B4726' : '#64748B',
+              boxShadow: viewMode === 'table' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <List size={14} /> Table
+          </button>
         </div>
       </div>
 
@@ -366,25 +364,59 @@ const ObjectionListView = () => {
                 </div>
               </div>
 
-              {/* Minimal Inline Metadata (Village, Parcel, Survey, Raised By, Date, Due) */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', fontSize: '12.5px', color: '#64748B', paddingTop: '2px' }}>
-                <span>Village: <strong style={{ color: '#1E293B' }}>{o.village}</strong></span>
-                <span>•</span>
-                <span>Parcel ID: <span className="mono-code" style={{ color: '#1E293B' }}>{o.parcelId}</span></span>
-                <span>•</span>
-                <span>Survey No: <span className="mono-code" style={{ color: '#1E293B' }}>{o.surveyNumber}</span></span>
-                <span>•</span>
-                <span>Raised By: <span style={{ color: '#1E293B' }}>{o.raisedBy}</span></span>
-                <span>•</span>
-                <span>Date: {o.dateRaised}</span>
-                <span>•</span>
-                <span style={{ color: o.daysRemaining < 0 ? '#C5221F' : '#D97706', fontWeight: '600' }}>
-                  Due: {o.dueDate} ({o.daysRemaining}d left)
-                </span>
+              {/* Stacked Vertical Metadata Points (Each point on the next line + Project ID included) */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '6px',
+                fontSize: '13.5px',
+                color: '#475569',
+                background: '#F8FAFC',
+                padding: '14px 18px',
+                borderRadius: '10px',
+                border: '1px solid #E2E8F0'
+              }}>
+                <div>
+                  <span style={{ color: '#64748B', fontWeight: 600 }}>Project ID:</span>{' '}
+                  <span className="mono-code" style={{ color: '#0B4726', fontWeight: 700 }}>
+                    {o.projectId || 'PRJ-MH-2026-101'}
+                  </span>
+                  {o.projectName && (
+                    <span style={{ color: '#64748B', marginLeft: '6px', fontSize: '12.5px' }}>
+                      ({o.projectName})
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <span style={{ color: '#64748B', fontWeight: 600 }}>Village:</span>{' '}
+                  <strong style={{ color: '#1E293B' }}>{o.village}</strong>
+                </div>
+                <div>
+                  <span style={{ color: '#64748B', fontWeight: 600 }}>Parcel ID:</span>{' '}
+                  <span className="mono-code" style={{ color: '#1E293B', fontWeight: 700 }}>{o.parcelId}</span>
+                </div>
+                <div>
+                  <span style={{ color: '#64748B', fontWeight: 600 }}>Survey No:</span>{' '}
+                  <span className="mono-code" style={{ color: '#1E293B', fontWeight: 700 }}>{o.surveyNumber}</span>
+                </div>
+                <div>
+                  <span style={{ color: '#64748B', fontWeight: 600 }}>Raised By:</span>{' '}
+                  <span style={{ color: '#1E293B', fontWeight: 600 }}>{o.raisedBy}</span>
+                </div>
+                <div>
+                  <span style={{ color: '#64748B', fontWeight: 600 }}>Date Raised:</span>{' '}
+                  <span style={{ color: '#1E293B' }}>{o.dateRaised}</span>
+                </div>
+                <div>
+                  <span style={{ color: '#64748B', fontWeight: 600 }}>Due Date:</span>{' '}
+                  <span style={{ color: o.daysRemaining < 0 ? '#C5221F' : '#D97706', fontWeight: '700' }}>
+                    {o.dueDate} ({o.daysRemaining}d left)
+                  </span>
+                </div>
               </div>
 
-              {/* Objection Description (Placed AFTER the village type details per spec) */}
-              <div style={{ fontSize: '13.5px', color: '#334155', lineHeight: '1.5', paddingTop: '6px', borderTop: '1px solid #F1F5F9' }}>
+              {/* Objection Description */}
+              <div style={{ fontSize: '13.5px', color: '#334155', lineHeight: '1.6', paddingTop: '6px', borderTop: '1px solid #F1F5F9' }}>
                 {o.issueDescription}
               </div>
             </div>

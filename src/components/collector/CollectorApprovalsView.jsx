@@ -91,7 +91,7 @@ export default function CollectorApprovalsView() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       {/* Page Masthead */}
       <div className="page-banner">
         <div className="page-title-group">
@@ -175,14 +175,14 @@ export default function CollectorApprovalsView() {
       {activeApprovalTab === 'project-approval' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* Proposal Selection & Details Header */}
-          <div className="card">
-            <div className="card-header">
-              <div className="card-title">
-                <FileCheck size={18} style={{ color: '#0B4726' }} />
+          <div className="card" style={{ padding: '28px', borderRadius: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid #E2E8F0' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', whiteSpace: 'nowrap', flexShrink: 0, fontSize: '15px', fontWeight: 800, color: '#0F172A', letterSpacing: '0.5px' }}>
+                <FileCheck size={20} style={{ color: '#008E4F' }} />
                 PROPOSING BODY PROJECT PROPOSAL REVIEW
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span style={{ fontSize: '12px', fontWeight: 600 }}>Select Proposal:</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: '1 1 380px', justifyContent: 'flex-end', maxWidth: '650px' }}>
+                <span style={{ fontSize: '13px', fontWeight: 700, color: '#475569', whiteSpace: 'nowrap' }}>Select Proposal:</span>
                 <select
                   className="form-select"
                   value={selectedProposalId}
@@ -190,7 +190,7 @@ export default function CollectorApprovalsView() {
                     setSelectedProposalId(e.target.value);
                     setDecisionSuccessTimeline(null);
                   }}
-                  style={{ fontWeight: 700 }}
+                  style={{ fontWeight: 700, fontSize: '13px', width: '100%', maxWidth: '480px', borderRadius: '10px', border: '1.5px solid #CBD5E1', padding: '9px 14px' }}
                 >
                   {collectorPendingProjectProposals.map(p => (
                     <option key={p.id} value={p.id}>{p.name} ({p.proposingBody})</option>
@@ -200,55 +200,79 @@ export default function CollectorApprovalsView() {
             </div>
 
             {/* Proposal Specs Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
-              <div>
-                <h3 style={{ fontSize: '17px', fontWeight: 800, color: '#0F172A', marginBottom: '4px' }}>
-                  {proposal.name}
-                </h3>
-                <div style={{ fontSize: '12px', color: '#475569', marginBottom: '12px' }}>
-                  Proposal ID: <span className="mono-code" style={{ color: '#0B4726', fontWeight: 700 }}>{proposal.id}</span> • Proposing Body: <strong>{proposal.proposingBody}</strong> ({proposal.proposingOfficer})
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '28px', alignItems: 'stretch' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                <div>
+                  <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#0F172A', margin: '0 0 10px 0', lineHeight: 1.35 }}>
+                    {proposal.name}
+                  </h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', fontSize: '13px', color: '#475569', lineHeight: 1.5 }}>
+                    <span>Proposal ID: <strong style={{ color: '#008E4F', fontFamily: 'monospace', fontWeight: 700 }}>{proposal.id}</strong></span>
+                    <span style={{ color: '#CBD5E1' }}>•</span>
+                    <span>Proposing Body: <strong style={{ color: '#1E293B' }}>{proposal.proposingBody}</strong></span>
+                    <span style={{ color: '#64748B' }}>({proposal.proposingOfficer})</span>
+                  </div>
                 </div>
 
-                <p style={{ fontSize: '13px', color: '#334155', background: '#F8FAFC', padding: '12px', borderRadius: '8px', borderLeft: '3px solid #0B4726', marginBottom: '14px' }}>
-                  <strong>Project Purpose & Scope:</strong> {proposal.purpose}
-                </p>
+                <div style={{
+                  fontSize: '13.5px',
+                  color: '#1E293B',
+                  background: 'rgba(0, 142, 79, 0.04)',
+                  padding: '16px 20px',
+                  borderRadius: '12px',
+                  borderLeft: '4px solid #008E4F',
+                  lineHeight: '1.6'
+                }}>
+                  <strong style={{ color: '#008E4F', display: 'block', fontSize: '12px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '6px' }}>
+                    Project Purpose & Scope
+                  </strong>
+                  {proposal.purpose}
+                </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', fontSize: '12px' }}>
-                  <div style={{ background: '#F1F5F9', padding: '8px 12px', borderRadius: '6px' }}>
-                    <div style={{ color: '#64748B', fontSize: '10.5px' }}>LAND REQUIRED</div>
-                    <div style={{ fontWeight: 800, color: '#0B4726', fontSize: '14px' }}>{proposal.landRequiredHa} Ha</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', fontSize: '12px' }}>
+                  <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '14px 16px', borderRadius: '12px' }}>
+                    <div style={{ color: '#64748B', fontSize: '11px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase' }}>LAND REQUIRED</div>
+                    <div style={{ fontWeight: 800, color: '#008E4F', fontSize: '17px', marginTop: '4px' }}>{proposal.landRequiredHa} Ha</div>
                   </div>
-                  <div style={{ background: '#F1F5F9', padding: '8px 12px', borderRadius: '6px' }}>
-                    <div style={{ color: '#64748B', fontSize: '10.5px' }}>ESTIMATED BUDGET</div>
-                    <div style={{ fontWeight: 800, color: '#1E293B', fontSize: '14px' }}>{proposal.estimatedCost}</div>
+                  <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '14px 16px', borderRadius: '12px' }}>
+                    <div style={{ color: '#64748B', fontSize: '11px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase' }}>ESTIMATED BUDGET</div>
+                    <div style={{ fontWeight: 800, color: '#0F172A', fontSize: '17px', marginTop: '4px' }}>{proposal.estimatedCost}</div>
                   </div>
-                  <div style={{ background: '#F1F5F9', padding: '8px 12px', borderRadius: '6px' }}>
-                    <div style={{ color: '#64748B', fontSize: '10.5px' }}>GEOGRAPHIC AREA</div>
-                    <div style={{ fontWeight: 700, color: '#1E293B' }}>{proposal.talukaCount} Talukas ({proposal.villageCount} Villages)</div>
+                  <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '14px 16px', borderRadius: '12px' }}>
+                    <div style={{ color: '#64748B', fontSize: '11px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase' }}>GEOGRAPHIC AREA</div>
+                    <div style={{ fontWeight: 700, color: '#0F172A', fontSize: '14px', marginTop: '4px' }}>{proposal.talukaCount} Talukas ({proposal.villageCount} Villages)</div>
                   </div>
                 </div>
               </div>
 
               {/* Proposal Document Link Box */}
-              <div style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', padding: '16px', borderRadius: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 4px 16px rgba(0,0,0,0.03)', padding: '24px', borderRadius: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: 700, color: '#0B4726', textTransform: 'uppercase' }}>
-                    <FileText size={14} /> Official Proposal Document
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', fontWeight: 800, color: '#008E4F', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    <FileText size={16} /> Official Proposal Document
                   </div>
-                  <div style={{ fontSize: '13px', fontWeight: 700, color: '#0F172A', marginTop: '6px' }}>
+                  <div style={{ fontSize: '14.5px', fontWeight: 700, color: '#0F172A', marginTop: '10px', wordBreak: 'break-all', lineHeight: 1.4 }}>
                     {proposal.proposalDoc}
                   </div>
-                  <div style={{ fontSize: '11px', color: '#64748B', marginTop: '4px' }}>
+                  <div style={{ fontSize: '12px', color: '#64748B', marginTop: '8px', lineHeight: 1.5 }}>
                     Submitted on {proposal.submissionDate} • Digitally Signed by CGM Land
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '8px', marginTop: '14px' }}>
-                  <button className="btn btn-secondary btn-sm" onClick={() => setIsViewProposalModalOpen(true)} style={{ flex: 1, background: '#0B4726', color: '#FFF' }}>
-                    <Eye size={13} /> View Proposal Report & 12 Sections
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', paddingTop: '12px' }}>
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => setIsViewProposalModalOpen(true)}
+                    style={{ flex: 1, minWidth: '160px', background: '#008E4F', color: '#FFF', border: 'none', padding: '10px 16px', borderRadius: '10px', fontWeight: 700, justifyContent: 'center' }}
+                  >
+                    <Eye size={15} /> View Proposal Report
                   </button>
-                  <button className="btn btn-primary btn-sm" onClick={() => setIsViewProposalModalOpen(true)} style={{ flex: 1 }}>
-                    <Download size={13} /> Download Dossier
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => setIsViewProposalModalOpen(true)}
+                    style={{ flex: 1, minWidth: '140px', background: 'var(--color-primary-gradient)', padding: '10px 16px', borderRadius: '10px', fontWeight: 700, border: 'none', justifyContent: 'center' }}
+                  >
+                    <Download size={15} /> Download Report
                   </button>
                 </div>
               </div>

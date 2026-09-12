@@ -49,9 +49,9 @@ const ProjectsView = () => {
 
   // Brief project descriptions lookup map
   const briefDescriptions = {
-    "PRJ-MH-2026-101": "High-Speed Access Controlled Expressway Road corridor spanning across revenue villages Wagholi, Avalwadi, Manjari Khurd, and Phursungi in Haveli Taluka. Active field verification for 320 assigned land parcels.",
-    "PRJ-MH-2026-102": "National Highway Expansion from 6-lane to 8-lane covering revenue villages Khed Shivapur, Shindewadi, and Golewadi. Includes rights-of-way widening and statutory notice issuance for 185 parcels.",
-    "PRJ-MH-2026-140": "Hydro-Reservoir & Canal Right-of-Way Acquisition in Mulshi Taluka spanning Male, Bhadas, and Kolewadi revenue villages. Covers 195.2 Ha of total assigned land area across 210 parcels.",
+    "PRJ-MH-2026-101": "High-Speed Access Controlled Expressway Road corridor spanning across villages Wagholi, Avalwadi, Manjari Khurd, and Phursungi in Haveli Taluka. Active field verification for 320 assigned land parcels.",
+    "PRJ-MH-2026-102": "National Highway Expansion from 6-lane to 8-lane covering villages Khed Shivapur, Shindewadi, and Golewadi. Includes rights-of-way widening and statutory notice issuance for 185 parcels.",
+    "PRJ-MH-2026-140": "Hydro-Reservoir & Canal Right-of-Way Acquisition in Mulshi Taluka spanning Male, Bhadas, and Kolewadi villages. Covers 195.2 Ha of total assigned land area across 210 parcels.",
     "PRJ-MH-2026-088": "Industrial Logistics Corridor & Warehousing Hub acquisition in Khed Taluka spanning Nighoje, Kuruli, and Vasuli villages. Covers 210.5 Ha total area across 450 land parcels."
   };
 
@@ -105,7 +105,7 @@ const ProjectsView = () => {
         <div className="page-banner">
           <div className="page-title-group">
             <h1>Land Parcel Record: <span className="mono-code">{p.id}</span> (Survey #{p.surveyNumber})</h1>
-            <p>Landowner: {p.landowner} • Revenue Village: {p.village} • Project ID: <span className="mono-code">{p.projectId}</span></p>
+            <p>Landowner: {p.landowner} • Village: {p.village} • Project ID: <span className="mono-code">{p.projectId}</span></p>
           </div>
           <StatusBadge status={p.verificationStatus} />
         </div>
@@ -120,7 +120,7 @@ const ProjectsView = () => {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', fontSize: '13.5px' }}>
                 <div><span style={{ color: '#64748B' }}>Parcel ID:</span> <span className="mono-code">{p.id}</span></div>
                 <div><span style={{ color: '#64748B' }}>Survey / Gut No:</span> <span className="mono-code">{p.surveyNumber}</span></div>
-                <div><span style={{ color: '#64748B' }}>Revenue Village:</span> <strong>{p.village}</strong></div>
+                <div><span style={{ color: '#64748B' }}>Village:</span> <strong>{p.village}</strong></div>
                 <div><span style={{ color: '#64748B' }}>Total Parcel Area:</span> <strong>{p.totalAreaHa} Ha</strong></div>
                 <div><span style={{ color: '#64748B' }}>Acquired Area:</span> <strong style={{ color: '#0B4726' }}>{p.acquiredAreaHa} Ha ({p.acquiredAreaSqM} sq.m)</strong></div>
                 <div><span style={{ color: '#64748B' }}>Sub-Registrar Rate:</span> <strong>₹ {p.subRegistrarRateSqM.toLocaleString('en-IN')}/sq.m</strong></div>
@@ -252,28 +252,26 @@ const ProjectsView = () => {
         </div>
 
         {/* Search & Filter Bar */}
-        <div className="card" style={{ padding: '16px 20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px' }}>
-            <div style={{ position: 'relative', flex: 1, minWidth: '280px' }}>
-              <input
-                type="text"
-                className="form-control"
-                style={{ paddingLeft: '38px', height: '40px', fontSize: '13.5px', borderRadius: '8px' }}
-                placeholder="Search projects by name, Project ID, village, district, or corridor type..."
-                value={gridSearch}
-                onChange={e => setGridSearch(e.target.value)}
-              />
-              <Search size={16} style={{ position: 'absolute', left: '12px', top: '12px', color: '#64748B' }} />
-            </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px', marginBottom: '8px' }}>
+          <div style={{ position: 'relative', flex: 1, minWidth: '280px' }}>
+            <input
+              type="text"
+              className="form-control"
+              style={{ paddingLeft: '38px', height: '42px', fontSize: '13.5px', borderRadius: '10px', background: '#FFFFFF', border: '1px solid #CBD5E1', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}
+              placeholder="Search projects by name, Project ID, village, district, or corridor type..."
+              value={gridSearch}
+              onChange={e => setGridSearch(e.target.value)}
+            />
+            <Search size={16} style={{ position: 'absolute', left: '12px', top: '13px', color: '#64748B' }} />
+          </div>
 
-            <div style={{ fontSize: '12.5px', fontWeight: '600', color: '#64748B' }}>
-              Showing <strong style={{ color: '#0B4726' }}>{filteredProjectsGrid.length}</strong> of {projects.length} Corridor Projects
-            </div>
+          <div style={{ fontSize: '12.5px', fontWeight: '600', color: '#64748B' }}>
+            Showing <strong style={{ color: '#0B4726' }}>{filteredProjectsGrid.length}</strong> of {projects.length} Corridor Projects
           </div>
         </div>
 
         {/* Projects Photo Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
           {filteredProjectsGrid.map(project => (
             <div
               key={project.id}
@@ -286,12 +284,14 @@ const ProjectsView = () => {
                 cursor: 'pointer',
                 transition: 'all 0.2s ease-in-out',
                 border: '1px solid #E2E8F0',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.04)'
+                borderRadius: '16px',
+                boxShadow: '0 4px 14px rgba(0,0,0,0.04)',
+                background: '#FFFFFF'
               }}
               onClick={() => handleOpenProjectDetail(project.id)}
             >
-              {/* Photo Cover with Status & ID Overlay */}
-              <div style={{ position: 'relative', height: '210px', width: '100%', overflow: 'hidden' }}>
+              {/* Photo Cover */}
+              <div style={{ position: 'relative', height: '150px', width: '100%', overflow: 'hidden' }}>
                 <img
                   src={project.image}
                   alt={project.name}
@@ -305,111 +305,100 @@ const ProjectsView = () => {
                 <div style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.3) 100%)'
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.35) 100%)'
                 }} />
 
                 {/* Top Badges */}
-                <div style={{ position: 'absolute', top: '12px', left: '12px', display: 'flex', gap: '8px' }}>
+                <div style={{ position: 'absolute', top: '10px', left: '10px', display: 'flex', gap: '6px' }}>
                   <span className="mono-code" style={{
                     background: '#0B4726',
                     color: '#FFFFFF',
-                    padding: '4px 10px',
+                    padding: '3px 8px',
                     borderRadius: '6px',
-                    fontSize: '11.5px',
-                    fontWeight: '800',
-                    boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+                    fontSize: '11px',
+                    fontWeight: '800'
                   }}>
                     {project.id}
                   </span>
                   <span style={{
                     background: 'rgba(255,255,255,0.92)',
                     color: '#0F172A',
-                    padding: '4px 10px',
+                    padding: '3px 8px',
                     borderRadius: '6px',
                     fontSize: '11px',
                     fontWeight: '700'
                   }}>
-                    {project.taluka} Sub-Division
+                    {project.taluka}
                   </span>
                 </div>
 
-                <div style={{ position: 'absolute', top: '12px', right: '12px' }}>
+                <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
                   <StatusBadge status={project.status} />
-                </div>
-
-                {/* Bottom Overlay Info inside Photo */}
-                <div style={{ position: 'absolute', bottom: '12px', left: '14px', right: '14px', color: '#FFFFFF' }}>
-                  <div style={{ fontSize: '11.5px', fontWeight: '600', opacity: 0.9, textTransform: 'uppercase', letterSpacing: '0.4px' }}>
-                    {project.type}
-                  </div>
                 </div>
               </div>
 
-              {/* Card Body & Description */}
-              <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
+              {/* Card Body */}
+              <div style={{ padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: '12px', flex: 1, justifyContent: 'space-between' }}>
                 <div>
-                  <h3 style={{ fontSize: '17.5px', fontWeight: '800', color: '#0B4726', margin: '0 0 6px 0', lineHeight: '1.3' }}>
+                  <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#0F172A', margin: '0 0 6px 0', lineHeight: '1.3' }}>
                     {project.name}
                   </h3>
-                  {/* Brief Description */}
-                  <p style={{ fontSize: '13.5px', color: '#334155', lineHeight: '1.55', margin: '0' }}>
-                    {briefDescriptions[project.id] || `Corridor stretch covering revenue villages ${project.villages.join(', ')}. Active field verification and statutory notification for assigned parcels.`}
+                  <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: '1.45', margin: '0' }}>
+                    {briefDescriptions[project.id] ? briefDescriptions[project.id].split('.')[0] + '.' : `Corridor stretch covering ${project.villages.join(', ')}.`}
                   </p>
                 </div>
 
-                {/* Key Metrics Bar */}
+                {/* Clean Metrics Row */}
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gridTemplateColumns: '1fr 1fr',
                   gap: '10px',
                   background: '#F8FAFC',
                   border: '1px solid #E2E8F0',
-                  padding: '12px',
+                  padding: '10px 12px',
                   borderRadius: '10px'
                 }}>
                   <div>
-                    <span style={{ fontSize: '11px', color: '#64748B', fontWeight: '600', display: 'block' }}>Assigned Parcels</span>
-                    <strong style={{ fontSize: '13.5px', color: '#0F172A' }}>{project.totalParcels} <span style={{ fontSize: '11px', color: '#1E7E34', fontWeight: '700' }}>({project.verifiedParcels} Verified)</span></strong>
+                    <span style={{ fontSize: '10.5px', color: '#64748B', fontWeight: '600', display: 'block' }}>Assigned Parcels</span>
+                    <strong style={{ fontSize: '13px', color: '#0F172A' }}>{project.totalParcels}</strong>
+                    <span style={{ fontSize: '11px', color: '#008E4F', fontWeight: '700', marginLeft: '4px' }}>({project.verifiedParcels} ✓)</span>
                   </div>
                   <div>
-                    <span style={{ fontSize: '11px', color: '#64748B', fontWeight: '600', display: 'block' }}>Affected Landowners</span>
-                    <strong style={{ fontSize: '13.5px', color: '#0F172A' }}>{project.totalLandowners} Owners</strong>
-                  </div>
-                  <div>
-                    <span style={{ fontSize: '11px', color: '#64748B', fontWeight: '600', display: 'block' }}>Corridor Area</span>
-                    <strong style={{ fontSize: '13.5px', color: '#0F172A' }}>{project.totalAreaHa} Ha</strong>
-                  </div>
-                  <div>
-                    <span style={{ fontSize: '11px', color: '#64748B', fontWeight: '600', display: 'block' }}>Est. Compensation</span>
-                    <strong style={{ fontSize: '13.5px', color: '#1E7E34' }}>{project.estCompensation}</strong>
+                    <span style={{ fontSize: '10.5px', color: '#64748B', fontWeight: '600', display: 'block' }}>Est. Compensation</span>
+                    <strong style={{ fontSize: '13px', color: '#008E4F' }}>{project.estCompensation}</strong>
                   </div>
                 </div>
 
-                {/* Village Tags */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', fontSize: '12px' }}>
-                  <span style={{ fontWeight: '700', color: '#64748B', fontSize: '11px', textTransform: 'uppercase' }}>Villages:</span>
-                  {project.villages.map(v => (
-                    <span key={v} style={{ background: '#F1F5F9', color: '#334155', padding: '2px 8px', borderRadius: '4px', fontWeight: '600', fontSize: '11.5px' }}>
+                {/* Village Badges */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
+                  <span style={{ fontWeight: '700', color: '#64748B', fontSize: '10.5px', textTransform: 'uppercase' }}>Villages:</span>
+                  {project.villages.slice(0, 3).map(v => (
+                    <span key={v} style={{ background: '#F1F5F9', color: '#334155', padding: '2px 7px', borderRadius: '12px', fontWeight: '600', fontSize: '11px' }}>
                       {v}
                     </span>
                   ))}
+                  {project.villages.length > 3 && (
+                    <span style={{ color: '#64748B', fontSize: '11px', fontWeight: '600' }}>+{project.villages.length - 3} more</span>
+                  )}
                 </div>
 
                 {/* CTA Action Footer */}
-                <div style={{ marginTop: 'auto', paddingTop: '8px' }}>
+                <div style={{ marginTop: 'auto', paddingTop: '4px' }}>
                   <button
                     className="btn btn-primary"
                     style={{
                       width: '100%',
                       justifyContent: 'center',
-                      borderRadius: '8px',
-                      padding: '10px',
-                      fontSize: '13.5px',
+                      borderRadius: '10px',
+                      padding: '9px 14px',
+                      fontSize: '13px',
                       fontWeight: '700',
-                      gap: '8px'
+                      gap: '6px',
+                      background: 'var(--color-primary-gradient)',
+                      border: 'none'
                     }}
                   >
-                    Explore Project Details & Parcels <ArrowRight size={15} />
+                    Explore Project Details <ArrowRight size={14} />
                   </button>
                 </div>
               </div>
@@ -546,7 +535,7 @@ const ProjectsView = () => {
               Land Acquisition Corridor Description
             </h4>
             <p style={{ fontSize: '13.5px', color: '#334155', lineHeight: '1.6', margin: '0' }}>
-              {briefDescriptions[currentProject.id] || `Corridor stretch spanning across revenue villages ${currentProject.villages.join(', ')} under Haveli & Mulshi Sub-Division.`}
+              {briefDescriptions[currentProject.id] || `Corridor stretch spanning across villages ${currentProject.villages.join(', ')} under Haveli & Mulshi Sub-Division.`}
             </p>
           </div>
         </div>
@@ -600,7 +589,7 @@ const ProjectsView = () => {
               <tr>
                 <th>Parcel ID</th>
                 <th>Survey Number</th>
-                <th>Revenue Village</th>
+                <th>Village</th>
                 <th>Landowner Name</th>
                 <th style={{ textAlign: 'right' }}>Acquired Area</th>
                 <th>Verification Status</th>

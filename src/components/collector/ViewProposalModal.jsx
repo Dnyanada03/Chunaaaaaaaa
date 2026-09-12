@@ -50,7 +50,7 @@ export default function ViewProposalModal({ isOpen, onClose, proposal }) {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button className="btn btn-secondary btn-sm" onClick={() => window.print()}>
-              <Printer size={14} /> Print Dossier
+              <Printer size={14} /> Print Report
             </button>
             <button className="modal-close-btn" onClick={onClose}>
               <X size={20} />
@@ -75,7 +75,7 @@ export default function ViewProposalModal({ isOpen, onClose, proposal }) {
                 GOVERNMENT OF MAHARASHTRA • REVENUE & LAND ACQUISITION DEPARTMENT
               </div>
               <h2 style={{ fontFamily: 'Merriweather, Georgia, serif', fontSize: '20px', fontWeight: 800, color: '#0F172A', marginTop: '4px' }}>
-                PROJECT PROPOSAL DOSSIER & LAND ACQUISITION REQUISITION
+                PROJECT PROPOSAL REPORT & LAND ACQUISITION REQUISITION
               </h2>
               <div style={{ fontSize: '11.5px', color: '#64748B', marginTop: '4px' }}>
                 Received under Rule 4(1) of LARR Rules • Submitted to Office of the District Collectorate Pune
@@ -323,7 +323,7 @@ export default function ViewProposalModal({ isOpen, onClose, proposal }) {
               {/* SECTION 11: DOCUMENTS */}
               <div style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', borderRadius: '10px', padding: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0B4726', fontWeight: 800, fontSize: '13px', textTransform: 'uppercase', marginBottom: '10px' }}>
-                  <Folder size={16} /> 11. ATTACHED PROPOSAL DOSSIER DOCUMENTS (5 FILES)
+                  <Folder size={16} /> 11. ATTACHED PROPOSAL REPORT DOCUMENTS (5 FILES)
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '12px' }}>
                   {[
@@ -385,7 +385,7 @@ export default function ViewProposalModal({ isOpen, onClose, proposal }) {
         {/* Modal Footer */}
         <div className="modal-footer">
           <button className="btn btn-secondary" onClick={onClose}>
-            Close Dossier
+            Close Report
           </button>
         </div>
       </div>

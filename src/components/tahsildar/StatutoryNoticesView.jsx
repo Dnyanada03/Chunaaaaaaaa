@@ -14,7 +14,7 @@ const StatutoryNoticesView = () => {
     const p = selectedNoticeParcel;
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
         <button
           className="btn btn-secondary btn-sm"
           onClick={() => setSelectedNoticeParcel(null)}
@@ -185,7 +185,7 @@ const StatutoryNoticesView = () => {
 
   // SCREEN 23: Statutory Notice List View
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       <div className="page-banner">
         <div className="page-title-group">
           <h1>Statutory Notice Management Register</h1>
@@ -201,7 +201,7 @@ const StatutoryNoticesView = () => {
               <th>Parcel ID</th>
               <th>Survey No</th>
               <th>Landowner Name</th>
-              <th>Revenue Village</th>
+              <th>Village</th>
               <th>Notice Type</th>
               <th>Notice Date</th>
               <th>Delivery Status</th>

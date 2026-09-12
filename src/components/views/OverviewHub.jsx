@@ -28,7 +28,7 @@ const OverviewHub = ({ onNavigate }) => {
       id: 'villages',
       tab: 'tasks',
       value: '48',
-      title: 'Revenue Villages',
+      title: 'Villages',
       desc: 'Haveli & Khed Taluka Jurisdiction',
       icon: Building,
       color: '#1A73E8',

@@ -131,7 +131,7 @@ const DashboardView = () => {
   // - red: Brick-Red border (#C5221F) for Overdue / Critical metrics
   const metrics = [
     { label: "Active Assigned Projects", value: "12", sub: "3 Major Infrastructure Corridors", icon: FolderKanban, type: "neutral", targetTab: "projects" },
-    { label: "Total Revenue Villages", value: "48", sub: "Haveli & Khed Taluka Jurisdiction", icon: Building, type: "neutral", targetTab: "tasks" },
+    { label: "Total Villages", value: "48", sub: "Haveli & Khed Taluka Jurisdiction", icon: Building, type: "neutral", targetTab: "tasks" },
     { label: "Affected Land Parcels", value: "8,450", sub: "Total Corridor Surveyed Area", icon: MapPin, type: "neutral", targetTab: "projects" },
     { label: "Pending Field Verification", value: "1,240", sub: "Talathi Inspection Queue", icon: Clock, type: "amber", targetTab: "tasks" },
     { label: "Compensation Approved", value: "580", sub: "PFMS Direct Benefit Transfer", icon: IndianRupee, type: "amber", targetTab: "compensation" },
@@ -161,25 +161,91 @@ const DashboardView = () => {
   const workNotifs = notifications.filter(n => n.category !== 'Objection').slice(0, 4);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Banner */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+      {/* Standard Clean Page Banner */}
       <div className="page-banner">
         <div className="page-title-group">
           <h1>Tahsildar Executive Dashboard</h1>
-          <p>Land Acquisition Monitoring & Verification Portal</p>
+          <p>Land Acquisition Monitoring & Verification Portal • Haveli Revenue Sub-Division</p>
         </div>
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button className="btn btn-secondary" onClick={() => setActiveTab('notices')}>
-            <FileCheck size={14} strokeWidth={1.5} /> Issue Statutory Notices
-          </button>
-          {/* Reserved Gold exclusively for header accent line; Objections button uses deep maroon/brick red (#991B1B) */}
+      </div>
+
+      {/* TOP NOTIFICATIONS & LIVE FIELD WORK ALERTS STREAM (MOVED TO TOP PER SPEC) */}
+      <div className="card" style={{ borderLeft: '4px solid #1A73E8' }}>
+        <div className="card-header">
+          <div className="card-title" style={{ fontSize: '15px' }}>
+            <Bell size={18} strokeWidth={2} style={{ color: '#1A73E8' }} />
+            Official Work Notifications & Field Alerts Register
+          </div>
           <button
-            className="btn btn-primary"
-            onClick={() => setActiveTab('objections')}
-            style={{ background: '#991B1B', color: '#FFFFFF', borderColor: '#7F1D1D' }}
+            className="btn btn-secondary btn-sm"
+            onClick={() => setActiveTab('notifications')}
           >
-            <AlertTriangle size={14} strokeWidth={1.5} /> Review Objections ({objections.filter(o => o.status !== 'Resolved').length})
+            View All Notifications ({notifications.length}) <ArrowRight size={13} strokeWidth={1.5} />
           </button>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          {workNotifs.map(n => (
+            <div
+              key={n.id}
+              style={{
+                padding: '16px 20px',
+                border: '1px solid #E2E8F0',
+                borderLeft: n.read ? '5px solid #CBD5E1' : '5px solid #0B4726',
+                borderRadius: '14px',
+                background: n.read ? '#FFFFFF' : '#F8FAFC',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease-in-out',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+              }}
+              onClick={() => {
+                markNotificationAsRead(n.id);
+                setActiveTab('notifications');
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '12px',
+                  background: n.read ? '#F1F5F9' : '#E6F4EA',
+                  color: n.read ? '#64748B' : '#0B4726',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <Bell size={18} strokeWidth={2} />
+                </div>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                    <span style={{ fontWeight: '700', color: '#0B4726', fontSize: '15px', letterSpacing: '-0.2px' }}>
+                      {n.title}
+                    </span>
+                    <span className="mono-code" style={{ fontSize: '11px', background: '#E8F0FE', color: '#1A73E8', padding: '2px 8px', borderRadius: '6px', fontWeight: '700' }}>
+                      {n.projectId}
+                    </span>
+                    {!n.read && (
+                      <span style={{ background: '#0B4726', color: '#FFFFFF', fontSize: '10px', padding: '2px 7px', borderRadius: '4px', fontWeight: '800', textTransform: 'uppercase' }}>
+                        UNREAD
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ fontSize: '13.5px', color: '#334155', marginTop: '4px', lineHeight: '1.5' }}>
+                    {n.message}
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', fontSize: '12px', fontWeight: '600', color: '#64748B', flexShrink: 0, marginLeft: '20px' }}>
+                {n.timestamp}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -298,64 +364,52 @@ const DashboardView = () => {
                 type="button"
                 onClick={() => setVillageChartType('grouped')}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '4px 10px',
+                  padding: '4px 12px',
+                  fontSize: '11px',
+                  fontWeight: 700,
                   borderRadius: '6px',
                   border: 'none',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
                   background: villageChartType === 'grouped' ? '#FFFFFF' : 'transparent',
                   color: villageChartType === 'grouped' ? '#0B4726' : '#64748B',
-                  boxShadow: villageChartType === 'grouped' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-                  transition: 'all 0.15s ease'
+                  boxShadow: villageChartType === 'grouped' ? '0 2px 4px rgba(0,0,0,0.06)' : 'none',
+                  cursor: 'pointer'
                 }}
               >
-                <BarChart2 size={13} /> Grouped
+                Grouped Bars
               </button>
               <button
                 type="button"
                 onClick={() => setVillageChartType('stacked')}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '4px 10px',
+                  padding: '4px 12px',
+                  fontSize: '11px',
+                  fontWeight: 700,
                   borderRadius: '6px',
                   border: 'none',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
                   background: villageChartType === 'stacked' ? '#FFFFFF' : 'transparent',
                   color: villageChartType === 'stacked' ? '#0B4726' : '#64748B',
-                  boxShadow: villageChartType === 'stacked' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-                  transition: 'all 0.15s ease'
+                  boxShadow: villageChartType === 'stacked' ? '0 2px 4px rgba(0,0,0,0.06)' : 'none',
+                  cursor: 'pointer'
                 }}
               >
-                <Layers size={13} /> Stacked
+                Stacked Bars
               </button>
               <button
                 type="button"
                 onClick={() => setVillageChartType('area')}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '4px 10px',
+                  padding: '4px 12px',
+                  fontSize: '11px',
+                  fontWeight: 700,
                   borderRadius: '6px',
                   border: 'none',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
                   background: villageChartType === 'area' ? '#FFFFFF' : 'transparent',
                   color: villageChartType === 'area' ? '#0B4726' : '#64748B',
-                  boxShadow: villageChartType === 'area' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-                  transition: 'all 0.15s ease'
+                  boxShadow: villageChartType === 'area' ? '0 2px 4px rgba(0,0,0,0.06)' : 'none',
+                  cursor: 'pointer'
                 }}
               >
-                <Activity size={13} /> Area Flow
+                Area Trend
               </button>
             </div>
           </div>
@@ -365,15 +419,15 @@ const DashboardView = () => {
                 <AreaChart data={villageBarData}>
                   <defs>
                     <linearGradient id="colorVer" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#1E7E34" stopOpacity={0.45}/>
+                      <stop offset="5%" stopColor="#1E7E34" stopOpacity={0.8}/>
                       <stop offset="95%" stopColor="#1E7E34" stopOpacity={0.05}/>
                     </linearGradient>
                     <linearGradient id="colorPen" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.45}/>
+                      <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.8}/>
                       <stop offset="95%" stopColor="#F59E0B" stopOpacity={0.05}/>
                     </linearGradient>
                     <linearGradient id="colorDis" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#C5221F" stopOpacity={0.45}/>
+                      <stop offset="5%" stopColor="#C5221F" stopOpacity={0.8}/>
                       <stop offset="95%" stopColor="#C5221F" stopOpacity={0.05}/>
                     </linearGradient>
                   </defs>
@@ -418,89 +472,6 @@ const DashboardView = () => {
               )}
             </ResponsiveContainer>
           </div>
-        </div>
-      </div>
-
-      {/* DASHBOARD NOTIFICATION PREVIEW PANEL */}
-      <div className="card">
-        <div className="card-header">
-          <div className="card-title">
-            <Bell size={16} strokeWidth={1.5} style={{ color: '#0B4726' }} />
-            Official Work Notifications Register
-          </div>
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={() => setActiveTab('notifications')}
-          >
-            View All Notifications <ArrowRight size={13} strokeWidth={1.5} />
-          </button>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {workNotifs.map(n => (
-            <div
-              key={n.id}
-              style={{
-                padding: '16px 20px',
-                border: '1px solid #E2E8F0',
-                borderLeft: n.read ? '5px solid #CBD5E1' : '5px solid #0B4726',
-                borderRadius: '14px',
-                background: n.read ? '#FFFFFF' : '#F8FAFC',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                cursor: 'pointer',
-                transition: 'all 0.15s ease-in-out',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
-              }}
-              onClick={() => {
-                markNotificationAsRead(n.id);
-                setActiveTab('notifications');
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <div style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '12px',
-                  background: n.read ? '#F1F5F9' : '#E6F4EA',
-                  color: n.read ? '#64748B' : '#0B4726',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
-                  <Bell size={18} strokeWidth={2} />
-                </div>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-                    {/* Distinct Dark Green Heading */}
-                    <span style={{ fontWeight: '700', color: '#0B4726', fontSize: '15px', letterSpacing: '-0.2px' }}>
-                      {n.title}
-                    </span>
-                    {/* Project ID Tag */}
-                    <span className="mono-code" style={{ fontSize: '11px', background: '#E8F0FE', color: '#1A73E8', padding: '2px 8px', borderRadius: '6px', fontWeight: '700' }}>
-                      {n.projectId}
-                    </span>
-                    {!n.read && (
-                      <span style={{ background: '#0B4726', color: '#FFFFFF', fontSize: '10px', padding: '2px 7px', borderRadius: '4px', fontWeight: '800', textTransform: 'uppercase' }}>
-                        UNREAD
-                      </span>
-                    )}
-                  </div>
-                  {/* Distinct Slate Description */}
-                  <div style={{ fontSize: '13.5px', color: '#334155', marginTop: '4px', lineHeight: '1.5' }}>
-                    {n.message}
-                  </div>
-                </div>
-              </div>
-
-              {/* Timestamp on the right */}
-              <div style={{ textAlign: 'right', fontSize: '12px', fontWeight: '600', color: '#64748B', flexShrink: 0, marginLeft: '20px' }}>
-                {n.timestamp}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>

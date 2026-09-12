@@ -25,7 +25,7 @@ const FinalMutationView = () => {
     ];
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
         <button
           className="btn btn-secondary btn-sm"
           onClick={() => setSelectedMutationParcel(null)}
@@ -92,7 +92,7 @@ const FinalMutationView = () => {
               <div><span style={{ color: '#6B7280' }}>Landowner Name:</span> <strong>{p.landowner}</strong></div>
               <div><span style={{ color: '#6B7280' }}>Survey / Gut No:</span> <span className="mono-code">{p.surveyNumber}</span></div>
               <div><span style={{ color: '#6B7280' }}>Parcel Area:</span> <strong>{p.acquiredAreaHa} Ha</strong></div>
-              <div><span style={{ color: '#6B7280' }}>Revenue Village:</span> <strong>{p.village}</strong></div>
+              <div><span style={{ color: '#6B7280' }}>Village:</span> <strong>{p.village}</strong></div>
             </div>
 
             {/* Criteria Check Grid */}
@@ -165,7 +165,7 @@ const FinalMutationView = () => {
 
   // SCREEN 27: Final Mutation Dashboard View
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       <div className="page-banner">
         <div className="page-title-group">
           <h1>Final Mutation Register</h1>
@@ -180,7 +180,7 @@ const FinalMutationView = () => {
               <th>Parcel ID</th>
               <th>Survey No</th>
               <th>Landowner Name</th>
-              <th>Revenue Village</th>
+              <th>Village</th>
               <th style={{ textAlign: 'right' }}>Acquired Area</th>
               <th>Verification</th>
               <th>Compensation</th>
@@ -199,7 +199,7 @@ const FinalMutationView = () => {
                 <td style={{ textAlign: 'right', fontWeight: '600' }}>{p.acquiredAreaHa} Ha</td>
                 <td><StatusBadge status={p.verificationStatus} /></td>
                 <td><StatusBadge status={p.compensationStatus} /></td>
-                <td><span style={{ color: '#1E7E34', fontWeight: '700', fontSize: '11.5px' }}>No Objection (Clear)</span></td>
+                <td><StatusBadge status="No Objection (Clear)" /></td>
                 <td><StatusBadge status={p.mutationStatus} /></td>
                 <td>
                   <button

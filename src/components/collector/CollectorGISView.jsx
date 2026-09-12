@@ -46,7 +46,7 @@ export default function CollectorGISView() {
   });
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       {/* Page Banner */}
       <div className="page-banner">
         <div className="page-title-group">

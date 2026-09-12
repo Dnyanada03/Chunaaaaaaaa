@@ -47,18 +47,14 @@ const Header = ({ onOpenProfile }) => {
           {unreadCount > 0 && <span className="bell-badge">{unreadCount}</span>}
         </button>
 
-        {/* Tahsildar Officer Profile Chip & Dropdown */}
+        {/* Tahsildar Officer Profile Photo Avatar & Dropdown */}
         <div className="profile-menu-container">
           <div
             className="profile-chip"
             onClick={() => setDropdownOpen(!dropdownOpen)}
+            title={`${officerProfile.name} • Tahsildar`}
           >
             <div className="profile-avatar">AP</div>
-            <div className="profile-meta">
-              <span className="profile-name">{officerProfile.name}</span>
-              <span className="profile-role">Tahsildar • {officerProfile.taluka}</span>
-            </div>
-            <ChevronDown size={14} style={{ color: 'rgba(255,255,255,0.8)' }} />
           </div>
 
           {dropdownOpen && (

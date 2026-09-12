@@ -201,7 +201,7 @@ const StatutoryNoticesView = () => {
               <th>Parcel ID</th>
               <th>Survey No</th>
               <th>Landowner Name</th>
-              <th>Revenue Village</th>
+              <th>Village</th>
               <th>Notice Type</th>
               <th>Notice Date</th>
               <th>Delivery Status</th>

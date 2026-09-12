@@ -110,11 +110,11 @@ const Sidebar = () => {
           {isResourcesOpen && (
             <div className="top-nav-dropdown-menu">
               <div style={{
-                fontSize: '10px',
+                fontSize: '10.5px',
                 fontWeight: 800,
                 color: '#0B4726',
-                letterSpacing: '0.6px',
-                padding: '4px 10px 6px 10px',
+                letterSpacing: '0.8px',
+                padding: '6px 12px 8px 12px',
                 borderBottom: '1px solid #E2E8F0',
                 textTransform: 'uppercase'
               }}>
@@ -133,11 +133,12 @@ const Sidebar = () => {
                       setActiveTab(sub.id);
                       setIsResourcesOpen(false);
                     }}
+                    style={{ padding: '12px 14px' }}
                   >
-                    <SubIcon size={16} style={{ color: isSubActive ? '#FFF' : '#0B4726', flexShrink: 0 }} />
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1px' }}>
-                      <span style={{ fontSize: '12.5px', fontWeight: isSubActive ? 700 : 600 }}>{sub.label}</span>
-                      <span style={{ fontSize: '10px', opacity: isSubActive ? 0.9 : 0.65, fontWeight: 400 }}>{sub.desc}</span>
+                    <SubIcon size={18} style={{ color: isSubActive ? '#FFF' : '#0B4726', flexShrink: 0 }} />
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
+                      <span style={{ fontSize: '13.5px', fontWeight: isSubActive ? 700 : 600 }}>{sub.label}</span>
+                      <span style={{ fontSize: '11px', opacity: isSubActive ? 0.9 : 0.7, fontWeight: 400 }}>{sub.desc}</span>
                     </div>
                   </button>
                 );

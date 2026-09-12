@@ -6,9 +6,12 @@
    ========================================================================== */
 
 :root {
-  /* Official Government Palette */
-  --color-primary-gov: #0B4726;       /* Deep Forest Government Green */
-  --color-primary-dark: #06371E;      /* Dark Masthead Accent */
+  /* User Custom Palette - Emerald Green & Teal Blue Gradient */
+  --color-primary-gov: #008E4F;       /* Emerald Green Swatch */
+  --color-primary-dark: #006638;      /* Dark Emerald Accent */
+  --color-primary-teal: #007F7E;      /* Teal Blue Swatch */
+  --color-primary-gradient: linear-gradient(135deg, #008E4F 0%, #008766 50%, #007F7E 100%);
+  --color-header-gradient: linear-gradient(135deg, #006638 0%, #005C5B 100%);
   
   /* Warm Neutral Paper Palette (GOV E-Filing Style) */
   --color-bg-scaffold: #F4F3F0;      /* Warm neutral gray-beige official paper tone */
@@ -94,8 +97,8 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-bg-scaffold);
   color: var(--color-text-main);
-  line-height: 1.5;
-  font-size: 13.5px;
+  line-height: 1.6;
+  font-size: 14.5px;
   -webkit-font-smoothing: antialiased;
   position: relative;
 }
@@ -137,9 +140,9 @@ body::before {
 .content-area {
   flex: 1;
   min-width: 0;
-  padding: 20px 24px 40px 24px;
-  max-width: 1600px;
-  margin: 132px auto 0 auto;
+  padding: 28px 36px 52px 36px;
+  max-width: 1680px;
+  margin: 136px auto 0 auto;
   width: 100%;
 }
 
@@ -149,13 +152,13 @@ body::before {
   top: 0;
   left: 0;
   right: 0;
-  height: 64px;
-  background: linear-gradient(135deg, #042413 0%, #0B4726 52%, #145E36 100%);
+  height: 68px;
+  background: var(--color-header-gradient);
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 28px;
   z-index: 1000;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
   border-bottom: 2px solid rgba(255, 255, 255, 0.12);
@@ -214,39 +217,39 @@ body::before {
 
 .brand-main {
   font-family: var(--font-serif);
-  font-size: 18px;
+  font-size: 19.5px;
   font-weight: 700;
   letter-spacing: 0.5px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   color: #FFFFFF;
 }
 
 .brand-sub {
-  font-size: 10.5px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.85);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.9px;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
 }
 
 .search-trigger-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: rgba(255, 255, 255, 0.95);
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: var(--radius-md);
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   transition: background 0.15s ease;
 }
@@ -298,30 +301,32 @@ body::before {
 .profile-chip {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 4px 12px 4px 6px;
-  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 2px;
+  border-radius: 50%;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .profile-chip:hover {
   background: rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
 }
 
 .profile-avatar {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   background: rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
   font-weight: 800;
   font-family: var(--font-serif);
-  border-radius: var(--radius-sm);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .profile-meta {
@@ -347,10 +352,10 @@ body::before {
 /* Top Navigation Bar Styles - Floating Centered Cylinder Pill Layout */
 .top-nav-bar {
   position: fixed;
-  top: 72px;
+  top: 74px;
   left: 0;
   right: 0;
-  height: 48px;
+  height: 50px;
   background: transparent;
   z-index: 990;
   display: flex;
@@ -364,11 +369,11 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   width: fit-content;
   max-width: 95vw;
   margin: 0 auto;
-  padding: 5px 12px;
+  padding: 6px 16px;
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -385,14 +390,14 @@ body::before {
 .top-nav-item {
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 15px;
+  gap: 8px;
+  padding: 8px 18px;
   color: #334155;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 30px; /* Cylinder Item Pills */
   font-weight: 600;
-  font-size: 13px;
+  font-size: 13.5px;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -406,11 +411,11 @@ body::before {
 }
 
 .top-nav-item.active {
-  background: linear-gradient(135deg, #0B4726 0%, #145E36 100%);
+  background: var(--color-primary-gradient);
   color: #FFFFFF;
   font-weight: 700;
-  border-color: #0B4726;
-  box-shadow: 0 4px 12px rgba(11, 71, 38, 0.25);
+  border-color: #007F7E;
+  box-shadow: 0 4px 14px rgba(0, 127, 126, 0.3);
 }
 
 .nav-badge {
@@ -493,7 +498,7 @@ body::before {
 }
 
 .top-nav-dropdown-item.active {
-  background: #0B4726;
+  background: var(--color-primary-gradient);
   color: #FFFFFF;
   font-weight: 700;
 }
@@ -538,42 +543,41 @@ body::before {
 }
 
 .sub-nav-item.active {
-  background: #0B4726;
+  background: var(--color-primary-gradient);
   color: #FFFFFF;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(11, 71, 38, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 142, 79, 0.3);
 }
 
-/* Formal Page Banners */
+/* Clean Unboxed Page Header Banners (NO Background Box) */
 .page-banner {
-  background: var(--color-primary-gov);
-  color: white;
-  padding: 18px 24px;
-  border-radius: var(--radius-lg);
-  border-left: 5px solid var(--color-primary-dark);
-  border-right: 1px solid var(--color-primary-dark);
-  border-top: 1px solid var(--color-primary-dark);
-  border-bottom: 1px solid var(--color-primary-dark);
+  background: transparent !important;
+  color: var(--color-text-main) !important;
+  padding: 0 0 12px 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: none;
-  overflow: hidden;
+  box-shadow: none !important;
+  overflow: visible !important;
+  margin-bottom: 8px;
 }
 
 .page-title-group h1 {
   font-family: var(--font-serif);
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 23px;
+  font-weight: 800;
   letter-spacing: 0.3px;
-  margin-bottom: 2px;
-  color: #FFFFFF;
+  margin-bottom: 4px;
+  color: #0F172A !important;
 }
 
 .page-title-group p {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 400;
+  font-size: 13.5px;
+  color: #475569 !important;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 /* Overview Hub Radial Layout Component */
@@ -832,7 +836,7 @@ body::before {
   background: var(--color-surface-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 18px 20px;
+  padding: 24px 28px;
   box-shadow: none;
   transition: border-color 0.15s ease;
 }
@@ -845,35 +849,35 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--color-border);
 }
 
 .card-title {
   font-family: var(--font-body);
-  font-size: 14.5px;
+  font-size: 15.5px;
   font-weight: 700;
   color: var(--color-text-main);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
 }
 
 /* Official Government KPI Metric Cards */
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
 }
 
 .kpi-card {
   background: var(--color-surface-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 14px 16px;
+  padding: 18px 20px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -901,14 +905,13 @@ body::before {
 .kpi-card.neutral::before { background-color: #4B5563; }  /* Informational: Gray-Navy */
 .kpi-card.amber::before { background-color: #475569; }    /* Action Required: Slate Steel */
 .kpi-card.red::before { background-color: #C5221F; }      /* Overdue/Critical: Brick-Red */
-.kpi-card.red::before { background-color: #C5221F; }      /* Overdue/Critical: Brick-Red */
 
 /* Interactive KPI Top-Right Action Icon */
 .kpi-action-icon {
   position: absolute;
-  right: 10px;
-  top: 10px;
-  padding: 4px;
+  right: 12px;
+  top: 12px;
+  padding: 6px;
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
   background: transparent;
@@ -927,68 +930,96 @@ body::before {
 
 /* Classic Gov Data Hierarchy Pattern */
 .kpi-label {
-  font-size: 10.5px;
+  font-size: 11.5px;
   color: var(--color-text-muted);
-  font-weight: 600;
-  margin-bottom: 4px;
+  font-weight: 700;
+  margin-bottom: 6px;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.9px;
 }
 
 .kpi-value {
   font-family: var(--font-body);
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 800;
   color: #111827;
   line-height: 1.1;
-  margin: 2px 0;
+  margin: 4px 0;
 }
 
 .kpi-subtext {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--color-text-secondary);
+  line-height: 1.4;
 }
 
-/* Official Register Tables (Subtle Zebra Striping, Monospaced IDs, Hairline Borders) */
+/* Official Register Tables (Subtle Zebra Striping, Monospaced IDs, Spacious Padding & Custom Scrollbars) */
 .table-container {
   overflow-x: auto;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface-card);
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  background: #FFFFFF;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+  margin-bottom: 24px;
+}
+
+/* Sleek custom scrollbars for table containers */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.table-container::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 4px;
+}
+.table-container::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #008E4F;
 }
 
 .gov-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   text-align: left;
-  font-size: 13px;
+  font-size: 13.5px;
 }
 
 .gov-table th {
-  background-color: var(--color-surface-muted);
-  color: var(--color-text-main);
+  background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+  color: #334155;
   font-weight: 700;
-  padding: 10px 14px;
-  border-bottom: 2px solid var(--color-border);
+  padding: 16px 22px;
+  border-bottom: 2px solid #E2E8F0;
   text-transform: uppercase;
-  font-size: 10.5px;
-  letter-spacing: 0.6px;
+  font-size: 11.5px;
+  letter-spacing: 0.8px;
   white-space: nowrap;
+  user-select: none;
 }
 
 .gov-table td {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-text-main);
+  padding: 16px 22px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #1E293B;
   vertical-align: middle;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.gov-table tbody tr {
+  transition: background-color 0.15s ease;
 }
 
 .gov-table tbody tr:nth-child(even) {
-  background-color: var(--color-surface-zebra);
+  background-color: #FAFBFD;
 }
 
 .gov-table tbody tr:hover {
-  background-color: #EFECE6;
+  background-color: #F0FDF4;
 }
 
 .gov-table tbody tr:last-child td {
@@ -998,21 +1029,23 @@ body::before {
 /* Monospaced Records & Reference Code Styling */
 .mono-code {
   font-family: var(--font-mono);
-  font-weight: 600;
-  letter-spacing: -0.3px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
 }
 
 /* Status Badges - Desaturated Low Saturation Pill with Solid Dot */
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
-  font-size: 11.5px;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.3;
   white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .badge-dot {
@@ -1076,10 +1109,10 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 7px 14px;
+  gap: 8px;
+  padding: 9px 18px;
   border-radius: var(--radius-md);
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s ease;
@@ -1090,12 +1123,13 @@ body::before {
 }
 
 .btn-primary {
-  background-color: var(--color-primary-gov);
+  background: var(--color-primary-gradient);
   color: white;
-  border-color: var(--color-primary-dark);
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 142, 79, 0.3);
 }
 .btn-primary:hover {
-  background-color: var(--color-primary-dark);
+  background: linear-gradient(135deg, #007E46 0%, #006F6E 100%);
 }
 
 .btn-secondary {
@@ -1126,31 +1160,31 @@ body::before {
 }
 
 .btn-sm {
-  padding: 4px 9px;
-  font-size: 11.5px;
+  padding: 6px 12px;
+  font-size: 12.5px;
 }
 
 /* Form Controls */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-bottom: 14px;
+  gap: 6px;
+  margin-bottom: 20px;
 }
 
 .form-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--color-text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.7px;
 }
 
 .form-control, .form-select {
-  padding: 7px 10px;
+  padding: 10px 14px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-main);
   background-color: #FFFFFF;
   transition: border-color 0.15s ease;
@@ -1176,7 +1210,7 @@ body::before {
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  padding: 20px;
+  padding: 24px;
 }
 
 .modal-container {
@@ -1185,15 +1219,19 @@ body::before {
   box-shadow: var(--shadow-modal);
   border: 1px solid var(--color-border);
   width: 100%;
-  max-width: 600px;
+  max-width: 720px;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+.modal-container.large {
+  max-width: 980px;
+}
+
 .modal-header {
-  padding: 14px 20px;
+  padding: 18px 26px;
   background-color: var(--color-primary-dark);
   color: white;
   display: flex;
@@ -1204,7 +1242,7 @@ body::before {
 
 .modal-title {
   font-family: var(--font-serif);
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
 }
 
@@ -1213,7 +1251,7 @@ body::before {
   border: none;
   color: white;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -1221,19 +1259,19 @@ body::before {
 }
 
 .modal-body {
-  padding: 20px;
+  padding: 28px 30px;
   overflow-y: auto;
   flex: 1;
 }
 
 .modal-footer {
-  padding: 12px 20px;
+  padding: 16px 26px;
   background-color: var(--color-surface-muted);
   border-top: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* ==========================================================================
@@ -1385,3 +1423,414 @@ body::before {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   TEHSILDAR-STYLE DIAMOND OVERVIEW HUB & FULL-WIDTH PROGRESS BAR
+   ========================================================================== */
+.tehsildar-diamond-overview-hub {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+  border-radius: 20px;
+  border: 1px solid #E2E8F0;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hub-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 14px;
+}
+
+.hub-layout-4card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  min-height: 240px;
+}
+
+.hub-center-container-4card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 250px;
+  height: 240px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .hub-layout-4card {
+    flex-direction: column;
+  }
+  .hub-center-container-4card {
+    margin: 16px 0;
+  }
+}
+
+/* True Diamond Cards Layout */
+.true-diamond-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 380px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.diamond-connecting-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.diamond-card-wrapper {
+  position: absolute;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.diamond-card-wrapper.top-card {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-card-wrapper.left-card {
+  left: calc(50% - 190px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.diamond-card-wrapper.right-card {
+  right: calc(50% - 190px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.diamond-card-wrapper.bottom-card {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.diamond-card-rhombus {
+  width: 150px;
+  height: 150px;
+  transform: rotate(45deg);
+  border-radius: 20px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.diamond-card-wrapper:hover .diamond-card-rhombus {
+  transform: rotate(45deg) scale(1.06);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  border-color: #0B4726;
+}
+
+.diamond-card-content {
+  transform: rotate(-45deg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  padding: 8px;
+}
+
+.diamond-card-icon {
+  margin-bottom: 4px;
+}
+
+.diamond-card-number {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.1;
+}
+
+.diamond-card-title {
+  font-size: 10px;
+  font-weight: 800;
+  color: #475569;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+
+.diamond-card-desc {
+  font-size: 10px;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.dark-navy-rhombus { border-color: #CBD5E1; }
+.amber-rhombus { border-color: #FDE68A; }
+.green-rhombus { border-color: #C3E6CB; }
+.blue-rhombus { border-color: #C2D7FF; }
+
+.dark-navy-rhombus .diamond-card-icon { color: #1E293B; }
+.amber-rhombus .diamond-card-icon { color: #D97706; }
+.green-rhombus .diamond-card-icon { color: #1E7E34; }
+.blue-rhombus .diamond-card-icon { color: #1A73E8; }
+
+/* Center Emblem */
+.diamond-center-emblem-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #1E7E34, #1A73E8, #D97706, #059669, #1E7E34);
+  padding: 4px;
+  box-shadow: 0 8px 20px rgba(11, 71, 38, 0.15);
+  z-index: 3;
+}
+
+.emblem-inner-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.emblem-sub {
+  font-size: 8px;
+  font-weight: 800;
+  color: #1E7E34;
+  letter-spacing: 0.8px;
+}
+
+.emblem-title {
+  font-size: 10px;
+  font-weight: 900;
+  color: #0B4726;
+  line-height: 1;
+}
+
+.emblem-badge {
+  font-size: 8px;
+  font-weight: 700;
+  background: #E6F4EA;
+  color: #1E7E34;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+/* Full Width Screen Progress Bar Card */
+.full-screen-progress-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-left: 6px solid #059669;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.progress-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.progress-banner-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.progress-icon-pill {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #D1FAE5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.progress-banner-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748B;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.progress-banner-value {
+  font-size: 26px;
+  font-weight: 900;
+  color: #059669;
+  line-height: 1.2;
+}
+
+.progress-banner-total {
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.progress-banner-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.progress-stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #334155;
+}
+
+.stat-pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.stat-pill-dot.green { background: #059669; }
+.stat-pill-dot.orange { background: #D97706; }
+
+.progress-pct-badge {
+  background: #D1FAE5;
+  color: #065F46;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #A7F3D0;
+}
+
+.progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.progress-track-outer {
+  background: #E2E8F0;
+  height: 16px;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+}
+
+.progress-fill-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #10B981 0%, #059669 100%);
+  border-radius: 999px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progress-fill-glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  background: rgba(255,255,255,0.4);
+  filter: blur(2px);
+  border-radius: 999px;
+}
+
+.progress-milestones {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 4px;
+  margin-top: 4px;
+}
+
+.milestone-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.milestone-item.active {
+  color: #059669;
+  font-weight: 700;
+}
+
+.milestone-tick {
+  width: 2px;
+  height: 6px;
+  background: #CBD5E1;
+  margin-bottom: 4px;
+  border-radius: 1px;
+}
+
+.milestone-item.active .milestone-tick {
+  background: #059669;
+}
+
+@media (max-width: 768px) {
+  .true-diamond-container {
+    min-height: auto;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 0;
+  }
+  .diamond-card-wrapper {
+    position: relative;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+  .diamond-connecting-lines, .diamond-center-emblem-core {
+    display: none;
+  }
+}
+
+

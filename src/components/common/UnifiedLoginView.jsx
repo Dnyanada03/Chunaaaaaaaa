@@ -4,10 +4,11 @@ import { ShieldCheck, Lock, User, Building2, Shield, ArrowRight, CheckCircle2 } 
 import Emblem from './Emblem';
 import { initialCollectorProfile } from '../../data/collectorMockData';
 import { initialOfficerProfile } from '../../data/mockData';
+import { stateOfficerProfile } from '../../data/stateMockData';
 
 export default function UnifiedLoginView() {
   const { login } = useSwadesh();
-  const [selectedRole, setSelectedRole] = useState('collector'); // 'collector' | 'tahsildar'
+  const [selectedRole, setSelectedRole] = useState('collector'); // 'collector' | 'tahsildar' | 'state'
 
   // Collector Form State
   const [collectorId, setCollectorId] = useState(initialCollectorProfile.id);
@@ -19,12 +20,19 @@ export default function UnifiedLoginView() {
   const [tahsildarPass, setTahsildarPass] = useState('••••••••');
   const [division, setDivision] = useState('Pune Division (Haveli / Mulshi / Khed)');
 
+  // State Form State
+  const [stateOfficerId, setStateOfficerId] = useState(stateOfficerProfile.id);
+  const [statePass, setStatePass] = useState('••••••••••••');
+  const [stateJurisdiction, setStateJurisdiction] = useState('State of Maharashtra');
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     if (selectedRole === 'collector') {
       login('collector', collectorId, collectorPass);
-    } else {
+    } else if (selectedRole === 'tahsildar') {
       login('tahsildar', tahsildarId, tahsildarPass);
+    } else {
+      login('state', stateOfficerId, statePass);
     }
   };
 
@@ -34,21 +42,21 @@ export default function UnifiedLoginView() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #042413 0%, #0B4726 50%, #145E36 100%)',
+      background: 'linear-gradient(135deg, #008E4F 0%, #008766 50%, #007F7E 100%)',
       padding: '24px'
     }}>
       <div style={{
         background: '#FFFFFF',
         borderRadius: '20px',
         width: '100%',
-        maxWidth: '520px',
+        maxWidth: '540px',
         overflow: 'hidden',
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.45)',
         border: '1px solid rgba(255, 255, 255, 0.2)'
       }}>
         {/* Header Masthead */}
         <div style={{
-          background: '#06371E',
+          background: 'linear-gradient(135deg, #006638 0%, #005C5B 100%)',
           color: '#FFFFFF',
           padding: '28px 24px 20px 24px',
           textAlign: 'center',
@@ -75,7 +83,7 @@ export default function UnifiedLoginView() {
         {/* PORTAL ROLE SELECTION TABS */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: '1fr 1fr 1fr',
           background: '#F1F5F9',
           borderBottom: '1px solid #CBD5E1',
           padding: '6px'
@@ -87,7 +95,7 @@ export default function UnifiedLoginView() {
               padding: '12px 10px',
               border: 'none',
               borderRadius: '10px',
-              background: selectedRole === 'collector' ? '#0B4726' : 'transparent',
+              background: selectedRole === 'collector' ? 'linear-gradient(135deg, #008E4F 0%, #007F7E 100%)' : 'transparent',
               color: selectedRole === 'collector' ? '#FFF' : '#475569',
               fontWeight: 700,
               fontSize: '12.5px',
@@ -100,7 +108,7 @@ export default function UnifiedLoginView() {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Shield size={16} style={{ color: selectedRole === 'collector' ? '#FDE68A' : '#0B4726' }} />
+              <Shield size={16} style={{ color: selectedRole === 'collector' ? '#FDE68A' : '#008E4F' }} />
               Collector Portal
             </div>
             <span style={{ fontSize: '10px', opacity: 0.85, fontWeight: 500 }}>
@@ -115,7 +123,7 @@ export default function UnifiedLoginView() {
               padding: '12px 10px',
               border: 'none',
               borderRadius: '10px',
-              background: selectedRole === 'tahsildar' ? '#0B4726' : 'transparent',
+              background: selectedRole === 'tahsildar' ? 'linear-gradient(135deg, #008E4F 0%, #007F7E 100%)' : 'transparent',
               color: selectedRole === 'tahsildar' ? '#FFF' : '#475569',
               fontWeight: 700,
               fontSize: '12.5px',
@@ -128,11 +136,39 @@ export default function UnifiedLoginView() {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Building2 size={16} style={{ color: selectedRole === 'tahsildar' ? '#FDE68A' : '#0B4726' }} />
+              <Building2 size={16} style={{ color: selectedRole === 'tahsildar' ? '#FDE68A' : '#008E4F' }} />
               Tahsildar Portal
             </div>
             <span style={{ fontSize: '10px', opacity: 0.85, fontWeight: 500 }}>
               Taluka Executive Bench
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSelectedRole('state')}
+            style={{
+              padding: '12px 10px',
+              border: 'none',
+              borderRadius: '10px',
+              background: selectedRole === 'state' ? 'linear-gradient(135deg, #008E4F 0%, #007F7E 100%)' : 'transparent',
+              color: selectedRole === 'state' ? '#FFF' : '#475569',
+              fontWeight: 700,
+              fontSize: '12.5px',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '4px',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <ShieldCheck size={16} style={{ color: selectedRole === 'state' ? '#FDE68A' : '#008E4F' }} />
+              State Government
+            </div>
+            <span style={{ fontSize: '10px', opacity: 0.85, fontWeight: 500 }}>
+              Cabinet Ministry Portal
             </span>
           </button>
         </div>
@@ -197,7 +233,7 @@ export default function UnifiedLoginView() {
                 </div>
               </div>
             </div>
-          ) : (
+          ) : selectedRole === 'tahsildar' ? (
             <div>
               <div style={{
                 background: '#EFF6FF',
@@ -255,6 +291,61 @@ export default function UnifiedLoginView() {
                 </div>
               </div>
             </div>
+          ) : (
+            <div>
+              <div style={{
+                background: '#FEF3C7',
+                padding: '10px 12px',
+                borderRadius: '8px',
+                border: '1px solid #FDE68A',
+                marginBottom: '18px',
+                fontSize: '12px',
+                color: '#92400E',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <ShieldCheck size={16} />
+                <span>Logging in as <strong>Principal Secretary, Revenue ({stateOfficerProfile.name.split(',')[0]})</strong></span>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">STATE JURISDICTION</label>
+                <select className="form-select" value={stateJurisdiction} onChange={e => setStateJurisdiction(e.target.value)}>
+                  <option>State of Maharashtra</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">STATE OFFICER ID / IAS CADRE CODE</label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="text"
+                    className="form-control mono-code"
+                    value={stateOfficerId}
+                    onChange={e => setStateOfficerId(e.target.value)}
+                    style={{ paddingLeft: '36px', fontWeight: 700 }}
+                    required
+                  />
+                  <User size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">SECURE PASSCODE / CLASS-3 DSC PIN</label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="password"
+                    className="form-control"
+                    value={statePass}
+                    onChange={e => setStatePass(e.target.value)}
+                    style={{ paddingLeft: '36px' }}
+                    required
+                  />
+                  <Lock size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
+                </div>
+              </div>
+            </div>
           )}
 
           <button
@@ -266,7 +357,8 @@ export default function UnifiedLoginView() {
               fontSize: '14px',
               fontWeight: 800,
               marginTop: '10px',
-              background: '#0B4726',
+              background: 'linear-gradient(135deg, #008E4F 0%, #008766 50%, #007F7E 100%)',
+              border: 'none',
               borderRadius: '10px',
               display: 'flex',
               alignItems: 'center',
@@ -275,7 +367,7 @@ export default function UnifiedLoginView() {
             }}
           >
             <ShieldCheck size={18} />
-            Authenticate & Access {selectedRole === 'collector' ? 'Collectorate' : 'Tahsildar'} Portal
+            Authenticate & Access {selectedRole === 'collector' ? 'Collectorate' : selectedRole === 'tahsildar' ? 'Tahsildar' : 'State Government'} Portal
             <ArrowRight size={16} />
           </button>
 

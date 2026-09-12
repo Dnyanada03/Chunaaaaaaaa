@@ -18,13 +18,10 @@ const MyTasksView = () => {
 
   const [viewingVillageDetail, setViewingVillageDetail] = useState(null);
 
-  // Warning Popup state (Popup only once when opened for first time)
-  const [showDeadlineModal, setShowDeadlineModal] = useState(() => {
-    return sessionStorage.getItem('swadesh_deadline_tracker_seen') !== 'true';
-  });
+  // Warning Popup state (Can be triggered manually via banner button)
+  const [showDeadlineModal, setShowDeadlineModal] = useState(false);
 
   const handleDismissModal = () => {
-    sessionStorage.setItem('swadesh_deadline_tracker_seen', 'true');
     setShowDeadlineModal(false);
   };
 
@@ -201,7 +198,7 @@ const MyTasksView = () => {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Select Revenue Village</label>
+            <label className="form-label">Select Village</label>
             <select
               className="form-select"
               value={selectedVillage}
@@ -221,7 +218,7 @@ const MyTasksView = () => {
         <table className="gov-table">
           <thead>
             <tr>
-              <th>Revenue Village</th>
+              <th>Village</th>
               <th>Project Name</th>
               <th>Total Parcels</th>
               <th>Verified</th>

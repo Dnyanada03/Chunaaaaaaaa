@@ -12,7 +12,7 @@ const CompensationView = () => {
     const p = selectedCompParcel;
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
         <button
           className="btn btn-secondary btn-sm"
           onClick={() => setSelectedCompParcel(null)}
@@ -163,7 +163,7 @@ const CompensationView = () => {
 
   // SCREEN 18: Compensation Dashboard View
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       <div className="page-banner">
         <div className="page-title-group">
           <h1>Compensation & Calculation Register</h1>

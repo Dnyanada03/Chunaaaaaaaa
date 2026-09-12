@@ -7,14 +7,21 @@ const StatusBadge = ({ status }) => {
   let colorClass = 'badge-blue';
   
   if (
+    s.includes('no objection') ||
+    s.includes('clear') ||
     s.includes('verified') ||
     s.includes('approved') ||
     s.includes('completed') ||
     s.includes('accepted') ||
     s.includes('resolved') ||
-    s.includes('successful')
+    s.includes('successful') ||
+    s.includes('mutated')
   ) {
     colorClass = 'badge-green';
+  } else if (
+    s.includes('eligible')
+  ) {
+    colorClass = 'badge-blue';
   } else if (
     s.includes('pending') ||
     s.includes('under review') ||

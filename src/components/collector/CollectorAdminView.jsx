@@ -38,7 +38,7 @@ export default function CollectorAdminView() {
   });
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       {/* Page Banner */}
       <div className="page-banner">
         <div className="page-title-group">
@@ -156,49 +156,53 @@ export default function CollectorAdminView() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {collectorProjectsMasterList.map(p => (
             <div
               key={p.id}
               style={{
-                background: '#F8FAFC',
-                border: '1px solid #CBD5E1',
-                borderRadius: '8px',
-                padding: '14px',
+                background: '#FFFFFF',
+                border: '1px solid #E2E8F0',
+                borderRadius: '12px',
+                padding: '18px 22px',
                 display: 'grid',
-                gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr',
-                gap: '12px',
-                alignItems: 'center'
+                gridTemplateColumns: '2.2fr 1.4fr 1fr 1fr 1fr',
+                gap: '16px',
+                alignItems: 'center',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)'
               }}
             >
-              <div>
-                <div style={{ fontWeight: 800, color: '#0F172A', fontSize: '13.5px' }}>{p.name}</div>
-                <div style={{ fontSize: '11px', color: '#64748B' }}>
-                  ID: <span className="mono-code" style={{ color: '#0B4726' }}>{p.id}</span> • Proposing: {p.proposingBody}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <div style={{ fontWeight: 800, color: '#0F172A', fontSize: '14.5px', lineHeight: 1.35 }}>{p.name}</div>
+                <div style={{ fontSize: '12px', color: '#64748B' }}>
+                  ID: <span className="mono-code" style={{ color: '#008E4F', fontWeight: 700 }}>{p.id}</span>
+                </div>
+                <div style={{ fontSize: '12px', color: '#475569' }}>
+                  Proposing Body: <strong style={{ color: '#1E293B' }}>{p.proposingBody}</strong>
                 </div>
               </div>
 
-              <div>
-                <div style={{ fontSize: '10.5px', color: '#64748B', fontWeight: 700 }}>RESPONSIBLE OFFICER</div>
-                <div style={{ fontSize: '12px', fontWeight: 700, color: '#1E293B' }}>Dr. Arvind R. Patil</div>
-                <div style={{ fontSize: '10.5px', color: '#475569' }}>Tahsildar Haveli</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <div style={{ fontSize: '11px', color: '#64748B', fontWeight: 700, letterSpacing: '0.4px', textTransform: 'uppercase', marginBottom: '2px' }}>RESPONSIBLE OFFICER</div>
+                <div style={{ fontSize: '13px', fontWeight: 700, color: '#1E293B', lineHeight: 1.4 }}>Dr. Arvind R. Patil</div>
+                <div style={{ fontSize: '11.5px', color: '#475569', lineHeight: 1.4 }}>Tahsildar Haveli</div>
               </div>
 
               <div>
-                <div style={{ fontSize: '10.5px', color: '#64748B', fontWeight: 700 }}>CURRENT STAGE</div>
-                <span className="badge badge-blue" style={{ fontSize: '11px' }}>{p.stage}</span>
+                <div style={{ fontSize: '11px', color: '#64748B', fontWeight: 700, letterSpacing: '0.4px', textTransform: 'uppercase', marginBottom: '6px' }}>CURRENT STAGE</div>
+                <span className="badge badge-blue" style={{ fontSize: '11.5px', padding: '5px 12px' }}>{p.stage}</span>
               </div>
 
               <div>
-                <div style={{ fontSize: '10.5px', color: '#64748B', fontWeight: 700 }}>RISK SCORE</div>
-                <span className={`badge ${p.riskColor === 'Red' ? 'badge-red' : p.riskColor === 'Orange' ? 'badge-orange' : 'badge-green'}`}>
+                <div style={{ fontSize: '11px', color: '#64748B', fontWeight: 700, letterSpacing: '0.4px', textTransform: 'uppercase', marginBottom: '6px' }}>RISK SCORE</div>
+                <span className={`badge ${p.riskColor === 'Red' ? 'badge-red' : p.riskColor === 'Orange' ? 'badge-orange' : 'badge-green'}`} style={{ fontSize: '11.5px', padding: '5px 12px' }}>
                   {p.riskLevel} ({p.riskScore})
                 </span>
               </div>
 
               <div style={{ textAlign: 'right' }}>
-                <button className="btn btn-secondary btn-sm">
-                  View Mapping <ChevronRight size={12} />
+                <button className="btn btn-secondary btn-sm" style={{ fontWeight: 700, padding: '8px 14px', borderRadius: '8px' }}>
+                  View Mapping <ChevronRight size={13} />
                 </button>
               </div>
             </div>
