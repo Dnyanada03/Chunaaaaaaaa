@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SwadeshProvider, useSwadesh } from './context/SwadeshContext';
 
 // Common Components
@@ -36,6 +36,22 @@ import CollectorGISView from './components/collector/CollectorGISView';
 import CollectorReportsView from './components/collector/CollectorReportsView';
 import CollectorAdminView from './components/collector/CollectorAdminView';
 
+// State Government Components
+import StateHeader from './components/state/StateHeader';
+import StateNav from './components/state/StateNav';
+import StateDashboardView from './components/state/StateDashboardView';
+import StateProjectsView from './components/state/StateProjectsView';
+import StateProjectDetailView from './components/state/StateProjectDetailView';
+import StateApprovalsView from './components/state/StateApprovalsView';
+import StateDocumentsView from './components/state/StateDocumentsView';
+import StateGISView from './components/state/StateGISView';
+import StateReportsView from './components/state/StateReportsView';
+import StateResourcesView from './components/state/StateResourcesView';
+import StateNotificationsView from './components/state/StateNotificationsView';
+import StateDigitalSignaturesView from './components/state/StateDigitalSignaturesView';
+import StateProfileModal from './components/state/StateProfileModal';
+import StateGlobalSearchModal from './components/state/StateGlobalSearchModal';
+
 const MainApp = () => {
   const { isAuthenticated, userRole, activeTab } = useSwadesh();
 
@@ -46,8 +62,32 @@ const MainApp = () => {
   const [isCollectorProfileOpen, setIsCollectorProfileOpen] = useState(false);
   const [isCollectorSearchOpen, setIsCollectorSearchOpen] = useState(false);
 
+  // State Tab State
+  const [stateTab, setStateTab] = useState('dashboard');
+  const [selectedStateProjectId, setSelectedStateProjectId] = useState(null);
+
+  // State Modals
+  const [isStateProfileOpen, setIsStateProfileOpen] = useState(false);
+  const [isStateSearchOpen, setIsStateSearchOpen] = useState(false);
+
   // Tahsildar Modal State
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
+  // Global Keyboard Shortcut (Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        if (userRole === 'state') {
+          setIsStateSearchOpen(prev => !prev);
+        } else if (userRole === 'collector') {
+          setIsCollectorSearchOpen(prev => !prev);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [userRole]);
 
   // Unauthenticated -> Render Unified Login Portal
   if (!isAuthenticated) {
@@ -120,7 +160,91 @@ const MainApp = () => {
     );
   }
 
-  // 2. Tahsildar Logged In View
+  // 2. State Government Logged In View
+  if (userRole === 'state') {
+    const handleStateNavigate = (tab, projectId = null) => {
+      if (projectId) {
+        setSelectedStateProjectId(projectId);
+      }
+      setStateTab(tab);
+    };
+
+    const renderStateView = () => {
+      if (stateTab === 'project-detail' && selectedStateProjectId) {
+        return (
+          <StateProjectDetailView
+            projectId={selectedStateProjectId}
+            onBack={() => {
+              setStateTab('projects');
+              setSelectedStateProjectId(null);
+            }}
+          />
+        );
+      }
+
+      switch (stateTab) {
+        case 'dashboard':
+          return <StateDashboardView onNavigate={handleStateNavigate} />;
+        case 'projects':
+          return <StateProjectsView onNavigate={handleStateNavigate} />;
+        case 'approvals':
+          return <StateApprovalsView />;
+        case 'documents':
+          return <StateDocumentsView />;
+        case 'map':
+          return <StateGISView onNavigate={handleStateNavigate} />;
+        case 'reports':
+          return <StateReportsView />;
+        case 'resources':
+          return <StateResourcesView />;
+        case 'notifications':
+          return <StateNotificationsView onNavigate={handleStateNavigate} />;
+        case 'signatures':
+          return <StateDigitalSignaturesView onNavigate={handleStateNavigate} />;
+        default:
+          return <StateDashboardView onNavigate={handleStateNavigate} />;
+      }
+    };
+
+    return (
+      <div className="app-container">
+        {/* State Government Header */}
+        <StateHeader
+          onOpenProfile={() => setIsStateProfileOpen(true)}
+          onOpenSearch={() => setIsStateSearchOpen(true)}
+          onNavigate={handleStateNavigate}
+        />
+
+        {/* Top Horizontal Navigation Bar */}
+        <StateNav
+          activeTab={stateTab}
+          setActiveTab={(tab) => {
+            setSelectedStateProjectId(null);
+            setStateTab(tab);
+          }}
+        />
+
+        {/* Main Content Area */}
+        <main className="content-area">
+          {renderStateView()}
+        </main>
+
+        {/* State Modals & Shared Modals */}
+        <StateGlobalSearchModal
+          isOpen={isStateSearchOpen}
+          onClose={() => setIsStateSearchOpen(false)}
+          onNavigate={handleStateNavigate}
+        />
+        <StateProfileModal
+          isOpen={isStateProfileOpen}
+          onClose={() => setIsStateProfileOpen(false)}
+        />
+        <DocumentViewerModal />
+      </div>
+    );
+  }
+
+  // 3. Tahsildar Logged In View
   const renderTahsildarView = () => {
     switch (activeTab) {
       case 'dashboard':

@@ -4,10 +4,11 @@ import { ShieldCheck, Lock, User, Building2, Shield, ArrowRight, CheckCircle2 } 
 import Emblem from './Emblem';
 import { initialCollectorProfile } from '../../data/collectorMockData';
 import { initialOfficerProfile } from '../../data/mockData';
+import { stateOfficerProfile } from '../../data/stateMockData';
 
 export default function UnifiedLoginView() {
   const { login } = useSwadesh();
-  const [selectedRole, setSelectedRole] = useState('collector'); // 'collector' | 'tahsildar'
+  const [selectedRole, setSelectedRole] = useState('collector'); // 'collector' | 'tahsildar' | 'state'
 
   // Collector Form State
   const [collectorId, setCollectorId] = useState(initialCollectorProfile.id);
@@ -19,12 +20,19 @@ export default function UnifiedLoginView() {
   const [tahsildarPass, setTahsildarPass] = useState('••••••••');
   const [division, setDivision] = useState('Pune Division (Haveli / Mulshi / Khed)');
 
+  // State Form State
+  const [stateOfficerId, setStateOfficerId] = useState(stateOfficerProfile.id);
+  const [statePass, setStatePass] = useState('••••••••••••');
+  const [stateJurisdiction, setStateJurisdiction] = useState('State of Maharashtra');
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     if (selectedRole === 'collector') {
       login('collector', collectorId, collectorPass);
-    } else {
+    } else if (selectedRole === 'tahsildar') {
       login('tahsildar', tahsildarId, tahsildarPass);
+    } else {
+      login('state', stateOfficerId, statePass);
     }
   };
 
@@ -75,7 +83,7 @@ export default function UnifiedLoginView() {
         {/* PORTAL ROLE SELECTION TABS */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: '1fr 1fr 1fr',
           background: '#F1F5F9',
           borderBottom: '1px solid #CBD5E1',
           padding: '6px'
@@ -133,6 +141,34 @@ export default function UnifiedLoginView() {
             </div>
             <span style={{ fontSize: '10px', opacity: 0.85, fontWeight: 500 }}>
               Taluka Executive Bench
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSelectedRole('state')}
+            style={{
+              padding: '12px 10px',
+              border: 'none',
+              borderRadius: '10px',
+              background: selectedRole === 'state' ? '#0B4726' : 'transparent',
+              color: selectedRole === 'state' ? '#FFF' : '#475569',
+              fontWeight: 700,
+              fontSize: '12.5px',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '4px',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <ShieldCheck size={16} style={{ color: selectedRole === 'state' ? '#FDE68A' : '#0B4726' }} />
+              State Government
+            </div>
+            <span style={{ fontSize: '10px', opacity: 0.85, fontWeight: 500 }}>
+              Cabinet Ministry Portal
             </span>
           </button>
         </div>
@@ -197,7 +233,7 @@ export default function UnifiedLoginView() {
                 </div>
               </div>
             </div>
-          ) : (
+          ) : selectedRole === 'tahsildar' ? (
             <div>
               <div style={{
                 background: '#EFF6FF',
@@ -255,6 +291,61 @@ export default function UnifiedLoginView() {
                 </div>
               </div>
             </div>
+          ) : (
+            <div>
+              <div style={{
+                background: '#FEF3C7',
+                padding: '10px 12px',
+                borderRadius: '8px',
+                border: '1px solid #FDE68A',
+                marginBottom: '18px',
+                fontSize: '12px',
+                color: '#92400E',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <ShieldCheck size={16} />
+                <span>Logging in as <strong>Principal Secretary, Revenue ({stateOfficerProfile.name.split(',')[0]})</strong></span>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">STATE JURISDICTION</label>
+                <select className="form-select" value={stateJurisdiction} onChange={e => setStateJurisdiction(e.target.value)}>
+                  <option>State of Maharashtra</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">STATE OFFICER ID / IAS CADRE CODE</label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="text"
+                    className="form-control mono-code"
+                    value={stateOfficerId}
+                    onChange={e => setStateOfficerId(e.target.value)}
+                    style={{ paddingLeft: '36px', fontWeight: 700 }}
+                    required
+                  />
+                  <User size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">SECURE PASSCODE / CLASS-3 DSC PIN</label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="password"
+                    className="form-control"
+                    value={statePass}
+                    onChange={e => setStatePass(e.target.value)}
+                    style={{ paddingLeft: '36px' }}
+                    required
+                  />
+                  <Lock size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
+                </div>
+              </div>
+            </div>
           )}
 
           <button
@@ -275,7 +366,7 @@ export default function UnifiedLoginView() {
             }}
           >
             <ShieldCheck size={18} />
-            Authenticate & Access {selectedRole === 'collector' ? 'Collectorate' : 'Tahsildar'} Portal
+            Authenticate & Access {selectedRole === 'collector' ? 'Collectorate' : selectedRole === 'tahsildar' ? 'Tahsildar' : 'State Government'} Portal
             <ArrowRight size={16} />
           </button>
 
