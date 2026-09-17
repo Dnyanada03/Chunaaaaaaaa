@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useSwadesh } from '../../context/SwadeshContext';
-import { ShieldCheck, Lock, User, Building2, Shield, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Lock, User, Building2, Shield, ArrowRight, CheckCircle2, Layers, Landmark } from 'lucide-react';
 import Emblem from './Emblem';
 import { initialCollectorProfile } from '../../data/collectorMockData';
 import { initialOfficerProfile } from '../../data/mockData';
 import { stateOfficerProfile } from '../../data/stateMockData';
+import { proposingOfficerProfile } from '../../data/proposingMockData';
+import { mordOfficerProfile } from '../../data/mordData';
 
 export default function UnifiedLoginView() {
   const { login } = useSwadesh();
-  const [selectedRole, setSelectedRole] = useState('collector'); // 'collector' | 'tahsildar' | 'state'
+  const [selectedRole, setSelectedRole] = useState('collector'); // 'collector' | 'tahsildar' | 'state' | 'proposing_body' | 'mord'
 
   // Collector Form State
   const [collectorId, setCollectorId] = useState(initialCollectorProfile.id);
@@ -25,14 +27,28 @@ export default function UnifiedLoginView() {
   const [statePass, setStatePass] = useState('••••••••••••');
   const [stateJurisdiction, setStateJurisdiction] = useState('State of Maharashtra');
 
+  // Proposing Body Form State
+  const [proposingId, setProposingId] = useState(proposingOfficerProfile.id);
+  const [proposingPass, setProposingPass] = useState('••••••••••••');
+  const [proposingAuthority, setProposingAuthority] = useState('Maharashtra Rail Infrastructure Dev. Corp. (Maharail)');
+
+  // MORD Form State
+  const [mordId, setMordId] = useState(mordOfficerProfile.id);
+  const [mordPass, setMordPass] = useState('••••••••••••');
+  const [mordJurisdiction, setMordJurisdiction] = useState('Ministry of Rural Development (DoLR), Government of India');
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     if (selectedRole === 'collector') {
       login('collector', collectorId, collectorPass);
     } else if (selectedRole === 'tahsildar') {
       login('tahsildar', tahsildarId, tahsildarPass);
-    } else {
+    } else if (selectedRole === 'state') {
       login('state', stateOfficerId, statePass);
+    } else if (selectedRole === 'proposing_body') {
+      login('proposing_body', proposingId, proposingPass);
+    } else if (selectedRole === 'mord') {
+      login('mord', mordId, mordPass);
     }
   };
 
@@ -49,7 +65,7 @@ export default function UnifiedLoginView() {
         background: '#FFFFFF',
         borderRadius: '20px',
         width: '100%',
-        maxWidth: '540px',
+        maxWidth: '660px',
         overflow: 'hidden',
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.45)',
         border: '1px solid rgba(255, 255, 255, 0.2)'
@@ -83,36 +99,37 @@ export default function UnifiedLoginView() {
         {/* PORTAL ROLE SELECTION TABS */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
+          gridTemplateColumns: 'repeat(5, 1fr)',
           background: '#F1F5F9',
           borderBottom: '1px solid #CBD5E1',
-          padding: '6px'
+          padding: '6px',
+          gap: '4px'
         }}>
           <button
             type="button"
             onClick={() => setSelectedRole('collector')}
             style={{
-              padding: '12px 10px',
+              padding: '10px 4px',
               border: 'none',
-              borderRadius: '10px',
+              borderRadius: '8px',
               background: selectedRole === 'collector' ? 'linear-gradient(135deg, #008E4F 0%, #007F7E 100%)' : 'transparent',
               color: selectedRole === 'collector' ? '#FFF' : '#475569',
               fontWeight: 700,
-              fontSize: '12.5px',
+              fontSize: '11px',
               cursor: 'pointer',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '4px',
+              gap: '3px',
               transition: 'all 0.15s ease'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Shield size={16} style={{ color: selectedRole === 'collector' ? '#FDE68A' : '#008E4F' }} />
-              Collector Portal
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Shield size={14} style={{ color: selectedRole === 'collector' ? '#FDE68A' : '#008E4F' }} />
+              Collector
             </div>
-            <span style={{ fontSize: '10px', opacity: 0.85, fontWeight: 500 }}>
-              District Magistrate Command
+            <span style={{ fontSize: '9px', opacity: 0.85, fontWeight: 500 }}>
+              DM Command
             </span>
           </button>
 
@@ -120,27 +137,27 @@ export default function UnifiedLoginView() {
             type="button"
             onClick={() => setSelectedRole('tahsildar')}
             style={{
-              padding: '12px 10px',
+              padding: '10px 4px',
               border: 'none',
-              borderRadius: '10px',
+              borderRadius: '8px',
               background: selectedRole === 'tahsildar' ? 'linear-gradient(135deg, #008E4F 0%, #007F7E 100%)' : 'transparent',
               color: selectedRole === 'tahsildar' ? '#FFF' : '#475569',
               fontWeight: 700,
-              fontSize: '12.5px',
+              fontSize: '11px',
               cursor: 'pointer',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '4px',
+              gap: '3px',
               transition: 'all 0.15s ease'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Building2 size={16} style={{ color: selectedRole === 'tahsildar' ? '#FDE68A' : '#008E4F' }} />
-              Tahsildar Portal
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Building2 size={14} style={{ color: selectedRole === 'tahsildar' ? '#FDE68A' : '#008E4F' }} />
+              Tahsildar
             </div>
-            <span style={{ fontSize: '10px', opacity: 0.85, fontWeight: 500 }}>
-              Taluka Executive Bench
+            <span style={{ fontSize: '9px', opacity: 0.85, fontWeight: 500 }}>
+              Taluka Bench
             </span>
           </button>
 
@@ -148,27 +165,83 @@ export default function UnifiedLoginView() {
             type="button"
             onClick={() => setSelectedRole('state')}
             style={{
-              padding: '12px 10px',
+              padding: '10px 4px',
               border: 'none',
-              borderRadius: '10px',
+              borderRadius: '8px',
               background: selectedRole === 'state' ? 'linear-gradient(135deg, #008E4F 0%, #007F7E 100%)' : 'transparent',
               color: selectedRole === 'state' ? '#FFF' : '#475569',
               fontWeight: 700,
-              fontSize: '12.5px',
+              fontSize: '11px',
               cursor: 'pointer',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '4px',
+              gap: '3px',
               transition: 'all 0.15s ease'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <ShieldCheck size={16} style={{ color: selectedRole === 'state' ? '#FDE68A' : '#008E4F' }} />
-              State Government
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <ShieldCheck size={14} style={{ color: selectedRole === 'state' ? '#FDE68A' : '#008E4F' }} />
+              State Govt
             </div>
-            <span style={{ fontSize: '10px', opacity: 0.85, fontWeight: 500 }}>
-              Cabinet Ministry Portal
+            <span style={{ fontSize: '9px', opacity: 0.85, fontWeight: 500 }}>
+              Cabinet Ministry
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSelectedRole('proposing_body')}
+            style={{
+              padding: '10px 4px',
+              border: 'none',
+              borderRadius: '8px',
+              background: selectedRole === 'proposing_body' ? 'linear-gradient(135deg, #008E4F 0%, #007F7E 100%)' : 'transparent',
+              color: selectedRole === 'proposing_body' ? '#FFF' : '#475569',
+              fontWeight: 700,
+              fontSize: '11px',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '3px',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Layers size={14} style={{ color: selectedRole === 'proposing_body' ? '#FDE68A' : '#008E4F' }} />
+              Project Body
+            </div>
+            <span style={{ fontSize: '9px', opacity: 0.85, fontWeight: 500 }}>
+              Proposing Auth
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSelectedRole('mord')}
+            style={{
+              padding: '10px 4px',
+              border: 'none',
+              borderRadius: '8px',
+              background: selectedRole === 'mord' ? 'linear-gradient(135deg, #16233A 0%, #2F6F62 100%)' : 'transparent',
+              color: selectedRole === 'mord' ? '#FFF' : '#475569',
+              fontWeight: 700,
+              fontSize: '11px',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '3px',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Landmark size={14} style={{ color: selectedRole === 'mord' ? '#FDE68A' : '#16233A' }} />
+              MORD
+            </div>
+            <span style={{ fontSize: '9px', opacity: 0.85, fontWeight: 500 }}>
+              National Apex
             </span>
           </button>
         </div>
@@ -291,7 +364,7 @@ export default function UnifiedLoginView() {
                 </div>
               </div>
             </div>
-          ) : (
+          ) : selectedRole === 'state' ? (
             <div>
               <div style={{
                 background: '#FEF3C7',
@@ -346,6 +419,125 @@ export default function UnifiedLoginView() {
                 </div>
               </div>
             </div>
+          ) : (
+            <div>
+              <div style={{
+                background: '#E6F4EA',
+                padding: '10px 12px',
+                borderRadius: '8px',
+                border: '1px solid #CEEAD6',
+                marginBottom: '18px',
+                fontSize: '12px',
+                color: '#1E7E34',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <ShieldCheck size={16} />
+                <span>Logging in as <strong>{proposingOfficerProfile.name} ({proposingOfficerProfile.designation})</strong></span>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">PROPOSING BODY / STATUTORY AUTHORITY</label>
+                <select className="form-select" value={proposingAuthority} onChange={e => setProposingAuthority(e.target.value)}>
+                  <option>Maharashtra Rail Infrastructure Dev. Corp. (Maharail)</option>
+                  <option>Maharashtra State Road Dev. Corp. (MSRDC)</option>
+                  <option>National Highways Authority of India (NHAI - RO Mumbai)</option>
+                  <option>Mumbai Metropolitan Region Dev. Authority (MMRDA)</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">OFFICER CADRE ID / EMPLOYEE CODE</label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="text"
+                    className="form-control mono-code"
+                    value={proposingId}
+                    onChange={e => setProposingId(e.target.value)}
+                    style={{ paddingLeft: '36px', fontWeight: 700 }}
+                    required
+                  />
+                  <User size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">CLASS-3 DSC HARDWARE TOKEN PASSCODE</label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="password"
+                    className="form-control"
+                    value={proposingPass}
+                    onChange={e => setProposingPass(e.target.value)}
+                    style={{ paddingLeft: '36px' }}
+                    required
+                  />
+                  <Lock size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedRole === 'mord' && (
+            <div>
+              <div style={{
+                background: '#E4EEE9',
+                padding: '10px 12px',
+                borderRadius: '8px',
+                border: '1px solid #2F6F62',
+                marginBottom: '18px',
+                fontSize: '12px',
+                color: '#2F6F62',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <Landmark size={16} />
+                <span>Logging in as <strong>{mordOfficerProfile.name} ({mordOfficerProfile.designation})</strong></span>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">APEX MINISTRY / JURISDICTION</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={mordJurisdiction}
+                  readOnly
+                  style={{ background: '#F8FAFC', fontWeight: 600, color: '#16233A' }}
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">NATIONAL SUPERVISORY CADRE ID</label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="text"
+                    className="form-control mono-code"
+                    value={mordId}
+                    onChange={e => setMordId(e.target.value)}
+                    style={{ paddingLeft: '36px', fontWeight: 700 }}
+                    required
+                  />
+                  <User size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">CLASS-3 DSC HARDWARE TOKEN PASSCODE</label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="password"
+                    className="form-control"
+                    value={mordPass}
+                    onChange={e => setMordPass(e.target.value)}
+                    style={{ paddingLeft: '36px' }}
+                    required
+                  />
+                  <Lock size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
+                </div>
+              </div>
+            </div>
           )}
 
           <button
@@ -357,7 +549,7 @@ export default function UnifiedLoginView() {
               fontSize: '14px',
               fontWeight: 800,
               marginTop: '10px',
-              background: 'linear-gradient(135deg, #008E4F 0%, #008766 50%, #007F7E 100%)',
+              background: selectedRole === 'mord' ? 'linear-gradient(135deg, #16233A 0%, #2F6F62 100%)' : 'linear-gradient(135deg, #008E4F 0%, #008766 50%, #007F7E 100%)',
               border: 'none',
               borderRadius: '10px',
               display: 'flex',
@@ -367,7 +559,7 @@ export default function UnifiedLoginView() {
             }}
           >
             <ShieldCheck size={18} />
-            Authenticate & Access {selectedRole === 'collector' ? 'Collectorate' : selectedRole === 'tahsildar' ? 'Tahsildar' : 'State Government'} Portal
+            Authenticate & Access {selectedRole === 'collector' ? 'Collectorate' : selectedRole === 'tahsildar' ? 'Tahsildar' : selectedRole === 'state' ? 'State Government' : selectedRole === 'mord' ? 'MORD National Supervisory' : 'Project Authority'} Portal
             <ArrowRight size={16} />
           </button>
 

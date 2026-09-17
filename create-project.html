@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create project — Land Acquisition Portal</title>
+<style>
+  :root{
+    --ink:#16233A;
+    --ink-soft:#3A4A63;
+    --paper:#F2F1EC;
+    --panel:#FFFFFF;
+    --line:#D8D5CB;
+    --survey:#2F6F62;
+    --survey-tint:#E4EEE9;
+    --rust:#A6432B;
+    --rust-tint:#F6E7E2;
+    --ochre:#8A6A1E;
+    --ochre-tint:#F2ECDC;
+    --mono: "IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+    --serif: "Source Serif Pro","Georgia",serif;
+    --sans: "Inter","Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55;}
+  a{color:inherit;}
+  input,select,textarea{font-family:var(--sans);font-size:13.5px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:2px;padding:8px 10px;width:100%;}
+  textarea{resize:vertical;min-height:70px;}
+  label{display:block;font-size:12px;color:var(--ink-soft);margin-bottom:5px;}
+  .field{margin-bottom:16px;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+  /* ---- top nav (kept consistent with dashboard) ---- */
+  .topnav{display:flex;align-items:center;justify-content:space-between;background:var(--ink);color:#F2F1EC;padding:0 28px;height:56px;}
+  .topnav .brand{font-family:var(--serif);font-size:16px;font-weight:600;}
+  .topnav .brand span{color:#9FC2B4;}
+  .nav-links{display:flex;gap:26px;font-size:13.5px;}
+  .nav-links a{text-decoration:none;color:#CBD3DE;padding:6px 0;border-bottom:2px solid transparent;}
+  .nav-links a.active{color:#fff;border-bottom-color:var(--survey);}
+  .avatar{width:28px;height:28px;border-radius:50%;background:#3A4A63;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:26px 24px 80px;}
+  .page-title{font-family:var(--serif);font-size:22px;font-weight:600;margin:0 0 4px;}
+  .page-sub{font-size:13px;color:var(--ink-soft);margin:0 0 22px;}
+
+  /* ---- wizard shell ---- */
+  .wizard{display:grid;grid-template-columns:220px 1fr;border:1px solid var(--line);background:var(--panel);}
+  .tracker{border-right:1px solid var(--line);padding:20px 0;}
+  .tracker .step{display:flex;align-items:center;gap:10px;padding:11px 20px;font-size:13px;color:var(--ink-soft);}
+  .tracker .num{width:21px;height:21px;border-radius:50%;border:1px solid var(--line);color:var(--ink-soft);font-family:var(--mono);font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .tracker .step.current{color:var(--ink);font-weight:600;}
+  .tracker .step.current .num{background:var(--survey);border-color:var(--survey);color:#fff;}
+  .tracker .step.done .num{background:var(--survey-tint);border-color:var(--survey);color:var(--survey);}
+  .tracker .step.done{color:var(--ink);}
+
+  .step-panel{display:none;padding:28px 32px;}
+  .step-panel.active{display:block;}
+  .step-head{font-family:var(--serif);font-size:18px;font-weight:600;margin:0 0 2px;}
+  .step-count{font-size:12px;color:var(--ink-soft);margin:0 0 20px;}
+
+  .pill-group{display:flex;gap:8px;margin-bottom:16px;}
+  .pill{font-size:12.5px;padding:6px 14px;border:1px solid var(--line);cursor:pointer;color:var(--ink-soft);}
+  .pill.selected{background:var(--survey);border-color:var(--survey);color:#fff;}
+
+  .footer-nav{display:flex;justify-content:space-between;padding:18px 32px;border-top:1px solid var(--line);}
+  .btn{font-size:13px;padding:9px 20px;cursor:pointer;border:none;font-family:var(--sans);}
+  .btn-primary{background:var(--survey);color:#fff;}
+  .btn-primary:disabled{background:var(--line);color:#8a8a80;cursor:not-allowed;}
+  .btn-ghost{background:none;border:1px solid var(--line);color:var(--ink-soft);}
+
+  /* ---- map step ---- */
+  .map-options{display:flex;gap:10px;margin-bottom:18px;}
+  .map-opt{flex:1;border:1px solid var(--line);padding:14px;cursor:pointer;}
+  .map-opt.selected{border-color:var(--survey);background:var(--survey-tint);}
+  .map-opt p{margin:0;font-size:13px;font-weight:500;}
+  .map-opt span{font-size:12px;color:var(--ink-soft);}
+  .map-mode{display:none;}
+  .map-mode.active{display:block;}
+  .gis-canvas{height:260px;background:repeating-linear-gradient(0deg,transparent,transparent 26px,var(--line) 27px),repeating-linear-gradient(90deg,transparent,transparent 26px,var(--line) 27px),#fff;border:1px solid var(--line);position:relative;cursor:crosshair;}
+  .gis-canvas .marker{position:absolute;width:10px;height:10px;background:var(--rust);border-radius:50%;transform:translate(-50%,-50%);}
+  .gis-status{font-family:var(--mono);font-size:12px;color:var(--ink-soft);margin-top:8px;}
+  .upload-row{display:flex;align-items:center;gap:10px;border:1px dashed var(--line);padding:14px;margin-bottom:12px;}
+  .upload-row .fname{font-size:12.5px;color:var(--ink-soft);font-family:var(--mono);}
+  .upload-row label.doc-label{margin:0;flex-shrink:0;width:190px;font-size:13px;color:var(--ink);}
+
+  /* ---- review step ---- */
+  .review-section{margin-bottom:22px;}
+  .review-section h4{font-family:var(--serif);font-size:14.5px;font-weight:600;margin:0 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px;}
+  .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;}
+  .review-item .rlabel{font-size:11.5px;color:var(--ink-soft);}
+  .review-item .rvalue{font-size:13.5px;margin-top:2px;}
+  .sign-box{border:1px solid var(--ink);padding:16px;margin-top:6px;background:#FBFAF6;}
+  .sign-box label{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink);cursor:pointer;}
+  .sign-box input[type=checkbox]{width:auto;margin-top:2px;}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">Bhoomi<span>Setu</span></div>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="#">Projects</a>
+    <a href="#" class="active">Create project</a>
+    <a href="#">Reports &amp; MIS</a>
+    <a href="#">Settings</a>
+  </div>
+  <div class="avatar">RS</div>
+</div>
+
+<div class="wrap">
+  <p class="page-title">Create new project</p>
+  <p class="page-sub">Complete all seven steps and digitally sign to create the project record.</p>
+
+  <div class="wizard">
+    <div class="tracker" id="tracker">
+      <div class="step current" data-step="1"><span class="num">1</span>Basic info</div>
+      <div class="step" data-step="2"><span class="num">2</span>Justification</div>
+      <div class="step" data-step="3"><span class="num">3</span>Financials</div>
+      <div class="step" data-step="4"><span class="num">4</span>Map</div>
+      <div class="step" data-step="5"><span class="num">5</span>Documents</div>
+      <div class="step" data-step="6"><span class="num">6</span>Officer details</div>
+      <div class="step" data-step="7"><span class="num">7</span>Review &amp; sign</div>
+    </div>
+
+    <div>
+      <!-- STEP 1 — BASIC INFO -->
+      <div class="step-panel active" data-panel="1">
+        <p class="step-head">Basic info</p>
+        <p class="step-count">Step 1 of 7</p>
+        <div class="field"><label>Project name</label><input id="f-name" type="text" placeholder="e.g. Mumbai-Nagpur expressway extension, phase 2"></div>
+        <div class="field"><label>Requiring body</label><input id="f-body" type="text" placeholder="e.g. National Highways Authority of India"></div>
+        <div class="row2">
+          <div class="field"><label>Project type &amp; category</label><input id="f-typecat" type="text" placeholder="e.g. Infrastructure — highway"></div>
+          <div class="field"><label>Public purpose category</label><input id="f-purposecat" type="text" placeholder="e.g. Road transport"></div>
+        </div>
+        <div class="field">
+          <label>Type</label>
+          <div class="pill-group" id="ptype-group">
+            <div class="pill" data-val="Central">Central</div>
+            <div class="pill" data-val="Interstate">Interstate</div>
+            <div class="pill" data-val="Single state">Single state</div>
+          </div>
+        </div>
+        <div class="field"><label>Project description</label><textarea id="f-desc" placeholder="Brief description of the project"></textarea></div>
+      </div>
+
+      <!-- STEP 2 — JUSTIFICATION -->
+      <div class="step-panel" data-panel="2">
+        <p class="step-head">Justification</p>
+        <p class="step-count">Step 2 of 7</p>
+        <div class="field"><label>Justification</label><textarea id="f-justification" placeholder="Why this project is required"></textarea></div>
+        <div class="field"><label>Purpose</label><textarea id="f-purpose" placeholder="Primary purpose of the project"></textarea></div>
+        <div class="field"><label>Benefits</label><textarea id="f-benefits" placeholder="Expected benefits to the public"></textarea></div>
+        <div class="row2">
+          <div class="field"><label>Total land required</label>
+            <div style="display:flex;gap:8px;">
+              <input id="f-land" type="number" placeholder="e.g. 412" style="flex:2;">
+              <select id="f-land-unit" style="flex:1;"><option>hectares</option><option>acres</option></select>
+            </div>
+          </div>
+          <div class="field"><label>Total time required to implement</label>
+            <div style="display:flex;gap:8px;">
+              <input id="f-time" type="number" placeholder="e.g. 36" style="flex:2;">
+              <select id="f-time-unit" style="flex:1;"><option>months</option><option>years</option></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 — FINANCIALS -->
+      <div class="step-panel" data-panel="3">
+        <p class="step-head">Financials</p>
+        <p class="step-count">Step 3 of 7</p>
+        <div class="field"><label>Financial sector</label><input id="f-sector" type="text" placeholder="e.g. Roads &amp; highways"></div>
+        <div class="row2">
+          <div class="field"><label>Estimated cost</label>
+            <div style="display:flex;gap:8px;">
+              <input id="f-cost" type="number" placeholder="e.g. 1840" style="flex:2;">
+              <select id="f-cost-unit" style="flex:1;"><option>Cr</option><option>Lakh</option></select>
+            </div>
+          </div>
+          <div class="field"><label>Date of proposal</label><input id="f-propdate" type="date"></div>
+        </div>
+        <div class="field"><label>Financial year (auto-detected)</label><input id="f-fy" type="text" readonly style="background:var(--paper);color:var(--ink-soft);"></div>
+      </div>
+
+      <!-- STEP 4 — MAP -->
+      <div class="step-panel" data-panel="4">
+        <p class="step-head">Map</p>
+        <p class="step-count">Step 4 of 7</p>
+        <div class="map-options">
+          <div class="map-opt selected" id="opt-upload" data-mode="upload"><p>Upload a map document</p><span>Attach a survey map or shapefile export</span></div>
+          <div class="map-opt" id="opt-gis" data-mode="gis"><p>Map on GIS</p><span>Click directly on the map to mark the land parcel</span></div>
+        </div>
+        <div class="map-mode active" data-mode="upload">
+          <div class="upload-row">
+            <label class="doc-label">Map document</label>
+            <input id="f-map-file" type="file" style="width:auto;flex:1;">
+          </div>
+        </div>
+        <div class="map-mode" data-mode="gis">
+          <div class="gis-canvas" id="gis-canvas"></div>
+          <p class="gis-status" id="gis-status">Click on the map above to mark the land parcel.</p>
+        </div>
+      </div>
+
+      <!-- STEP 5 — DOCUMENTS -->
+      <div class="step-panel" data-panel="5">
+        <p class="step-head">Documents</p>
+        <p class="step-count">Step 5 of 7</p>
+        <div class="upload-row"><label class="doc-label">Feasibility report</label><input class="doc-input" data-doc="feasibility" type="file" style="width:auto;flex:1;"></div>
+        <div class="upload-row"><label class="doc-label">PPP document (if applicable)</label><input class="doc-input" data-doc="ppp" type="file" style="width:auto;flex:1;"></div>
+        <div class="upload-row"><label class="doc-label">Administrator approval</label><input class="doc-input" data-doc="admin" type="file" style="width:auto;flex:1;"></div>
+        <div class="upload-row"><label class="doc-label">Project detail report</label><input class="doc-input" data-doc="report" type="file" style="width:auto;flex:1;"></div>
+      </div>
+
+      <!-- STEP 6 — OFFICER DETAILS -->
+      <div class="step-panel" data-panel="6">
+        <p class="step-head">Officer details</p>
+        <p class="step-count">Step 6 of 7</p>
+        <div class="field"><label>Officer name</label><input id="f-off-name" type="text" placeholder="e.g. Rohan Sharma"></div>
+        <div class="row2">
+          <div class="field"><label>Designation</label><input id="f-off-desig" type="text" placeholder="e.g. Deputy Collector"></div>
+          <div class="field"><label>Department</label><input id="f-off-dept" type="text" placeholder="e.g. Revenue Department"></div>
+        </div>
+      </div>
+
+      <!-- STEP 7 — REVIEW & SIGN -->
+      <div class="step-panel" data-panel="7">
+        <p class="step-head">Review &amp; sign</p>
+        <p class="step-count">Step 7 of 7 — this project is created only once digitally signed below</p>
+        <div id="review-output"></div>
+        <div class="sign-box">
+          <label>
+            <input type="checkbox" id="f-sign">
+            <span>I confirm the details above are accurate and I am digitally signing this project on behalf of the officer named in Step 6.</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-nav">
+    <button class="btn btn-ghost" id="btn-back">&larr; Back</button>
+    <button class="btn btn-primary" id="btn-next">Next: Justification &rarr;</button>
+  </div>
+</div>
+
+<script>
+  var STEP_NAMES = ["", "Basic info", "Justification", "Financials", "Map", "Documents", "Officer details", "Review & sign"];
+  var current = 1;
+  var TOTAL = 7;
+
+  function showStep(n){
+    document.querySelectorAll('.step-panel').forEach(function(p){ p.classList.toggle('active', p.dataset.panel == n); });
+    document.querySelectorAll('.tracker .step').forEach(function(s){
+      var idx = parseInt(s.dataset.step, 10);
+      s.classList.toggle('current', idx === n);
+      s.classList.toggle('done', idx < n);
+    });
+    document.getElementById('btn-back').style.visibility = (n === 1) ? 'hidden' : 'visible';
+    var nextBtn = document.getElementById('btn-next');
+    if(n === TOTAL){
+      nextBtn.textContent = 'Create project';
+      nextBtn.disabled = !document.getElementById('f-sign').checked;
+    } else {
+      nextBtn.textContent = 'Next: ' + STEP_NAMES[n+1] + ' \u2192';
+      nextBtn.disabled = false;
+    }
+    if(n === TOTAL){ renderReview(); }
+    current = n;
+  }
+
+  document.getElementById('btn-next').addEventListener('click', function(){
+    if(current === TOTAL){
+      if(!document.getElementById('f-sign').checked) return;
+      alert('Project created and digitally signed.');
+      return;
+    }
+    if(current < TOTAL) showStep(current + 1);
+  });
+  document.getElementById('btn-back').addEventListener('click', function(){
+    if(current > 1) showStep(current - 1);
+  });
+  document.querySelectorAll('.tracker .step').forEach(function(s){
+    s.style.cursor = 'pointer';
+    s.addEventListener('click', function(){ showStep(parseInt(s.dataset.step, 10)); });
+  });
+
+  /* type pills */
+  document.querySelectorAll('#ptype-group .pill').forEach(function(p){
+    p.addEventListener('click', function(){
+      document.querySelectorAll('#ptype-group .pill').forEach(function(x){ x.classList.remove('selected'); });
+      p.classList.add('selected');
+    });
+  });
+  document.querySelector('#ptype-group .pill[data-val="Central"]').classList.add('selected');
+
+  /* financial year auto-detect */
+  document.getElementById('f-propdate').addEventListener('change', function(){
+    var d = new Date(this.value);
+    if(isNaN(d)) return;
+    var y = d.getFullYear();
+    var m = d.getMonth() + 1;
+    var fy = (m >= 4) ? (y + '-' + String(y+1).slice(-2)) : ((y-1) + '-' + String(y).slice(-2));
+    document.getElementById('f-fy').value = fy;
+  });
+
+  /* map mode toggle */
+  document.querySelectorAll('.map-opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      document.querySelectorAll('.map-opt').forEach(function(o){ o.classList.remove('selected'); });
+      document.querySelectorAll('.map-mode').forEach(function(m){ m.classList.remove('active'); });
+      opt.classList.add('selected');
+      document.querySelector('.map-mode[data-mode="' + opt.dataset.mode + '"]').classList.add('active');
+    });
+  });
+
+  /* GIS click-to-mark (demo only — swap for real GIS library click handler) */
+  document.getElementById('gis-canvas').addEventListener('click', function(e){
+    document.querySelectorAll('#gis-canvas .marker').forEach(function(m){ m.remove(); });
+    var rect = this.getBoundingClientRect();
+    var x = e.clientX - rect.left, y = e.clientY - rect.top;
+    var marker = document.createElement('div');
+    marker.className = 'marker';
+    marker.style.left = x + 'px';
+    marker.style.top = y + 'px';
+    this.appendChild(marker);
+    document.getElementById('gis-status').textContent = 'Parcel marked at approx. (' + Math.round(x) + ', ' + Math.round(y) + ') — replace with real lat/lng from your GIS layer.';
+  });
+
+  /* file upload labels */
+  document.querySelectorAll('input[type=file]').forEach(function(inp){
+    inp.addEventListener('change', function(){
+      if(this.files && this.files[0]){
+        var note = this.parentElement.querySelector('.fname');
+        if(!note){
+          note = document.createElement('span');
+          note.className = 'fname';
+          this.parentElement.appendChild(note);
+        }
+        note.textContent = this.files[0].name;
+      }
+    });
+  });
+
+  function val(id){ var el = document.getElementById(id); return el && el.value ? el.value : '—'; }
+  function fileNameFor(selector){
+    var el = document.querySelector(selector);
+    return (el && el.files && el.files[0]) ? el.files[0].name : 'Not uploaded';
+  }
+
+  function renderReview(){
+    var ptype = document.querySelector('#ptype-group .pill.selected');
+    var out = '';
+
+    out += '<div class="review-section"><h4>1. Basic info</h4><div class="review-grid">' +
+      item('Project name', val('f-name')) +
+      item('Requiring body', val('f-body')) +
+      item('Project type & category', val('f-typecat')) +
+      item('Public purpose category', val('f-purposecat')) +
+      item('Type', ptype ? ptype.dataset.val : '—') +
+      item('Description', val('f-desc')) +
+      '</div></div>';
+
+    out += '<div class="review-section"><h4>2. Justification</h4><div class="review-grid">' +
+      item('Justification', val('f-justification')) +
+      item('Purpose', val('f-purpose')) +
+      item('Benefits', val('f-benefits')) +
+      item('Total land required', val('f-land') + ' ' + val('f-land-unit')) +
+      item('Total time required', val('f-time') + ' ' + val('f-time-unit')) +
+      '</div></div>';
+
+    out += '<div class="review-section"><h4>3. Financials</h4><div class="review-grid">' +
+      item('Financial sector', val('f-sector')) +
+      item('Estimated cost', val('f-cost') + ' ' + val('f-cost-unit')) +
+      item('Date of proposal', val('f-propdate')) +
+      item('Financial year', val('f-fy')) +
+      '</div></div>';
+
+    var mapMode = document.querySelector('.map-opt.selected').dataset.mode;
+    out += '<div class="review-section"><h4>4. Map</h4><div class="review-grid">' +
+      item('Method', mapMode === 'upload' ? 'Uploaded document' : 'Mapped on GIS') +
+      item('Detail', mapMode === 'upload' ? fileNameFor('#f-map-file') : document.getElementById('gis-status').textContent) +
+      '</div></div>';
+
+    out += '<div class="review-section"><h4>5. Documents</h4><div class="review-grid">' +
+      item('Feasibility report', fileNameFor('[data-doc="feasibility"]')) +
+      item('PPP document', fileNameFor('[data-doc="ppp"]')) +
+      item('Administrator approval', fileNameFor('[data-doc="admin"]')) +
+      item('Project detail report', fileNameFor('[data-doc="report"]')) +
+      '</div></div>';
+
+    out += '<div class="review-section"><h4>6. Officer details</h4><div class="review-grid">' +
+      item('Officer name', val('f-off-name')) +
+      item('Designation', val('f-off-desig')) +
+      item('Department', val('f-off-dept')) +
+      '</div></div>';
+
+    document.getElementById('review-output').innerHTML = out;
+  }
+
+  function item(label, value){
+    return '<div class="review-item"><div class="rlabel">' + label + '</div><div class="rvalue">' + (value || '—') + '</div></div>';
+  }
+
+  document.getElementById('f-sign').addEventListener('change', function(){
+    document.getElementById('btn-next').disabled = !this.checked;
+  });
+</script>
+</body>
+</html>

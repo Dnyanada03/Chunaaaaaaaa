@@ -9,6 +9,7 @@ import DigitalSignModal from './components/common/DigitalSignModal';
 import DocumentViewerModal from './components/common/DocumentViewerModal';
 import DocumentsView from './components/common/DocumentsView';
 import UnifiedLoginView from './components/common/UnifiedLoginView';
+import MordApp from './components/mord/MordApp';
 
 // Tahsildar Components
 import DashboardView from './components/tahsildar/DashboardView';
@@ -52,6 +53,24 @@ import StateDigitalSignaturesView from './components/state/StateDigitalSignature
 import StateProfileModal from './components/state/StateProfileModal';
 import StateGlobalSearchModal from './components/state/StateGlobalSearchModal';
 
+// Proposing Body Components
+import ProposingBodyHeader from './components/proposing/ProposingBodyHeader';
+import ProposingBodyNav from './components/proposing/ProposingBodyNav';
+import ProposingBodyDashboardView from './components/proposing/ProposingBodyDashboardView';
+import ProposingBodyProjectsView from './components/proposing/ProposingBodyProjectsView';
+import ProposingBodyAddProjectView from './components/proposing/ProposingBodyAddProjectView';
+import ProposingBodyProjectDetailView from './components/proposing/ProposingBodyProjectDetailView';
+import ProposingBodyCreateProposalView from './components/proposing/ProposingBodyCreateProposalView';
+import ProposingBodyAIPreProposalReportView from './components/proposing/ProposingBodyAIPreProposalReportView';
+import ProposingBodyProposalDetailView from './components/proposing/ProposingBodyProposalDetailView';
+import ProposingBodyGISView from './components/proposing/ProposingBodyGISView';
+import ProposingBodyDocumentsView from './components/proposing/ProposingBodyDocumentsView';
+import ProposingBodyReportsView from './components/proposing/ProposingBodyReportsView';
+import ProposingBodyNotificationsView from './components/proposing/ProposingBodyNotificationsView';
+import ProposingBodySettingsView from './components/proposing/ProposingBodySettingsView';
+import ProposingBodyProfileModal from './components/proposing/ProposingBodyProfileModal';
+import ProposingBodyGlobalSearchModal from './components/proposing/ProposingBodyGlobalSearchModal';
+
 const MainApp = () => {
   const { isAuthenticated, userRole, activeTab } = useSwadesh();
 
@@ -70,6 +89,16 @@ const MainApp = () => {
   const [isStateProfileOpen, setIsStateProfileOpen] = useState(false);
   const [isStateSearchOpen, setIsStateSearchOpen] = useState(false);
 
+  // Proposing Body Tab State
+  const [proposingTab, setProposingTab] = useState('dashboard');
+  const [selectedProposingProjectId, setSelectedProposingProjectId] = useState(null);
+  const [selectedProposingProposalId, setSelectedProposingProposalId] = useState(null);
+  const [activeAIReportData, setActiveAIReportData] = useState(null);
+
+  // Proposing Body Modals
+  const [isProposingProfileOpen, setIsProposingProfileOpen] = useState(false);
+  const [isProposingSearchOpen, setIsProposingSearchOpen] = useState(false);
+
   // Tahsildar Modal State
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
@@ -82,6 +111,8 @@ const MainApp = () => {
           setIsStateSearchOpen(prev => !prev);
         } else if (userRole === 'collector') {
           setIsCollectorSearchOpen(prev => !prev);
+        } else if (userRole === 'proposing_body') {
+          setIsProposingSearchOpen(prev => !prev);
         }
       }
     };
@@ -92,6 +123,11 @@ const MainApp = () => {
   // Unauthenticated -> Render Unified Login Portal
   if (!isAuthenticated) {
     return <UnifiedLoginView />;
+  }
+
+  // 0. MORD National Supervisory Authority Logged In View
+  if (userRole === 'mord') {
+    return <MordApp />;
   }
 
   // 1. District Collector Logged In View
@@ -244,7 +280,123 @@ const MainApp = () => {
     );
   }
 
-  // 3. Tahsildar Logged In View
+  // 3. Project Authority / Proposing Body Logged In View
+  if (userRole === 'proposing_body') {
+    const handleProposingNavigate = (tab, projectId = null, extraData = null) => {
+      if (projectId) {
+        setSelectedProposingProjectId(projectId);
+      }
+      if (tab === 'proposal-detail' && extraData) {
+        setSelectedProposingProposalId(extraData);
+      } else if (tab === 'ai-pre-proposal' && extraData) {
+        setActiveAIReportData(extraData);
+      }
+      setProposingTab(tab);
+    };
+
+    const renderProposingView = () => {
+      if (proposingTab === 'project-detail' && selectedProposingProjectId) {
+        return (
+          <ProposingBodyProjectDetailView
+            projectId={selectedProposingProjectId}
+            onBack={() => {
+              setProposingTab('projects');
+              setSelectedProposingProjectId(null);
+            }}
+            onNavigate={handleProposingNavigate}
+          />
+        );
+      }
+
+      if (proposingTab === 'proposal-detail' && selectedProposingProposalId) {
+        return (
+          <ProposingBodyProposalDetailView
+            proposalId={selectedProposingProposalId}
+            onBack={() => {
+              setProposingTab('proposals');
+              setSelectedProposingProposalId(null);
+            }}
+            onNavigate={handleProposingNavigate}
+          />
+        );
+      }
+
+      if (proposingTab === 'ai-pre-proposal') {
+        return (
+          <ProposingBodyAIPreProposalReportView
+            projectId={selectedProposingProjectId}
+            proposalData={activeAIReportData}
+            onBack={() => setProposingTab('proposals')}
+            onNavigate={handleProposingNavigate}
+          />
+        );
+      }
+
+      switch (proposingTab) {
+        case 'dashboard':
+          return <ProposingBodyDashboardView onNavigate={handleProposingNavigate} />;
+        case 'projects':
+          return <ProposingBodyProjectsView onNavigate={handleProposingNavigate} />;
+        case 'add-project':
+          return <ProposingBodyAddProjectView onNavigate={handleProposingNavigate} />;
+        case 'proposals':
+        case 'create-proposal':
+          return <ProposingBodyCreateProposalView onNavigate={handleProposingNavigate} />;
+        case 'documents':
+          return <ProposingBodyDocumentsView onNavigate={handleProposingNavigate} />;
+        case 'map':
+          return <ProposingBodyGISView onNavigate={handleProposingNavigate} />;
+        case 'reports':
+          return <ProposingBodyReportsView onNavigate={handleProposingNavigate} />;
+        case 'notifications':
+          return <ProposingBodyNotificationsView onNavigate={handleProposingNavigate} />;
+        case 'settings':
+          return <ProposingBodySettingsView onNavigate={handleProposingNavigate} />;
+        default:
+          return <ProposingBodyDashboardView onNavigate={handleProposingNavigate} />;
+      }
+    };
+
+    return (
+      <div className="app-container">
+        {/* Proposing Body Official Header */}
+        <ProposingBodyHeader
+          onOpenProfile={() => setIsProposingProfileOpen(true)}
+          onOpenSearch={() => setIsProposingSearchOpen(true)}
+          onNavigate={handleProposingNavigate}
+        />
+
+        {/* Top Horizontal Navigation Bar */}
+        <ProposingBodyNav
+          activeTab={proposingTab}
+          setActiveTab={(tab) => {
+            setSelectedProposingProjectId(null);
+            setSelectedProposingProposalId(null);
+            setProposingTab(tab);
+          }}
+        />
+
+        {/* Main Content Area */}
+        <main className="content-area">
+          {renderProposingView()}
+        </main>
+
+        {/* Proposing Body Modals & Shared Modals */}
+        <ProposingBodyGlobalSearchModal
+          isOpen={isProposingSearchOpen}
+          onClose={() => setIsProposingSearchOpen(false)}
+          onNavigate={handleProposingNavigate}
+        />
+        <ProposingBodyProfileModal
+          isOpen={isProposingProfileOpen}
+          onClose={() => setIsProposingProfileOpen(false)}
+        />
+        <DocumentViewerModal />
+      </div>
+    );
+  }
+
+  // 4. Tahsildar Logged In View
   const renderTahsildarView = () => {
     switch (activeTab) {
       case 'dashboard':

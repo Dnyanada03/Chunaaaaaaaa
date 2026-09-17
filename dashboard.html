@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Land Acquisition Portal</title>
+<style>
+  :root{
+    --ink:#16233A;
+    --ink-soft:#3A4A63;
+    --paper:#F2F1EC;
+    --panel:#FFFFFF;
+    --line:#D8D5CB;
+    --survey:#2F6F62;
+    --survey-tint:#E4EEE9;
+    --rust:#A6432B;
+    --rust-tint:#F6E7E2;
+    --ochre:#8A6A1E;
+    --ochre-tint:#F2ECDC;
+    --mono: "IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+    --serif: "Source Serif Pro","Georgia",serif;
+    --sans: "Inter","Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55;}
+  a{color:inherit;}
+
+  /* ---- top nav ---- */
+  .topnav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--ink);
+    color:#F2F1EC;
+    padding:0 28px;
+    height:56px;
+  }
+  .topnav .brand{
+    font-family:var(--serif);
+    font-size:16px;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  .topnav .brand span{color:#9FC2B4;}
+  .nav-links{display:flex;gap:26px;font-size:13.5px;}
+  .nav-links a{text-decoration:none;color:#CBD3DE;padding:6px 0;border-bottom:2px solid transparent;}
+  .nav-links a.active{color:#fff;border-bottom-color:var(--survey);}
+  .nav-right{display:flex;align-items:center;gap:18px;}
+  .nav-icon{font-family:var(--mono);font-size:16px;color:#CBD3DE;position:relative;cursor:pointer;}
+  .nav-icon .dot{position:absolute;top:-3px;right:-6px;width:7px;height:7px;background:var(--rust);border-radius:50%;}
+  .avatar{width:28px;height:28px;border-radius:50%;background:#3A4A63;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:24px 24px 80px;}
+
+  /* ---- notification ribbon ---- */
+  .ribbon{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--ochre-tint);color:var(--ochre);
+    border:1px solid var(--ochre);
+    padding:9px 16px;font-size:13px;margin-bottom:22px;
+  }
+  .ribbon .msg{display:flex;align-items:center;gap:8px;}
+  .ribbon .close{cursor:pointer;font-family:var(--mono);}
+
+  /* ---- section labels ---- */
+  .section-label{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-soft);margin:0 0 10px;}
+
+  /* ---- KPI rows ---- */
+  .kpi-row{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:26px;}
+  .kpi-row.row4{grid-template-columns:repeat(4,1fr);}
+  .kpi-row.row3{grid-template-columns:repeat(3,1fr);}
+  .kpi{background:var(--panel);padding:16px 18px;}
+  .kpi.alert{background:var(--rust-tint);}
+  .kpi-label{font-size:11.5px;color:var(--ink-soft);margin:0 0 6px;}
+  .kpi.alert .kpi-label{color:var(--rust);}
+  .kpi-value{font-family:var(--serif);font-size:22px;font-weight:600;margin:0;}
+  .kpi.alert .kpi-value{color:var(--rust);}
+
+  /* ---- alerts ---- */
+  .alerts{border:1px solid var(--line);margin-bottom:30px;}
+  .alert-row{border-bottom:1px solid var(--line);}
+  .alert-row:last-child{border-bottom:none;}
+  .alert-head{
+    display:flex;gap:12px;align-items:flex-start;
+    padding:13px 16px;cursor:pointer;background:var(--panel);
+  }
+  .alert-head:hover{background:#FBFAF6;}
+  .sev{font-family:var(--mono);font-size:10.5px;padding:3px 8px;flex-shrink:0;margin-top:1px;}
+  .sev.high{color:var(--rust);border:1px solid var(--rust);background:var(--rust-tint);}
+  .sev.medium{color:var(--ochre);border:1px solid var(--ochre);background:var(--ochre-tint);}
+  .alert-title{font-size:13.5px;font-weight:500;margin:0;}
+  .alert-sub{font-size:12px;color:var(--ink-soft);margin:2px 0 0;}
+  .chev{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--ink-soft);transition:transform 0.15s;}
+  .alert-row.open .chev{transform:rotate(90deg);}
+  .alert-detail{display:none;padding:0 16px 16px 42px;background:#FBFAF6;font-size:13px;}
+  .alert-row.open .alert-detail{display:block;}
+  .alert-detail ul{margin:8px 0 12px;padding-left:18px;color:var(--ink-soft);}
+  .alert-detail li{margin-bottom:4px;}
+  .alert-detail a{font-size:13px;color:var(--survey);text-decoration:none;border-bottom:1px solid var(--survey);}
+
+  /* ---- carousel ---- */
+  .carousel{display:flex;gap:14px;overflow-x:auto;padding-bottom:6px;}
+  .proj-card{min-width:220px;background:var(--panel);border:1px solid var(--line);flex-shrink:0;}
+  .proj-thumb{height:90px;background:repeating-linear-gradient(45deg, var(--paper), var(--paper) 8px, var(--line) 9px);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--ink-soft);}
+  .proj-body{padding:12px 14px;}
+  .proj-name{font-size:13.5px;font-weight:500;margin:0 0 8px;}
+  .proj-bar{height:4px;background:var(--line);position:relative;}
+  .proj-bar span{position:absolute;left:0;top:0;bottom:0;background:var(--survey);}
+  .proj-pct{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin:6px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">Bhoomi<span>Setu</span></div>
+  <div class="nav-links">
+    <a href="#" class="active">Dashboard</a>
+    <a href="#">Projects</a>
+    <a href="#">Create project</a>
+    <a href="#">Reports &amp; MIS</a>
+    <a href="#">Settings</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-icon">&#9679;<span class="dot"></span></div>
+    <div class="avatar">RS</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="ribbon">
+    <div class="msg">3 proposals are awaiting your digital signature</div>
+    <span class="close">&times;</span>
+  </div>
+
+  <p class="section-label">Portfolio</p>
+  <div class="kpi-row row4">
+    <div class="kpi"><p class="kpi-label">Active projects</p><p class="kpi-value">28</p></div>
+    <div class="kpi"><p class="kpi-label">In pre-proposal</p><p class="kpi-value">14</p></div>
+    <div class="kpi"><p class="kpi-label">Submitted proposals</p><p class="kpi-value">41</p></div>
+    <div class="kpi"><p class="kpi-label">Land under acquisition</p><p class="kpi-value">6,140 ha</p></div>
+  </div>
+
+  <p class="section-label">Risk &amp; finance</p>
+  <div class="kpi-row row3">
+    <div class="kpi alert"><p class="kpi-label">High-risk proposals</p><p class="kpi-value">7</p></div>
+    <div class="kpi"><p class="kpi-label">Total budget</p><p class="kpi-value">&#8377;48,200 Cr</p></div>
+    <div class="kpi"><p class="kpi-label">RFCT compliance</p><p class="kpi-value">92%</p></div>
+  </div>
+
+  <p class="section-label">Priority alerts</p>
+  <div class="alerts">
+    <div class="alert-row">
+      <div class="alert-head" data-target="detail-1">
+        <span class="sev high">high</span>
+        <div>
+          <p class="alert-title">Nagpur ring-road tie-in — forest clearance likely to lapse in 12 days</p>
+          <p class="alert-sub">Flagged by AI risk model &middot; 2h ago</p>
+        </div>
+        <span class="chev">&#9656;</span>
+      </div>
+      <div class="alert-detail" id="detail-1">
+        <p style="margin:10px 0 0;color:var(--ink-soft);">Why this is flagged high risk:</p>
+        <ul>
+          <li>Stage-2 forest clearance permit expires 25 Sep 2025, no renewal filed yet.</li>
+          <li>Similar clearance lapses in this district have historically added 4–6 months of delay.</li>
+          <li>61 ha of the proposed 61 ha falls inside notified forest land.</li>
+        </ul>
+        <a href="project-detail.html">Open Nagpur ring-road tie-in proposal &rarr;</a>
+      </div>
+    </div>
+
+    <div class="alert-row">
+      <div class="alert-head" data-target="detail-2">
+        <span class="sev medium">medium</span>
+        <div>
+          <p class="alert-title">Amravati interchange — cost estimate 18% above similar past projects</p>
+          <p class="alert-sub">Flagged by AI risk model &middot; 1d ago</p>
+        </div>
+        <span class="chev">&#9656;</span>
+      </div>
+      <div class="alert-detail" id="detail-2">
+        <p style="margin:10px 0 0;color:var(--ink-soft);">Why this is flagged:</p>
+        <ul>
+          <li>Estimated cost of &#8377;312 Cr for 45 ha, versus a &#8377;265 Cr average for comparable interchanges.</li>
+          <li>Compensation rate used is 22% above the district's last two settled awards.</li>
+        </ul>
+        <a href="project-detail.html">Open Amravati interchange proposal &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Recent ongoing projects</p>
+  <div class="carousel">
+    <div class="proj-card">
+      <div class="proj-thumb">photo</div>
+      <div class="proj-body">
+        <p class="proj-name">Mumbai-Nagpur expressway</p>
+        <div class="proj-bar"><span style="width:64%;"></span></div>
+        <p class="proj-pct">64% complete</p>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb">photo</div>
+      <div class="proj-body">
+        <p class="proj-name">Konkan coastal rail link</p>
+        <div class="proj-bar"><span style="width:31%;"></span></div>
+        <p class="proj-pct">31% complete</p>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb">photo</div>
+      <div class="proj-body">
+        <p class="proj-name">Pune ring metro depot</p>
+        <div class="proj-bar"><span style="width:82%;"></span></div>
+        <p class="proj-pct">82% complete</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.alert-head').forEach(function(head){
+    head.addEventListener('click', function(){
+      head.parentElement.classList.toggle('open');
+    });
+  });
+</script>
+</body>
+</html>
