@@ -160,31 +160,33 @@ const CustomTurnaroundTooltip = ({ active, payload, label }) => {
     return (
       <div style={{
         background: '#FFFFFF',
-        border: '1px solid #16233A',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+        border: '1px solid #E2E8F0',
+        borderRadius: '10px',
+        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
         padding: '12px 14px',
         fontSize: '12px',
         minWidth: '240px',
         fontFamily: 'Inter, sans-serif'
       }}>
-        <div style={{ fontWeight: 700, color: '#16233A', fontSize: '12.5px', borderBottom: '1px solid #E5E7EB', paddingBottom: '6px', marginBottom: '8px' }}>
+        <div style={{ fontWeight: 700, color: '#0F172A', fontSize: '13px', borderBottom: '1px solid #E2E8F0', paddingBottom: '6px', marginBottom: '8px' }}>
           {dataObj?.fullStage || label}
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-          <span style={{ color: '#A6432B', fontWeight: 600 }}>• Traditional Process:</span>
-          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontWeight: 700, color: '#A6432B' }}>
+          <span style={{ color: '#C5221F', fontWeight: 600 }}>• Traditional Process:</span>
+          <span style={{ fontFamily: 'var(--font-mono, monospace)', fontWeight: 700, color: '#C5221F' }}>
             {traditionalVal} {dataObj?.unit || 'Days'}
           </span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-          <span style={{ color: '#2F6F62', fontWeight: 600 }}>• SWADESH Digital:</span>
-          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontWeight: 700, color: '#2F6F62' }}>
+          <span style={{ color: '#008E4F', fontWeight: 600 }}>• SWADESH Digital:</span>
+          <span style={{ fontFamily: 'var(--font-mono, monospace)', fontWeight: 700, color: '#008E4F' }}>
             {swadeshVal} {dataObj?.unit || 'Days'}
           </span>
         </div>
         <div style={{
-          background: '#E4EEE9',
-          border: '1px solid #2F6F62',
+          background: '#E6F4EA',
+          border: '1px solid #CEEAD6',
+          borderRadius: '6px',
           padding: '6px 8px',
           marginTop: '6px',
           display: 'flex',
@@ -192,13 +194,13 @@ const CustomTurnaroundTooltip = ({ active, payload, label }) => {
           alignItems: 'center',
           fontSize: '11px'
         }}>
-          <span style={{ color: '#2F6F62', fontWeight: 700 }}>Time Saved:</span>
-          <span style={{ color: '#2F6F62', fontWeight: 700, fontFamily: '"IBM Plex Mono", monospace' }}>
+          <span style={{ color: '#008E4F', fontWeight: 700 }}>Time Saved:</span>
+          <span style={{ color: '#008E4F', fontWeight: 700, fontFamily: 'var(--font-mono, monospace)' }}>
             {daysSaved} Days ({dataObj?.reductionPct}% Faster)
           </span>
         </div>
         {dataObj?.statute && (
-          <div style={{ fontSize: '10.5px', color: '#6B7280', marginTop: '6px' }}>
+          <div style={{ fontSize: '11px', color: '#64748B', marginTop: '6px' }}>
             Statute: {dataObj.statute}
           </div>
         )}
@@ -215,31 +217,33 @@ const CustomRiskTooltip = ({ active, payload, label }) => {
     return (
       <div style={{
         background: '#FFFFFF',
-        border: '1px solid #16233A',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+        border: '1px solid #E2E8F0',
+        borderRadius: '10px',
+        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
         padding: '12px 14px',
         fontSize: '12px',
         minWidth: '230px',
         fontFamily: 'Inter, sans-serif'
       }}>
-        <div style={{ fontWeight: 700, color: '#16233A', fontSize: '12.5px', borderBottom: '1px solid #E5E7EB', paddingBottom: '6px', marginBottom: '8px' }}>
+        <div style={{ fontWeight: 700, color: '#0F172A', fontSize: '13px', borderBottom: '1px solid #E2E8F0', paddingBottom: '6px', marginBottom: '8px' }}>
           {label}
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-          <span style={{ color: '#A6432B', fontWeight: 600 }}>Traditional Baseline:</span>
-          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontWeight: 700, color: '#A6432B' }}>
+          <span style={{ color: '#C5221F', fontWeight: 600 }}>Traditional Baseline:</span>
+          <span style={{ fontFamily: 'var(--font-mono, monospace)', fontWeight: 700, color: '#C5221F' }}>
             {dataObj?.traditional}%
           </span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-          <span style={{ color: '#2F6F62', fontWeight: 600 }}>SWADESH Telemetry:</span>
-          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontWeight: 700, color: '#2F6F62' }}>
+          <span style={{ color: '#008E4F', fontWeight: 600 }}>SWADESH Telemetry:</span>
+          <span style={{ fontFamily: 'var(--font-mono, monospace)', fontWeight: 700, color: '#008E4F' }}>
             {dataObj?.swadesh}%
           </span>
         </div>
         <div style={{
-          background: '#E4EEE9',
-          border: '1px solid #2F6F62',
+          background: '#E6F4EA',
+          border: '1px solid #CEEAD6',
+          borderRadius: '6px',
           padding: '6px 8px',
           marginTop: '6px',
           display: 'flex',
@@ -247,13 +251,13 @@ const CustomRiskTooltip = ({ active, payload, label }) => {
           alignItems: 'center',
           fontSize: '11px'
         }}>
-          <span style={{ color: '#2F6F62', fontWeight: 700 }}>Risk Mitigation:</span>
-          <span style={{ color: '#2F6F62', fontWeight: 700, fontFamily: '"IBM Plex Mono", monospace' }}>
+          <span style={{ color: '#008E4F', fontWeight: 700 }}>Risk Mitigation:</span>
+          <span style={{ color: '#008E4F', fontWeight: 700, fontFamily: 'var(--font-mono, monospace)' }}>
             {dataObj?.reduction} Drop
           </span>
         </div>
         {dataObj?.note && (
-          <div style={{ fontSize: '10.5px', color: '#6B7280', marginTop: '6px' }}>
+          <div style={{ fontSize: '11px', color: '#64748B', marginTop: '6px' }}>
             Mechanism: {dataObj.note}
           </div>
         )}
@@ -271,31 +275,33 @@ const CustomLifecycleTooltip = ({ active, payload, label }) => {
     return (
       <div style={{
         background: '#FFFFFF',
-        border: '1px solid #16233A',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+        border: '1px solid #E2E8F0',
+        borderRadius: '10px',
+        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
         padding: '12px 14px',
         fontSize: '12px',
         minWidth: '240px',
         fontFamily: 'Inter, sans-serif'
       }}>
-        <div style={{ fontWeight: 700, color: '#16233A', fontSize: '12.5px', borderBottom: '1px solid #E5E7EB', paddingBottom: '6px', marginBottom: '8px' }}>
+        <div style={{ fontWeight: 700, color: '#0F172A', fontSize: '13px', borderBottom: '1px solid #E2E8F0', paddingBottom: '6px', marginBottom: '8px' }}>
           {label}
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-          <span style={{ color: '#A6432B', fontWeight: 600 }}>Traditional Elapsed:</span>
-          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontWeight: 700, color: '#A6432B' }}>
+          <span style={{ color: '#C5221F', fontWeight: 600 }}>Traditional Elapsed:</span>
+          <span style={{ fontFamily: 'var(--font-mono, monospace)', fontWeight: 700, color: '#C5221F' }}>
             Month {trad}
           </span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-          <span style={{ color: '#2F6F62', fontWeight: 600 }}>SWADESH Elapsed:</span>
-          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontWeight: 700, color: '#2F6F62' }}>
+          <span style={{ color: '#008E4F', fontWeight: 600 }}>SWADESH Elapsed:</span>
+          <span style={{ fontFamily: 'var(--font-mono, monospace)', fontWeight: 700, color: '#008E4F' }}>
             Month {swad}
           </span>
         </div>
         <div style={{
-          background: '#E4EEE9',
-          border: '1px solid #2F6F62',
+          background: '#E6F4EA',
+          border: '1px solid #CEEAD6',
+          borderRadius: '6px',
           padding: '6px 8px',
           marginTop: '6px',
           display: 'flex',
@@ -303,8 +309,8 @@ const CustomLifecycleTooltip = ({ active, payload, label }) => {
           alignItems: 'center',
           fontSize: '11px'
         }}>
-          <span style={{ color: '#2F6F62', fontWeight: 700 }}>Lead Time Advantage:</span>
-          <span style={{ color: '#2F6F62', fontWeight: 700, fontFamily: '"IBM Plex Mono", monospace' }}>
+          <span style={{ color: '#008E4F', fontWeight: 700 }}>Lead Time Advantage:</span>
+          <span style={{ color: '#008E4F', fontWeight: 700, fontFamily: 'var(--font-mono, monospace)' }}>
             {(trad - swad).toFixed(1)} Months Sooner
           </span>
         </div>
@@ -320,27 +326,24 @@ export default function MordTransformationSection() {
   return (
     <div
       id="swadesh-transformation-section"
+      className="card"
       style={{
-        background: '#FFFFFF',
-        border: '1px solid #2F6F62',
-        padding: '24px',
-        marginBottom: '30px',
-        position: 'relative',
-        boxShadow: '0 2px 6px rgba(0,0,0,0.04)'
+        borderLeft: '4px solid #008E4F',
+        position: 'relative'
       }}
     >
-      {/* Top Gold/Teal Banner */}
+      {/* Top Audited Telemetry Badge */}
       <div style={{
         position: 'absolute',
-        top: 0,
-        right: 0,
-        background: '#2F6F62',
-        color: '#FFFFFF',
-        fontSize: '10px',
-        fontFamily: '"IBM Plex Mono", monospace',
-        padding: '4px 14px',
-        textTransform: 'uppercase',
-        letterSpacing: '0.06em',
+        top: '20px',
+        right: '24px',
+        background: '#E6F4EA',
+        color: '#008E4F',
+        border: '1px solid #CEEAD6',
+        borderRadius: '8px',
+        fontSize: '11px',
+        fontFamily: 'var(--font-mono, monospace)',
+        padding: '4px 10px',
         fontWeight: 700,
         display: 'flex',
         alignItems: 'center',
@@ -349,41 +352,40 @@ export default function MordTransformationSection() {
         <Database size={12} />
         Live Audited Telemetry • SWADESH X-Factor
       </div>
-
       {/* SECTION HEADER */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px', flexWrap: 'wrap', gap: '14px' }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
             <span style={{
-              fontSize: '10px',
-              fontFamily: '"IBM Plex Mono", monospace',
-              background: '#F2ECDC',
-              color: '#8A6A1E',
-              border: '1px solid #8A6A1E',
-              padding: '2px 7px',
+              fontSize: '11px',
+              fontFamily: 'var(--font-mono, monospace)',
+              background: '#FEF3C7',
+              color: '#92400E',
+              border: '1px solid #FCD34D',
+              borderRadius: '4px',
+              padding: '2px 8px',
               fontWeight: 700,
               textTransform: 'uppercase'
             }}>
               National Reform Evidence
             </span>
             <span style={{
-              fontSize: '11px',
-              color: '#6B7280',
-              fontFamily: 'Inter, sans-serif'
+              fontSize: '12px',
+              color: '#64748B'
             }}>
               Historical Baselines (CAG &amp; NITI Aayog PMG) vs. Live SWADESH Platform
             </span>
           </div>
           <h3 style={{
-            fontFamily: '"Source Serif Pro", Georgia, serif',
-            fontSize: '22px',
+            fontFamily: 'var(--font-serif, "Merriweather", Georgia, serif)',
+            fontSize: '20px',
             fontWeight: 700,
             margin: '0 0 4px',
-            color: '#16233A'
+            color: '#0F172A'
           }}>
             The SWADESH Transformation: Traditional Process vs. SWADESH Process
           </h3>
-          <p style={{ fontSize: '13px', color: '#3A4A63', margin: 0, maxWidth: '85ch', lineHeight: 1.5 }}>
+          <p style={{ fontSize: '13px', color: '#475569', margin: 0, maxWidth: '85ch', lineHeight: 1.5 }}>
             Empirical comparative analysis demonstrating radical reduction in acquisition cycle turnaround, litigation risks, and administrative friction across all 8 statutory RFCTLARR stages.
           </p>
         </div>
@@ -391,10 +393,11 @@ export default function MordTransformationSection() {
         {/* Chart View Toggle Controls */}
         <div style={{
           display: 'flex',
-          background: '#F2F1EC',
-          border: '1px solid #D8D5CB',
+          background: '#F1F5F9',
+          border: '1px solid #E2E8F0',
+          borderRadius: '8px',
           padding: '3px',
-          gap: '2px'
+          gap: '4px'
         }}>
           <button
             onClick={() => setChartView('turnaround')}
@@ -403,13 +406,15 @@ export default function MordTransformationSection() {
               alignItems: 'center',
               gap: '6px',
               padding: '6px 12px',
-              fontSize: '11.5px',
+              fontSize: '12px',
               fontWeight: chartView === 'turnaround' ? 700 : 500,
               background: chartView === 'turnaround' ? '#FFFFFF' : 'transparent',
-              color: chartView === 'turnaround' ? '#2F6F62' : '#3A4A63',
-              border: chartView === 'turnaround' ? '1px solid #D8D5CB' : '1px solid transparent',
+              color: chartView === 'turnaround' ? '#008E4F' : '#64748B',
+              border: chartView === 'turnaround' ? '1px solid #E2E8F0' : '1px solid transparent',
+              borderRadius: '6px',
               cursor: 'pointer',
-              boxShadow: chartView === 'turnaround' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none'
+              boxShadow: chartView === 'turnaround' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+              transition: 'all 0.15s ease'
             }}
           >
             <BarChart3 size={13} />
@@ -423,13 +428,15 @@ export default function MordTransformationSection() {
               alignItems: 'center',
               gap: '6px',
               padding: '6px 12px',
-              fontSize: '11.5px',
+              fontSize: '12px',
               fontWeight: chartView === 'risk' ? 700 : 500,
               background: chartView === 'risk' ? '#FFFFFF' : 'transparent',
-              color: chartView === 'risk' ? '#2F6F62' : '#3A4A63',
-              border: chartView === 'risk' ? '1px solid #D8D5CB' : '1px solid transparent',
+              color: chartView === 'risk' ? '#008E4F' : '#64748B',
+              border: chartView === 'risk' ? '1px solid #E2E8F0' : '1px solid transparent',
+              borderRadius: '6px',
               cursor: 'pointer',
-              boxShadow: chartView === 'risk' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none'
+              boxShadow: chartView === 'risk' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+              transition: 'all 0.15s ease'
             }}
           >
             <TrendingDown size={13} />
@@ -443,13 +450,15 @@ export default function MordTransformationSection() {
               alignItems: 'center',
               gap: '6px',
               padding: '6px 12px',
-              fontSize: '11.5px',
+              fontSize: '12px',
               fontWeight: chartView === 'trajectory' ? 700 : 500,
               background: chartView === 'trajectory' ? '#FFFFFF' : 'transparent',
-              color: chartView === 'trajectory' ? '#2F6F62' : '#3A4A63',
-              border: chartView === 'trajectory' ? '1px solid #D8D5CB' : '1px solid transparent',
+              color: chartView === 'trajectory' ? '#008E4F' : '#64748B',
+              border: chartView === 'trajectory' ? '1px solid #E2E8F0' : '1px solid transparent',
+              borderRadius: '6px',
               cursor: 'pointer',
-              boxShadow: chartView === 'trajectory' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none'
+              boxShadow: chartView === 'trajectory' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+              transition: 'all 0.15s ease'
             }}
           >
             <LineChartIcon size={13} />
@@ -460,26 +469,27 @@ export default function MordTransformationSection() {
 
       {/* GRAPHICAL REPRESENTATION CONTAINER */}
       <div style={{
-        background: '#FBFAF6',
-        border: '1px solid #D8D5CB',
+        background: '#F8FAFC',
+        border: '1px solid #E2E8F0',
+        borderRadius: '12px',
         padding: '20px'
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '10px' }}>
           <div>
             <span style={{
-              fontFamily: '"IBM Plex Mono", monospace',
+              fontFamily: 'var(--font-mono, monospace)',
               fontSize: '11px',
               fontWeight: 700,
-              color: '#2F6F62',
+              color: '#008E4F',
               textTransform: 'uppercase'
             }}>
               GRAPHICAL BENCHMARK ANALYSIS
             </span>
             <h4 style={{
-              fontFamily: '"Source Serif Pro", serif',
+              fontFamily: 'var(--font-serif, "Merriweather", Georgia, serif)',
               fontSize: '16px',
               fontWeight: 700,
-              color: '#16233A',
+              color: '#0F172A',
               margin: '2px 0 0'
             }}>
               {chartView === 'turnaround' && 'Statutory Stage Processing Turnaround: Traditional (Days) vs. SWADESH (Days)'}
@@ -491,12 +501,12 @@ export default function MordTransformationSection() {
           {/* Chart Legend Summary */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ width: '12px', height: '12px', background: '#C85A32', display: 'inline-block', borderRadius: '2px' }} />
-              <span style={{ color: '#3A4A63', fontWeight: 600 }}>Traditional Manual Process</span>
+              <span style={{ width: '12px', height: '12px', background: '#DC2626', display: 'inline-block', borderRadius: '3px' }} />
+              <span style={{ color: '#475569', fontWeight: 600 }}>Traditional Manual Process</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ width: '12px', height: '12px', background: '#2F6F62', display: 'inline-block', borderRadius: '2px' }} />
-              <span style={{ color: '#16233A', fontWeight: 700 }}>SWADESH Digital Platform</span>
+              <span style={{ width: '12px', height: '12px', background: '#008E4F', display: 'inline-block', borderRadius: '3px' }} />
+              <span style={{ color: '#0F172A', fontWeight: 700 }}>SWADESH Digital Platform</span>
             </div>
           </div>
         </div>
@@ -511,18 +521,18 @@ export default function MordTransformationSection() {
                 barCategoryGap="25%"
                 barGap={4}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
                 <XAxis
                   dataKey="stageKey"
-                  tick={{ fill: '#3A4A63', fontSize: 11, fontWeight: 600 }}
-                  axisLine={{ stroke: '#D8D5CB' }}
+                  tick={{ fill: '#475569', fontSize: 11, fontWeight: 600 }}
+                  axisLine={{ stroke: '#E2E8F0' }}
                   tickLine={false}
                 />
                 <YAxis
-                  tick={{ fill: '#3A4A63', fontSize: 11 }}
-                  axisLine={{ stroke: '#D8D5CB' }}
+                  tick={{ fill: '#475569', fontSize: 11 }}
+                  axisLine={{ stroke: '#E2E8F0' }}
                   tickLine={false}
-                  label={{ value: 'Turnaround Duration (Days)', angle: -90, position: 'insideLeft', style: { fill: '#6B7280', fontSize: 11, textAnchor: 'middle' } }}
+                  label={{ value: 'Turnaround Duration (Days)', angle: -90, position: 'insideLeft', style: { fill: '#64748B', fontSize: 11, textAnchor: 'middle' } }}
                 />
                 <Tooltip content={<CustomTurnaroundTooltip />} />
                 <Legend
@@ -530,8 +540,8 @@ export default function MordTransformationSection() {
                   align="right"
                   wrapperStyle={{ paddingBottom: '10px', fontSize: '11.5px' }}
                 />
-                <Bar dataKey="traditional" name="Traditional (Days)" fill="#C85A32" radius={[3, 3, 0, 0]} />
-                <Bar dataKey="swadesh" name="SWADESH (Days)" fill="#2F6F62" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="traditional" name="Traditional (Days)" fill="#DC2626" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="swadesh" name="SWADESH (Days)" fill="#008E4F" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -544,21 +554,21 @@ export default function MordTransformationSection() {
                 barCategoryGap="25%"
                 barGap={4}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
                 <XAxis
                   dataKey="indicator"
-                  tick={{ fill: '#3A4A63', fontSize: 10.5, fontWeight: 600 }}
-                  axisLine={{ stroke: '#D8D5CB' }}
+                  tick={{ fill: '#475569', fontSize: 10.5, fontWeight: 600 }}
+                  axisLine={{ stroke: '#E2E8F0' }}
                   tickLine={false}
                   interval={0}
                   angle={-12}
                   textAnchor="end"
                 />
                 <YAxis
-                  tick={{ fill: '#3A4A63', fontSize: 11 }}
-                  axisLine={{ stroke: '#D8D5CB' }}
+                  tick={{ fill: '#475569', fontSize: 11 }}
+                  axisLine={{ stroke: '#E2E8F0' }}
                   tickLine={false}
-                  label={{ value: 'Occurrence Rate (%)', angle: -90, position: 'insideLeft', style: { fill: '#6B7280', fontSize: 11, textAnchor: 'middle' } }}
+                  label={{ value: 'Occurrence Rate (%)', angle: -90, position: 'insideLeft', style: { fill: '#64748B', fontSize: 11, textAnchor: 'middle' } }}
                 />
                 <Tooltip content={<CustomRiskTooltip />} />
                 <Legend
@@ -566,8 +576,8 @@ export default function MordTransformationSection() {
                   align="right"
                   wrapperStyle={{ paddingBottom: '10px', fontSize: '11.5px' }}
                 />
-                <Bar dataKey="traditional" name="Traditional Baseline (%)" fill="#C85A32" radius={[3, 3, 0, 0]} />
-                <Bar dataKey="swadesh" name="SWADESH System (%)" fill="#2F6F62" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="traditional" name="Traditional Baseline (%)" fill="#DC2626" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="swadesh" name="SWADESH System (%)" fill="#008E4F" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -580,29 +590,29 @@ export default function MordTransformationSection() {
               >
                 <defs>
                   <linearGradient id="gradTraditional" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#C85A32" stopOpacity={0.25} />
-                    <stop offset="95%" stopColor="#C85A32" stopOpacity={0.0} />
+                    <stop offset="5%" stopColor="#DC2626" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#DC2626" stopOpacity={0.0} />
                   </linearGradient>
                   <linearGradient id="gradSwadesh" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2F6F62" stopOpacity={0.35} />
-                    <stop offset="95%" stopColor="#2F6F62" stopOpacity={0.05} />
+                    <stop offset="5%" stopColor="#008E4F" stopOpacity={0.35} />
+                    <stop offset="95%" stopColor="#008E4F" stopOpacity={0.05} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
                 <XAxis
                   dataKey="milestone"
-                  tick={{ fill: '#3A4A63', fontSize: 10.5, fontWeight: 600 }}
-                  axisLine={{ stroke: '#D8D5CB' }}
+                  tick={{ fill: '#475569', fontSize: 10.5, fontWeight: 600 }}
+                  axisLine={{ stroke: '#E2E8F0' }}
                   tickLine={false}
                   interval={0}
                   angle={-10}
                   textAnchor="end"
                 />
                 <YAxis
-                  tick={{ fill: '#3A4A63', fontSize: 11 }}
-                  axisLine={{ stroke: '#D8D5CB' }}
+                  tick={{ fill: '#475569', fontSize: 11 }}
+                  axisLine={{ stroke: '#E2E8F0' }}
                   tickLine={false}
-                  label={{ value: 'Elapsed Time (Months)', angle: -90, position: 'insideLeft', style: { fill: '#6B7280', fontSize: 11, textAnchor: 'middle' } }}
+                  label={{ value: 'Elapsed Time (Months)', angle: -90, position: 'insideLeft', style: { fill: '#64748B', fontSize: 11, textAnchor: 'middle' } }}
                 />
                 <Tooltip content={<CustomLifecycleTooltip />} />
                 <Legend
@@ -614,7 +624,7 @@ export default function MordTransformationSection() {
                   type="monotone"
                   dataKey="traditionalMonths"
                   name="Traditional Process (Total 58 Months)"
-                  stroke="#C85A32"
+                  stroke="#DC2626"
                   strokeWidth={2.5}
                   fillOpacity={1}
                   fill="url(#gradTraditional)"
@@ -623,7 +633,7 @@ export default function MordTransformationSection() {
                   type="monotone"
                   dataKey="swadeshMonths"
                   name="SWADESH Digital Platform (Total 16 Months)"
-                  stroke="#2F6F62"
+                  stroke="#008E4F"
                   strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#gradSwadesh)"
@@ -635,24 +645,24 @@ export default function MordTransformationSection() {
 
         {/* Quick Analytical Callout Footer */}
         <div style={{
-          borderTop: '1px solid #D8D5CB',
+          borderTop: '1px solid #E2E8F0',
           paddingTop: '12px',
           marginTop: '12px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          fontSize: '11.5px',
-          color: '#3A4A63',
+          fontSize: '12px',
+          color: '#475569',
           flexWrap: 'wrap',
           gap: '8px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Info size={13} color="#2F6F62" />
+            <Info size={14} color="#008E4F" />
             <span>
               <strong>Key Reform Finding:</strong> Across all 7 statutory phases, the SWADESH automation pipeline removes an aggregate of <strong>1,294 days (42.5 months)</strong> of administrative waiting latency.
             </span>
           </div>
-          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10.5px', color: '#6B7280' }}>
+          <span style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '11px', color: '#64748B' }}>
             Source: Live RFCTLARR Telemetry Stream &bull; Sept 2026
           </span>
         </div>

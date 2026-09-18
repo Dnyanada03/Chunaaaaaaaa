@@ -96,12 +96,7 @@ export default function MordApp() {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: '#F2F1EC',
-      color: '#16233A',
-      fontFamily: 'Inter, -apple-system, sans-serif'
-    }}>
+    <div className="app-container">
       {/* Official Government of India Header */}
       <MordHeader
         onOpenProfile={() => setActiveTab('settings')}
@@ -120,8 +115,8 @@ export default function MordApp() {
         unreadDirectives={2}
       />
 
-      {/* Main Viewport */}
-      <main>
+      {/* Main Content Area */}
+      <main className="content-area">
         {renderActiveView()}
       </main>
 

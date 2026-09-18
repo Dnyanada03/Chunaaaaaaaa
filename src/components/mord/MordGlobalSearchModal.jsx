@@ -38,7 +38,8 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
       left: 0,
       right: 0,
       bottom: 0,
-      background: 'rgba(22, 35, 58, 0.65)',
+      background: 'rgba(15, 23, 42, 0.65)',
+      backdropFilter: 'blur(4px)',
       display: 'flex',
       alignItems: 'flex-start',
       justifyContent: 'center',
@@ -49,9 +50,9 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
         background: '#FFFFFF',
         width: '100%',
         maxWidth: '680px',
-        border: '1px solid #D8D5CB',
-        boxShadow: '0 25px 50px rgba(0,0,0,0.3)',
-        borderRadius: '4px',
+        border: '1px solid #E2E8F0',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        borderRadius: '16px',
         overflow: 'hidden'
       }}>
         {/* Search Input Bar */}
@@ -59,11 +60,11 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
-          padding: '14px 18px',
-          borderBottom: '1px solid #D8D5CB',
-          background: '#FBFAF6'
+          padding: '16px 20px',
+          borderBottom: '1px solid #E2E8F0',
+          background: '#FFFFFF'
         }}>
-          <Search size={18} style={{ color: '#2F6F62' }} />
+          <Search size={20} style={{ color: '#008E4F' }} />
           <input
             type="text"
             placeholder="Search national projects, states, ministries, directives, documents (e.g. 'Mumbai', 'Expressway', 'DIR')..."
@@ -75,9 +76,9 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
               border: 'none',
               outline: 'none',
               background: 'transparent',
-              fontSize: '14px',
+              fontSize: '15px',
               fontFamily: 'Inter, sans-serif',
-              color: '#16233A'
+              color: '#0F172A'
             }}
           />
           <button
@@ -85,9 +86,12 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
             style={{
               background: 'none',
               border: 'none',
-              color: '#6B7280',
+              color: '#94A3B8',
               cursor: 'pointer',
-              padding: '2px'
+              padding: '4px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >
             <X size={18} />
@@ -95,20 +99,20 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
         </div>
 
         {/* Results Body */}
-        <div style={{ maxHeight: '420px', overflowY: 'auto', padding: '16px' }}>
+        <div style={{ maxHeight: '420px', overflowY: 'auto', padding: '18px' }}>
           {!q ? (
-            <div style={{ fontSize: '12px', color: '#6B7280', textAlign: 'center', padding: '24px 0' }}>
+            <div style={{ fontSize: '13px', color: '#64748B', textAlign: 'center', padding: '28px 0' }}>
               Type a search query to search across all national records, corridors, and statutory directives.
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
               {/* Projects Section */}
               {matchingProjects.length > 0 && (
                 <div>
-                  <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: '#6B7280', fontWeight: 700, marginBottom: '6px' }}>
+                  <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748B', fontWeight: 700, marginBottom: '8px', letterSpacing: '0.04em' }}>
                     National Projects ({matchingProjects.length})
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {matchingProjects.map(p => (
                       <div
                         key={p.id}
@@ -117,25 +121,27 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
                           onNavigate && onNavigate('project-detail', p.id);
                         }}
                         style={{
-                          padding: '10px 12px',
-                          background: '#FBFAF6',
-                          border: '1px solid #D8D5CB',
+                          padding: '12px 14px',
+                          background: '#F8FAFC',
+                          border: '1px solid #E2E8F0',
+                          borderRadius: '10px',
                           cursor: 'pointer',
                           display: 'flex',
                           justifyContent: 'space-between',
-                          alignItems: 'center'
+                          alignItems: 'center',
+                          transition: 'all 0.15s ease'
                         }}
                       >
                         <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <span style={{ fontFamily: 'monospace', fontSize: '11px', color: '#2F6F62', fontWeight: 600 }}>{p.id}</span>
-                            <span style={{ fontSize: '13px', fontWeight: 600, color: '#16233A' }}>{p.name}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontFamily: '"Roboto Mono", monospace', fontSize: '11px', color: '#008E4F', fontWeight: 700 }}>{p.id}</span>
+                            <span style={{ fontSize: '13.5px', fontWeight: 600, color: '#0F172A' }}>{p.name}</span>
                           </div>
-                          <div style={{ fontSize: '11.5px', color: '#6B7280', marginTop: '2px' }}>
+                          <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>
                             {p.state} ({p.district}) &nbsp;|&nbsp; {p.category} &nbsp;|&nbsp; Stage: {p.stage}
                           </div>
                         </div>
-                        <ChevronRight size={14} style={{ color: '#2F6F62' }} />
+                        <ChevronRight size={16} style={{ color: '#008E4F' }} />
                       </div>
                     ))}
                   </div>
@@ -145,10 +151,10 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
               {/* Directives Section */}
               {matchingDirectives.length > 0 && (
                 <div>
-                  <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: '#6B7280', fontWeight: 700, marginBottom: '6px' }}>
+                  <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748B', fontWeight: 700, marginBottom: '8px', letterSpacing: '0.04em' }}>
                     Ministerial Directives &amp; Inquiries ({matchingDirectives.length})
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {matchingDirectives.map(d => (
                       <div
                         key={d.id}
@@ -157,25 +163,27 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
                           onNavigate && onNavigate('alerts');
                         }}
                         style={{
-                          padding: '10px 12px',
-                          background: '#FBFAF6',
-                          border: '1px solid #D8D5CB',
+                          padding: '12px 14px',
+                          background: '#F8FAFC',
+                          border: '1px solid #E2E8F0',
+                          borderRadius: '10px',
                           cursor: 'pointer',
                           display: 'flex',
                           justifyContent: 'space-between',
-                          alignItems: 'center'
+                          alignItems: 'center',
+                          transition: 'all 0.15s ease'
                         }}
                       >
                         <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <span style={{ fontFamily: 'monospace', fontSize: '11px', color: '#8A6A1E', fontWeight: 600 }}>{d.id}</span>
-                            <span style={{ fontSize: '13px', fontWeight: 600, color: '#16233A' }}>{d.title}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontFamily: '"Roboto Mono", monospace', fontSize: '11px', color: '#D97706', fontWeight: 700 }}>{d.id}</span>
+                            <span style={{ fontSize: '13.5px', fontWeight: 600, color: '#0F172A' }}>{d.title}</span>
                           </div>
-                          <div style={{ fontSize: '11.5px', color: '#6B7280', marginTop: '2px' }}>
+                          <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>
                             Target: {d.targetAuthority} &nbsp;|&nbsp; Status: {d.status}
                           </div>
                         </div>
-                        <ChevronRight size={14} style={{ color: '#8A6A1E' }} />
+                        <ChevronRight size={16} style={{ color: '#D97706' }} />
                       </div>
                     ))}
                   </div>
@@ -183,7 +191,7 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
               )}
 
               {matchingProjects.length === 0 && matchingDirectives.length === 0 && (
-                <div style={{ textAlign: 'center', padding: '24px 0', color: '#6B7280', fontSize: '12.5px' }}>
+                <div style={{ textAlign: 'center', padding: '28px 0', color: '#64748B', fontSize: '13px' }}>
                   No matching records found for "{query}".
                 </div>
               )}
@@ -193,11 +201,11 @@ export default function MordGlobalSearchModal({ isOpen, onClose, onNavigate }) {
 
         {/* Footer */}
         <div style={{
-          background: '#F2F1EC',
-          borderTop: '1px solid #D8D5CB',
-          padding: '8px 16px',
-          fontSize: '11px',
-          color: '#6B7280',
+          background: '#F8FAFC',
+          borderTop: '1px solid #E2E8F0',
+          padding: '10px 18px',
+          fontSize: '11.5px',
+          color: '#64748B',
           display: 'flex',
           justifyContent: 'space-between'
         }}>

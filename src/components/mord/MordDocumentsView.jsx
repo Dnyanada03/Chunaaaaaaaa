@@ -48,39 +48,24 @@ export default function MordDocumentsView({ onNavigate }) {
   };
 
   return (
-    <div style={{
-      maxWidth: '1440px',
-      margin: '0 auto',
-      padding: '24px 28px 80px',
-      fontFamily: 'Inter, sans-serif'
-    }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* Page Title */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-        <div>
-          <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#6B7280', fontWeight: 600 }}>
-            Central Document Repository &amp; DSC Verification
-          </div>
-          <h2 style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '24px', fontWeight: 600, margin: '2px 0 0', color: '#16233A' }}>
-            National Project Documents &amp; Statutory Archives
-          </h2>
-          <p style={{ fontSize: '13px', color: '#3A4A63', margin: '4px 0 0' }}>
-            Permanent electronic records with Class-3 digital signatures and immutable audit timestamps across all national projects.
-          </p>
+      <div className="page-banner">
+        <div className="page-title-group">
+          <h1>National Project Documents &amp; Statutory Archives</h1>
+          <p>Permanent electronic records with Class-3 digital signatures and immutable audit timestamps across all national projects • Central Document Repository</p>
         </div>
       </div>
 
       {/* Filter Toolbar */}
-      <div style={{
-        background: '#FFFFFF',
-        border: '1px solid #D8D5CB',
+      <div className="card" style={{
         padding: '14px 18px',
-        marginBottom: '20px',
         display: 'flex',
         gap: '14px',
         alignItems: 'center'
       }}>
         <div style={{ position: 'relative', flex: 1 }}>
-          <Search size={14} style={{ position: 'absolute', left: '10px', top: '10px', color: '#6B7280' }} />
+          <Search size={15} style={{ position: 'absolute', left: '12px', top: '11px', color: '#64748B' }} />
           <input
             type="text"
             placeholder="Search documents by name, project, or authority..."
@@ -88,24 +73,27 @@ export default function MordDocumentsView({ onNavigate }) {
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
               width: '100%',
-              padding: '7px 10px 7px 32px',
-              border: '1px solid #D8D5CB',
+              padding: '8px 12px 8px 34px',
+              border: '1px solid #E2E8F0',
+              borderRadius: '8px',
               fontSize: '12.5px',
-              color: '#16233A'
+              color: '#0F172A',
+              background: '#FFFFFF'
             }}
           />
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '11.5px', color: '#6B7280', textTransform: 'uppercase', fontWeight: 600 }}>Doc Type:</span>
+          <span style={{ fontSize: '11.5px', color: '#64748B', textTransform: 'uppercase', fontWeight: 600 }}>Doc Type:</span>
           <select
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
             style={{
-              padding: '6px 10px',
-              border: '1px solid #D8D5CB',
+              padding: '7px 12px',
+              border: '1px solid #E2E8F0',
+              borderRadius: '8px',
               fontSize: '12px',
-              color: '#16233A',
+              color: '#0F172A',
               background: '#FFFFFF'
             }}
           >
@@ -115,109 +103,108 @@ export default function MordDocumentsView({ onNavigate }) {
       </div>
 
       {/* Document Table */}
-      <div style={{
-        background: '#FFFFFF',
-        border: '1px solid #D8D5CB',
-        overflowX: 'auto'
-      }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px' }}>
-          <thead>
-            <tr style={{ background: '#F2F1EC', borderBottom: '1px solid #16233A' }}>
-              <th style={{ padding: '10px 14px', textAlign: 'left', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>DOCUMENT NAME</th>
-              <th style={{ padding: '10px 12px', textAlign: 'left', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>PROJECT</th>
-              <th style={{ padding: '10px 12px', textAlign: 'left', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>TYPE</th>
-              <th style={{ padding: '10px 10px', textAlign: 'center', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>VER</th>
-              <th style={{ padding: '10px 12px', textAlign: 'left', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>UPLOADED BY</th>
-              <th style={{ padding: '10px 14px', textAlign: 'left', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>TIMESTAMP</th>
-              <th style={{ padding: '10px 12px', textAlign: 'center', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>SIGNATURE</th>
-              <th style={{ padding: '10px 12px', textAlign: 'center', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredDocs.map((doc, idx) => (
-              <tr
-                key={doc.id}
-                style={{
-                  borderBottom: '1px solid #D8D5CB',
-                  background: idx % 2 === 0 ? '#FFFFFF' : '#FBFAF6'
-                }}
-              >
-                <td style={{ padding: '12px 14px', fontWeight: 600, color: '#16233A' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <FileText size={14} style={{ color: '#2F6F62', flexShrink: 0 }} />
-                    <span>{doc.name}</span>
-                  </div>
-                  <div style={{ fontSize: '10.5px', color: '#6B7280', fontFamily: 'monospace', marginTop: '2px' }}>
-                    {doc.id} · {doc.size}
-                  </div>
-                </td>
-
-                <td style={{ padding: '12px 12px' }}>
-                  <div
-                    onClick={() => onNavigate && onNavigate('project-detail', doc.projectId)}
-                    style={{ color: '#2F6F62', fontWeight: 500, cursor: 'pointer', fontSize: '12px' }}
-                  >
-                    {doc.project}
-                  </div>
-                  <div style={{ fontSize: '10.5px', color: '#6B7280', fontFamily: 'monospace' }}>
-                    {doc.projectId}
-                  </div>
-                </td>
-
-                <td style={{ padding: '12px 12px', color: '#3A4A63' }}>
-                  {doc.type}
-                </td>
-
-                <td style={{ padding: '12px 10px', textAlign: 'center', fontFamily: 'monospace', fontWeight: 600 }}>
-                  v{doc.version}
-                </td>
-
-                <td style={{ padding: '12px 12px', color: '#3A4A63' }}>
-                  <div>{doc.uploader}</div>
-                  <div style={{ fontSize: '10.5px', color: '#6B7280' }}>{doc.department}</div>
-                </td>
-
-                <td style={{ padding: '12px 14px', fontFamily: 'monospace', fontSize: '11px', color: '#3A4A63' }}>
-                  {doc.timestamp}
-                </td>
-
-                <td style={{ padding: '12px 12px', textAlign: 'center' }}>
-                  <span style={{
-                    fontSize: '10px',
-                    fontFamily: 'monospace',
-                    padding: '2px 6px',
-                    background: doc.signature === 'Digitally Signed' ? '#E4EEE9' : '#F2ECDC',
-                    color: doc.signature === 'Digitally Signed' ? '#2F6F62' : '#8A6A1E',
-                    border: '1px solid',
-                    borderColor: doc.signature === 'Digitally Signed' ? '#2F6F62' : '#8A6A1E',
-                    fontWeight: 600
-                  }}>
-                    {doc.signature}
-                  </span>
-                </td>
-
-                <td style={{ padding: '12px 12px', textAlign: 'center' }}>
-                  <button
-                    onClick={() => handleViewDoc(doc)}
-                    style={{
-                      background: '#FFFFFF',
-                      border: '1px solid #D8D5CB',
-                      padding: '4px 8px',
-                      fontSize: '11px',
-                      cursor: 'pointer',
-                      borderRadius: '2px',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px'
-                    }}
-                  >
-                    <Eye size={12} /> Inspect
-                  </button>
-                </td>
+      <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="table-container" style={{ margin: 0, border: 'none', borderRadius: 0 }}>
+          <table className="gov-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px' }}>
+            <thead>
+              <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0' }}>
+                <th style={{ padding: '12px 14px', textAlign: 'left', fontSize: '11px', color: '#475569', fontWeight: 700, textTransform: 'uppercase' }}>DOCUMENT NAME</th>
+                <th style={{ padding: '12px 12px', textAlign: 'left', fontSize: '11px', color: '#475569', fontWeight: 700, textTransform: 'uppercase' }}>PROJECT</th>
+                <th style={{ padding: '12px 12px', textAlign: 'left', fontSize: '11px', color: '#475569', fontWeight: 700, textTransform: 'uppercase' }}>TYPE</th>
+                <th style={{ padding: '12px 10px', textAlign: 'center', fontSize: '11px', color: '#475569', fontWeight: 700, textTransform: 'uppercase' }}>VER</th>
+                <th style={{ padding: '12px 12px', textAlign: 'left', fontSize: '11px', color: '#475569', fontWeight: 700, textTransform: 'uppercase' }}>UPLOADED BY</th>
+                <th style={{ padding: '12px 14px', textAlign: 'left', fontSize: '11px', color: '#475569', fontWeight: 700, textTransform: 'uppercase' }}>TIMESTAMP</th>
+                <th style={{ padding: '12px 12px', textAlign: 'center', fontSize: '11px', color: '#475569', fontWeight: 700, textTransform: 'uppercase' }}>SIGNATURE</th>
+                <th style={{ padding: '12px 12px', textAlign: 'center', fontSize: '11px', color: '#475569', fontWeight: 700, textTransform: 'uppercase' }}>ACTION</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredDocs.map((doc, idx) => (
+                <tr
+                  key={doc.id}
+                  style={{
+                    borderBottom: '1px solid #E2E8F0',
+                    background: idx % 2 === 0 ? '#FFFFFF' : '#F8FAFC',
+                    transition: 'background 0.1s'
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#F1F5F9'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = idx % 2 === 0 ? '#FFFFFF' : '#F8FAFC'; }}
+                >
+                  <td style={{ padding: '12px 14px', fontWeight: 600, color: '#0F172A' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <FileText size={15} style={{ color: '#008E4F', flexShrink: 0 }} />
+                      <span>{doc.name}</span>
+                    </div>
+                    <div style={{ fontSize: '11px', color: '#64748B', fontFamily: 'var(--font-mono, monospace)', marginTop: '2px' }}>
+                      {doc.id} · {doc.size}
+                    </div>
+                  </td>
+
+                  <td style={{ padding: '12px 12px' }}>
+                    <div
+                      onClick={() => onNavigate && onNavigate('project-detail', doc.projectId)}
+                      style={{ color: '#008E4F', fontWeight: 600, cursor: 'pointer', fontSize: '12.5px' }}
+                    >
+                      {doc.project}
+                    </div>
+                    <div style={{ fontSize: '11px', color: '#64748B', fontFamily: 'var(--font-mono, monospace)' }}>
+                      {doc.projectId}
+                    </div>
+                  </td>
+
+                  <td style={{ padding: '12px 12px', color: '#475569' }}>
+                    {doc.type}
+                  </td>
+
+                  <td style={{ padding: '12px 10px', textAlign: 'center', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
+                    v{doc.version}
+                  </td>
+
+                  <td style={{ padding: '12px 12px', color: '#0F172A' }}>
+                    <div style={{ fontWeight: 500 }}>{doc.uploader}</div>
+                    <div style={{ fontSize: '11px', color: '#64748B' }}>{doc.department}</div>
+                  </td>
+
+                  <td style={{ padding: '12px 14px', fontFamily: 'var(--font-mono, monospace)', fontSize: '11.5px', color: '#475569' }}>
+                    {doc.timestamp}
+                  </td>
+
+                  <td style={{ padding: '12px 12px', textAlign: 'center' }}>
+                    <span style={{
+                      fontSize: '10.5px',
+                      fontFamily: 'var(--font-mono, monospace)',
+                      padding: '2px 7px',
+                      borderRadius: '4px',
+                      background: doc.signature === 'Digitally Signed' ? '#E6F4EA' : '#FEF3C7',
+                      color: doc.signature === 'Digitally Signed' ? '#15803D' : '#B45309',
+                      border: '1px solid',
+                      borderColor: doc.signature === 'Digitally Signed' ? '#86EFAC' : '#FCD34D',
+                      fontWeight: 700
+                    }}>
+                      {doc.signature}
+                    </span>
+                  </td>
+
+                  <td style={{ padding: '12px 12px', textAlign: 'center' }}>
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => handleViewDoc(doc)}
+                      style={{
+                        padding: '4px 10px',
+                        fontSize: '11.5px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                    >
+                      <Eye size={13} /> Inspect
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

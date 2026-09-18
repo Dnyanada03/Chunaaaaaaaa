@@ -74,7 +74,8 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
       left: 0,
       right: 0,
       bottom: 0,
-      background: 'rgba(22, 35, 58, 0.65)',
+      background: 'rgba(15, 23, 42, 0.65)',
+      backdropFilter: 'blur(4px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -85,40 +86,43 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
         background: '#FFFFFF',
         width: '100%',
         maxWidth: '720px',
-        border: '1px solid #D8D5CB',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
-        borderRadius: '4px',
+        border: '1px solid #E2E8F0',
+        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px',
         overflow: 'hidden'
       }}>
         {/* Modal Header */}
         <div style={{
-          background: '#16233A',
-          color: '#F2F1EC',
-          padding: '16px 24px',
+          background: 'var(--color-header-gradient, linear-gradient(135deg, #008E4F 0%, #0B4726 100%))',
+          color: '#FFFFFF',
+          padding: '20px 24px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '2px solid #2F6F62'
+          justifyContent: 'space-between'
         }}>
           <div>
-            <div style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9FC2B4', fontWeight: 600 }}>
+            <div style={{ fontSize: '10.5px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#A7F3D0', fontWeight: 600 }}>
               Ministry of Rural Development • Government of India
             </div>
-            <h2 style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '18px', fontWeight: 600, margin: '2px 0 0', color: '#FFFFFF' }}>
+            <h2 style={{ fontFamily: 'Merriweather, Georgia, serif', fontSize: '18px', fontWeight: 700, margin: '4px 0 0', color: '#FFFFFF' }}>
               Issue Ministerial Supervisory Directive / Inquiry
             </h2>
           </div>
           <button
             onClick={onClose}
             style={{
-              background: 'none',
+              background: 'rgba(255, 255, 255, 0.15)',
               border: 'none',
-              color: '#CBD3DE',
+              color: '#FFFFFF',
               cursor: 'pointer',
-              padding: '4px'
+              padding: '6px',
+              borderRadius: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
@@ -129,8 +133,8 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
               width: '56px',
               height: '56px',
               borderRadius: '50%',
-              background: '#E4EEE9',
-              color: '#2F6F62',
+              background: '#ECFDF5',
+              color: '#008E4F',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -138,13 +142,13 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
             }}>
               <CheckCircle2 size={32} />
             </div>
-            <h3 style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '20px', color: '#16233A', margin: '0 0 6px' }}>
+            <h3 style={{ fontFamily: 'Merriweather, Georgia, serif', fontSize: '20px', color: '#111827', margin: '0 0 6px' }}>
               Supervisory Directive Officially Dispatched
             </h3>
-            <p style={{ fontSize: '13px', color: '#3A4A63', maxWidth: '460px', margin: '0 auto 12px' }}>
+            <p style={{ fontSize: '13px', color: '#4B5563', maxWidth: '460px', margin: '0 auto 12px', lineHeight: 1.5 }}>
               Signed with Class-3 DSC ({mordOfficerProfile.certSerial}). Delivered electronically to {targetAuthority} with statutory mandate of {responseDays} days.
             </p>
-            <div style={{ fontSize: '11px', fontFamily: '"IBM Plex Mono", monospace', color: '#6B7280' }}>
+            <div style={{ fontSize: '11px', fontFamily: '"Roboto Mono", monospace', color: '#64748B' }}>
               Tracking Token: DIR-MORD-2026-SYS-{Date.now().toString().slice(-4)}
             </div>
           </div>
@@ -152,39 +156,42 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
           <form onSubmit={handleSubmit} style={{ padding: '24px' }}>
             {/* Project Context Badge */}
             <div style={{
-              background: '#F2F1EC',
-              border: '1px solid #D8D5CB',
-              padding: '10px 14px',
-              marginBottom: '18px',
-              fontSize: '12.5px',
+              background: '#F8FAFC',
+              border: '1px solid #E2E8F0',
+              borderRadius: '10px',
+              padding: '12px 16px',
+              marginBottom: '20px',
+              fontSize: '13px',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
               <div>
-                <strong style={{ color: '#16233A' }}>Target Project:</strong> {project.name}
-                <span style={{ fontFamily: '"IBM Plex Mono", monospace', color: '#2F6F62', marginLeft: '8px' }}>
+                <strong style={{ color: '#111827' }}>Target Project:</strong> {project.name}
+                <span style={{ fontFamily: '"Roboto Mono", monospace', color: '#008E4F', marginLeft: '8px', fontWeight: 600 }}>
                   ({project.id})
                 </span>
               </div>
               <span style={{
-                fontFamily: '"IBM Plex Mono", monospace',
+                fontFamily: '"Roboto Mono", monospace',
                 fontSize: '11px',
-                padding: '2px 8px',
-                background: project.status === 'Delayed' ? '#F6E7E2' : '#E4EEE9',
-                color: project.status === 'Delayed' ? '#A6432B' : '#2F6F62',
-                border: '1px solid'
+                padding: '4px 10px',
+                borderRadius: '9999px',
+                background: project.status === 'Delayed' ? '#FEF2F2' : '#ECFDF5',
+                color: project.status === 'Delayed' ? '#991B1B' : '#065F46',
+                border: project.status === 'Delayed' ? '1px solid #FECACA' : '1px solid #A7F3D0',
+                fontWeight: 600
               }}>
                 Stage: {project.stage}
               </span>
             </div>
 
             {/* Directive Type Selection */}
-            <div style={{ marginBottom: '16px' }}>
-              <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#3A4A63', marginBottom: '6px' }}>
+            <div style={{ marginBottom: '18px' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#475569', marginBottom: '8px' }}>
                 Action Type
               </label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                 {[
                   { id: 'DEMAND_DELAY_EXPLANATION', label: 'Demand Delay Explanation', desc: 'Formal statutory inquiry on stalled stage' },
                   { id: 'POLICY_SUGGESTION', label: 'Supervisory Directive', desc: 'Ministerial policy guidance & recommendations' },
@@ -195,19 +202,20 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
                     type="button"
                     onClick={() => setDirectiveType(type.id)}
                     style={{
-                      padding: '10px',
+                      padding: '12px',
                       textAlign: 'left',
-                      background: directiveType === type.id ? '#E4EEE9' : '#FFFFFF',
+                      background: directiveType === type.id ? '#ECFDF5' : '#FFFFFF',
                       border: '1px solid',
-                      borderColor: directiveType === type.id ? '#2F6F62' : '#D8D5CB',
-                      borderRadius: '3px',
-                      cursor: 'pointer'
+                      borderColor: directiveType === type.id ? '#008E4F' : '#CBD5E1',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease'
                     }}
                   >
-                    <div style={{ fontSize: '12px', fontWeight: 600, color: directiveType === type.id ? '#2F6F62' : '#16233A' }}>
+                    <div style={{ fontSize: '12.5px', fontWeight: 600, color: directiveType === type.id ? '#065F46' : '#1E293B' }}>
                       {type.label}
                     </div>
-                    <div style={{ fontSize: '10.5px', color: '#6B7280', marginTop: '2px' }}>
+                    <div style={{ fontSize: '11px', color: '#64748B', marginTop: '4px', lineHeight: 1.3 }}>
                       {type.desc}
                     </div>
                   </button>
@@ -216,9 +224,9 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
             </div>
 
             {/* Recipient Authority & Response Time */}
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '14px', marginBottom: '16px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '14px', marginBottom: '18px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#3A4A63', marginBottom: '4px' }}>
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#475569', marginBottom: '6px' }}>
                   Target Recipient Authority
                 </label>
                 <input
@@ -227,18 +235,20 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
                   onChange={(e) => setTargetAuthority(e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '8px 10px',
-                    border: '1px solid #D8D5CB',
-                    borderRadius: '2px',
+                    padding: '9px 12px',
+                    border: '1px solid #CBD5E1',
+                    borderRadius: '8px',
                     fontSize: '13px',
-                    color: '#16233A'
+                    color: '#1E293B',
+                    outline: 'none',
+                    background: '#FFFFFF'
                   }}
                   required
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#3A4A63', marginBottom: '4px' }}>
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#475569', marginBottom: '6px' }}>
                   Mandated Response Window
                 </label>
                 <select
@@ -246,12 +256,13 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
                   onChange={(e) => setResponseDays(Number(e.target.value))}
                   style={{
                     width: '100%',
-                    padding: '8px 10px',
-                    border: '1px solid #D8D5CB',
-                    borderRadius: '2px',
+                    padding: '9px 12px',
+                    border: '1px solid #CBD5E1',
+                    borderRadius: '8px',
                     fontSize: '13px',
-                    color: '#16233A',
-                    background: '#FFFFFF'
+                    color: '#1E293B',
+                    background: '#FFFFFF',
+                    outline: 'none'
                   }}
                 >
                   <option value={7}>7 Calendar Days (Urgent)</option>
@@ -262,8 +273,8 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
             </div>
 
             {/* Directive Subject / Title */}
-            <div style={{ marginBottom: '16px' }}>
-              <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#3A4A63', marginBottom: '4px' }}>
+            <div style={{ marginBottom: '18px' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#475569', marginBottom: '6px' }}>
                 Subject / Title
               </label>
               <input
@@ -272,19 +283,21 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
                 onChange={(e) => setTitle(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '8px 10px',
-                  border: '1px solid #D8D5CB',
-                  borderRadius: '2px',
+                  padding: '9px 12px',
+                  border: '1px solid #CBD5E1',
+                  borderRadius: '8px',
                   fontSize: '13px',
-                  color: '#16233A'
+                  color: '#1E293B',
+                  outline: 'none',
+                  background: '#FFFFFF'
                 }}
                 required
               />
             </div>
 
             {/* Directive Content */}
-            <div style={{ marginBottom: '18px' }}>
-              <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#3A4A63', marginBottom: '4px' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#475569', marginBottom: '6px' }}>
                 Directive Content & Statutory Inquiries
               </label>
               <textarea
@@ -293,13 +306,15 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
                 rows={5}
                 style={{
                   width: '100%',
-                  padding: '10px',
-                  border: '1px solid #D8D5CB',
-                  borderRadius: '2px',
-                  fontSize: '12.5px',
-                  color: '#16233A',
-                  lineHeight: 1.5,
-                  fontFamily: 'Inter, sans-serif'
+                  padding: '12px',
+                  border: '1px solid #CBD5E1',
+                  borderRadius: '8px',
+                  fontSize: '13px',
+                  color: '#1E293B',
+                  lineHeight: 1.55,
+                  fontFamily: 'Inter, sans-serif',
+                  outline: 'none',
+                  background: '#FFFFFF'
                 }}
                 required
               />
@@ -307,22 +322,23 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
 
             {/* DSC Signatory Strip */}
             <div style={{
-              background: '#FBFAF6',
-              border: '1px solid #D8D5CB',
-              padding: '10px 14px',
-              marginBottom: '20px',
+              background: '#F8FAFC',
+              border: '1px solid #E2E8F0',
+              borderRadius: '8px',
+              padding: '12px 16px',
+              marginBottom: '24px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              fontSize: '12px'
+              fontSize: '12.5px'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#2F6F62' }}>
-                <ShieldCheck size={16} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#008E4F' }}>
+                <ShieldCheck size={18} />
                 <span>
                   <strong>Signatory:</strong> {mordOfficerProfile.name} (Class-3 DSC Active)
                 </span>
               </div>
-              <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: '#6B7280' }}>
+              <span style={{ fontFamily: '"Roboto Mono", monospace', fontSize: '11px', color: '#64748B' }}>
                 {mordOfficerProfile.certSerial}
               </span>
             </div>
@@ -333,14 +349,11 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
                 type="button"
                 onClick={onClose}
                 disabled={isSigning}
+                className="btn btn-secondary"
                 style={{
-                  background: 'none',
-                  border: '1px solid #D8D5CB',
                   padding: '9px 18px',
                   fontSize: '13px',
-                  color: '#3A4A63',
-                  cursor: 'pointer',
-                  borderRadius: '2px'
+                  borderRadius: '8px'
                 }}
               >
                 Cancel
@@ -349,15 +362,11 @@ export default function MordIssueDirectiveModal({ isOpen, onClose, project, onDi
               <button
                 type="submit"
                 disabled={isSigning}
+                className="btn btn-primary"
                 style={{
-                  background: '#2F6F62',
-                  border: 'none',
-                  padding: '9px 20px',
+                  padding: '9px 22px',
                   fontSize: '13px',
-                  fontWeight: 600,
-                  color: '#FFFFFF',
-                  cursor: 'pointer',
-                  borderRadius: '2px',
+                  borderRadius: '8px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px'

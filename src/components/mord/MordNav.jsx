@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   LayoutDashboard,
   FolderKanban,
@@ -8,114 +8,129 @@ import {
   FolderArchive,
   AlertTriangle,
   Settings,
-  Landmark
+  Landmark,
+  Layers,
+  ChevronDown
 } from 'lucide-react';
 
 export default function MordNav({ activeTab, setActiveTab, unreadDirectives = 2 }) {
-  const navTabs = [
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const primaryNavItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'projects', label: 'Projects', icon: FolderKanban, badge: '128' },
     { id: 'map', label: 'National Map', icon: MapPin },
     { id: 'states', label: 'States', icon: Building2 },
     { id: 'ministries', label: 'Ministries / Depts', icon: Landmark },
-    { id: 'reports', label: 'Reports & MIS', icon: FileText },
-    { id: 'documents', label: 'Documents', icon: FolderArchive },
-    { id: 'alerts', label: 'Alerts & Directives', icon: AlertTriangle, alertBadge: unreadDirectives },
-    { id: 'settings', label: 'Settings', icon: Settings }
+    { id: 'alerts', label: 'Alerts & Directives', icon: AlertTriangle, badge: unreadDirectives, badgeType: 'danger' }
   ];
 
+  const resourceSubItems = [
+    { id: 'reports', label: 'Reports & MIS', icon: FileText, desc: 'Statutory compliance & audit reports' },
+    { id: 'documents', label: 'Document Vault', icon: FolderArchive, desc: 'Central gazette & land record archives' },
+    { id: 'settings', label: 'Supervisory Settings', icon: Settings, desc: 'System configuration & directive logs' }
+  ];
+
+  const isResourceActive = resourceSubItems.some(item => item.id === activeTab);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsResourcesOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleResourcesClick = () => {
+    setIsResourcesOpen(prev => !prev);
+  };
+
   return (
-    <nav style={{
-      background: '#FFFFFF',
-      borderBottom: '1px solid #D8D5CB',
-      padding: '0 28px',
-      overflowX: 'auto',
-      whiteSpace: 'nowrap'
-    }} aria-label="National Supervisory Navigation">
-      <div style={{
-        maxWidth: '1440px',
-        margin: '0 auto',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '4px'
-      }}>
-        {navTabs.map(tab => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.id;
+    <nav className="top-nav-bar" aria-label="National Supervisory Navigation">
+      <div className="top-nav-container">
+        {primaryNavItems.map(item => {
+          const Icon = item.icon;
+          const isActive = activeTab === item.id;
           return (
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '13px 14px',
-                background: 'none',
-                border: 'none',
-                borderBottom: isActive ? '3px solid #2F6F62' : '3px solid transparent',
-                color: isActive ? '#16233A' : '#3A4A63',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '13px',
-                fontWeight: isActive ? 700 : 500,
-                cursor: 'pointer',
-                transition: 'all 0.12s ease',
-                position: 'relative'
+              key={item.id}
+              onClick={() => {
+                setActiveTab(item.id);
+                setIsResourcesOpen(false);
               }}
+              className={`top-nav-item ${isActive ? 'active' : ''}`}
             >
-              <Icon size={15} style={{
-                color: isActive ? '#2F6F62' : (tab.highlight ? '#8A6A1E' : '#3A4A63')
-              }} />
-              <span>{tab.label}</span>
-
-              {tab.badge && (
-                <span style={{
-                  fontFamily: '"IBM Plex Mono", Consolas, monospace',
-                  fontSize: '10.5px',
-                  background: isActive ? '#E4EEE9' : '#F2F1EC',
-                  color: isActive ? '#2F6F62' : '#3A4A63',
-                  padding: '1px 6px',
-                  borderRadius: '3px',
-                  fontWeight: 600,
-                  border: '1px solid #D8D5CB'
-                }}>
-                  {tab.badge}
-                </span>
-              )}
-
-              {tab.alertBadge && tab.alertBadge > 0 ? (
-                <span style={{
-                  fontFamily: '"IBM Plex Mono", Consolas, monospace',
-                  fontSize: '10px',
-                  background: '#F6E7E2',
-                  color: '#A6432B',
-                  border: '1px solid #A6432B',
-                  padding: '1px 5px',
-                  borderRadius: '3px',
-                  fontWeight: 700
-                }}>
-                  {tab.alertBadge}
+              <Icon size={15} />
+              <span>{item.label}</span>
+              {item.badge ? (
+                <span className={`nav-badge ${item.badgeType || ''}`}>
+                  {item.badge}
                 </span>
               ) : null}
-
-              {tab.highlight && (
-                <span style={{
-                  fontSize: '9px',
-                  letterSpacing: '0.04em',
-                  textTransform: 'uppercase',
-                  background: '#F2ECDC',
-                  color: '#8A6A1E',
-                  border: '1px solid #8A6A1E',
-                  padding: '1px 4px',
-                  borderRadius: '2px',
-                  fontWeight: 700
-                }}>
-                  X-Factor
-                </span>
-              )}
             </button>
           );
         })}
+
+        {/* Resources Dropdown Tab */}
+        <div className="top-nav-dropdown-container" ref={dropdownRef}>
+          <button
+            className={`top-nav-item ${isResourceActive || isResourcesOpen ? 'active' : ''}`}
+            onClick={handleResourcesClick}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            <Layers size={15} strokeWidth={1.75} />
+            <span>Resources</span>
+            <ChevronDown
+              size={13}
+              style={{
+                transition: 'transform 0.2s ease',
+                transform: isResourcesOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+              }}
+            />
+          </button>
+
+          {isResourcesOpen && (
+            <div className="top-nav-dropdown-menu">
+              <div style={{
+                fontSize: '10.5px',
+                fontWeight: 800,
+                color: '#0B4726',
+                letterSpacing: '0.8px',
+                padding: '6px 12px 8px 12px',
+                borderBottom: '1px solid #E2E8F0',
+                textTransform: 'uppercase'
+              }}>
+                RESOURCES & REPOSITORIES
+              </div>
+
+              {resourceSubItems.map((sub) => {
+                const SubIcon = sub.icon;
+                const isSubActive = activeTab === sub.id;
+
+                return (
+                  <button
+                    key={sub.id}
+                    className={`top-nav-dropdown-item ${isSubActive ? 'active' : ''}`}
+                    onClick={() => {
+                      setActiveTab(sub.id);
+                      setIsResourcesOpen(false);
+                    }}
+                    style={{ padding: '12px 14px' }}
+                  >
+                    <SubIcon size={18} style={{ color: isSubActive ? '#FFF' : '#0B4726', flexShrink: 0 }} />
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
+                      <span style={{ fontSize: '13.5px', fontWeight: isSubActive ? 700 : 600 }}>{sub.label}</span>
+                      <span style={{ fontSize: '11px', opacity: isSubActive ? 0.9 : 0.7, fontWeight: 400 }}>{sub.desc}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

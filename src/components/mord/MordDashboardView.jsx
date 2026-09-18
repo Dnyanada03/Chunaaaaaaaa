@@ -14,7 +14,8 @@ import {
   Users,
   TreePine,
   ExternalLink,
-  HelpCircle
+  HelpCircle,
+  Bell
 } from 'lucide-react';
 import {
   nationalStageFlow,
@@ -58,146 +59,133 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
   };
 
   return (
-    <div style={{
-      maxWidth: '1440px',
-      margin: '0 auto',
-      padding: '24px 28px 80px',
-      fontFamily: 'Inter, sans-serif'
-    }}>
-      {/* High-Level Notification Ribbon */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        background: '#F2ECDC',
-        color: '#8A6A1E',
-        border: '1px solid #8A6A1E',
-        padding: '10px 18px',
-        fontSize: '13px',
-        marginBottom: '24px',
-        borderRadius: '2px'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <AlertTriangle size={16} style={{ color: '#8A6A1E' }} />
-          <span>
-            <strong>National Oversight Alert:</strong> 19 projects currently record abnormal delay (&gt;30 days). 3 ministerial directives are awaiting state responses.
-          </span>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+      {/* Official Clean Page Banner matching Tahsildar */}
+      <div className="page-banner">
+        <div className="page-title-group">
+          <h1>National Supervisory Executive Dashboard</h1>
+          <p>Ministry of Rural Development • Land Acquisition Monitoring &amp; RFCTLARR Act Statutory Compliance Gateway</p>
         </div>
-        <button
-          onClick={() => onNavigate && onNavigate('alerts')}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#8A6A1E',
-            textDecoration: 'underline',
-            fontWeight: 600,
-            fontSize: '12.5px',
-            cursor: 'pointer'
-          }}
-        >
-          View Directives Console →
-        </button>
+      </div>
+
+      {/* TOP NOTIFICATIONS & LIVE FIELD WORK ALERTS STREAM */}
+      <div className="card" style={{ borderLeft: '4px solid #D97706', padding: '16px 22px', background: '#FFFBEB' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '10px',
+              background: '#FEF3C7',
+              color: '#D97706',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <AlertTriangle size={18} strokeWidth={2} />
+            </div>
+            <div>
+              <span style={{ fontWeight: 700, color: '#92400E', fontSize: '13.5px' }}>
+                National Oversight Alert:
+              </span>{' '}
+              <span style={{ color: '#78350F', fontSize: '13.5px' }}>
+                19 projects currently record abnormal delay (&gt;30 days). 3 ministerial directives are awaiting state responses.
+              </span>
+            </div>
+          </div>
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={() => onNavigate && onNavigate('alerts')}
+            style={{ whiteSpace: 'nowrap', color: '#92400E', borderColor: '#FDE68A', background: '#FFFFFF' }}
+          >
+            View Directives Console →
+          </button>
+        </div>
       </div>
 
       {/* TOP KPI STRIP - PORTFOLIO COMMAND SUMMARY */}
-      <div style={{ marginBottom: '28px' }}>
-        <p style={{
+      <div>
+        <div style={{
           fontSize: '11px',
           textTransform: 'uppercase',
-          letterSpacing: '0.08em',
-          color: '#3A4A63',
+          letterSpacing: '0.8px',
+          color: '#475569',
           fontWeight: 700,
-          margin: '0 0 10px'
+          marginBottom: '12px'
         }}>
           National Land Acquisition Portfolio Overview
-        </p>
+        </div>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '1px',
-          background: '#D8D5CB',
-          border: '1px solid #D8D5CB'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: '18px'
         }}>
-          <div style={{ background: '#FFFFFF', padding: '16px 20px' }}>
-            <p style={{ fontSize: '11.5px', color: '#3A4A63', margin: '0 0 4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+          <div className="card" style={{ padding: '20px 22px', borderLeft: '4px solid #4B5563' }}>
+            <p style={{ fontSize: '11.5px', color: '#64748B', margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: '0.8px', fontWeight: 700 }}>
               Active Projects
             </p>
-            <p style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '24px', fontWeight: 600, color: '#16233A', margin: 0 }}>
+            <p style={{ fontFamily: 'Inter, -apple-system, sans-serif', fontSize: '28px', fontWeight: 800, color: '#0F172A', margin: 0, lineHeight: 1.1 }}>
               128
             </p>
-            <p style={{ fontSize: '11px', color: '#6B7280', margin: '4px 0 0' }}>Across 28 States / UTs</p>
+            <p style={{ fontSize: '12px', color: '#64748B', margin: '6px 0 0', fontWeight: 500 }}>Across 28 States / UTs</p>
           </div>
 
-          <div style={{ background: '#FFFFFF', padding: '16px 20px' }}>
-            <p style={{ fontSize: '11.5px', color: '#3A4A63', margin: '0 0 4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+          <div className="card" style={{ padding: '20px 22px', borderLeft: '4px solid #008E4F' }}>
+            <p style={{ fontSize: '11.5px', color: '#64748B', margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: '0.8px', fontWeight: 700 }}>
               Land Acquired
             </p>
-            <p style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '24px', fontWeight: 600, color: '#16233A', margin: 0 }}>
-              23,650 <span style={{ fontSize: '14px', fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Ha</span>
+            <p style={{ fontFamily: 'Inter, -apple-system, sans-serif', fontSize: '28px', fontWeight: 800, color: '#0F172A', margin: 0, lineHeight: 1.1 }}>
+              23,650 <span style={{ fontSize: '15px', fontWeight: 500, color: '#64748B' }}>Ha</span>
             </p>
-            <p style={{ fontSize: '11px', color: '#2F6F62', margin: '4px 0 0', fontWeight: 500 }}>61.5% of 38,420 Ha Target</p>
+            <p style={{ fontSize: '12px', color: '#008E4F', margin: '6px 0 0', fontWeight: 600 }}>61.5% of 38,420 Ha Target</p>
           </div>
 
-          <div style={{ background: '#FFFFFF', padding: '16px 20px' }}>
-            <p style={{ fontSize: '11.5px', color: '#3A4A63', margin: '0 0 4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Forest & Tribal Land Under Projects
+          <div className="card" style={{ padding: '20px 22px', borderLeft: '4px solid #D97706' }}>
+            <p style={{ fontSize: '11.5px', color: '#64748B', margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: '0.8px', fontWeight: 700 }}>
+              Forest &amp; Tribal Land Under Projects
             </p>
-            <p style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '24px', fontWeight: 600, color: '#16233A', margin: 0 }}>
-              7,460 <span style={{ fontSize: '14px', fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Ha</span>
+            <p style={{ fontFamily: 'Inter, -apple-system, sans-serif', fontSize: '28px', fontWeight: 800, color: '#0F172A', margin: 0, lineHeight: 1.1 }}>
+              7,460 <span style={{ fontSize: '15px', fontWeight: 500, color: '#64748B' }}>Ha</span>
             </p>
-            <p style={{ fontSize: '11px', color: '#8A6A1E', margin: '4px 0 0', fontWeight: 500 }}>4,520 Ha Forest · 2,940 Ha Tribal (PESA)</p>
+            <p style={{ fontSize: '12px', color: '#D97706', margin: '6px 0 0', fontWeight: 600 }}>4,520 Ha Forest · 2,940 Ha Tribal (PESA)</p>
           </div>
 
-          <div style={{ background: '#FFFFFF', padding: '16px 20px' }}>
-            <p style={{ fontSize: '11.5px', color: '#3A4A63', margin: '0 0 4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+          <div className="card" style={{ padding: '20px 22px', borderLeft: '4px solid #1A73E8' }}>
+            <p style={{ fontSize: '11.5px', color: '#64748B', margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: '0.8px', fontWeight: 700 }}>
               Affected Families
             </p>
-            <p style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '24px', fontWeight: 600, color: '#16233A', margin: 0 }}>
+            <p style={{ fontFamily: 'Inter, -apple-system, sans-serif', fontSize: '28px', fontWeight: 800, color: '#0F172A', margin: 0, lineHeight: 1.1 }}>
               84,320
             </p>
-            <p style={{ fontSize: '11px', color: '#8A6A1E', margin: '4px 0 0' }}>14,850 Tribal / PESA</p>
+            <p style={{ fontSize: '12px', color: '#D97706', margin: '6px 0 0', fontWeight: 500 }}>14,850 Tribal / PESA</p>
           </div>
         </div>
       </div>
 
       {/* 7.1 PROMINENT STAGE-FLOW VISUALIZATION */}
-      <div style={{
-        background: '#FFFFFF',
-        border: '1px solid #D8D5CB',
-        padding: '24px',
-        marginBottom: '30px'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '18px' }}>
+      <div className="card" style={{ borderLeft: '4px solid #0B4726' }}>
+        <div className="card-header" style={{ marginBottom: '18px', paddingBottom: '12px', flexWrap: 'wrap', gap: '12px' }}>
           <div>
-            <h3 style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '18px', fontWeight: 600, margin: '0 0 4px', color: '#16233A' }}>
+            <div className="card-title" style={{ fontSize: '15.5px' }}>
+              <TrendingUp size={16} strokeWidth={2} style={{ color: '#0B4726' }} />
               Statutory Stage-Flow Pipeline
-            </h3>
-            <p style={{ fontSize: '12.5px', color: '#3A4A63', margin: 0 }}>
+            </div>
+            <p style={{ fontSize: '12.5px', color: '#64748B', margin: '4px 0 0' }}>
               National tracking of projects progressing through the statutory RFCTLARR stages. Click any stage to inspect underlying projects.
             </p>
           </div>
 
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            background: '#F2F1EC',
-            padding: '6px 14px',
-            border: '1px solid #D8D5CB',
-            fontSize: '12px',
-            fontFamily: '"IBM Plex Mono", monospace'
-          }}>
-            <span style={{ color: '#3A4A63' }}>PARALLEL METRIC:</span>
-            <strong style={{ color: '#16233A' }}>LAND REQUIRED: 38,420 Ha</strong>
-            <span style={{ color: '#2F6F62' }}>| ACQUIRED: 23,650 Ha</span>
-          </div>
+          <span className="mono-code" style={{ fontSize: '11px', fontWeight: '700', background: '#E6F4EA', color: '#0B4726', padding: '4px 12px', borderRadius: '8px', border: '1px solid #CEEAD6' }}>
+            LAND REQUIRED: 38,420 Ha | ACQUIRED: 23,650 Ha
+          </span>
         </div>
 
         {/* Stage Flow Nodes */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
-          gap: '12px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '14px',
           position: 'relative'
         }}>
           {nationalStageFlow.map((flow, index) => {
@@ -206,21 +194,24 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
                 key={flow.stage}
                 onClick={() => handleStageClick(flow.stage)}
                 style={{
-                  background: '#FBFAF6',
-                  border: '1px solid #D8D5CB',
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '12px',
                   padding: '16px',
                   cursor: 'pointer',
-                  transition: 'all 0.15s ease',
+                  transition: 'all 0.15s ease-in-out',
                   position: 'relative'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = '#FFFFFF';
-                  e.currentTarget.style.borderColor = '#2F6F62';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(47, 111, 98, 0.12)';
+                  e.currentTarget.style.borderColor = '#008E4F';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 18px rgba(0, 142, 79, 0.12)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = '#FBFAF6';
-                  e.currentTarget.style.borderColor = '#D8D5CB';
+                  e.currentTarget.style.background = '#F8FAFC';
+                  e.currentTarget.style.borderColor = '#E2E8F0';
+                  e.currentTarget.style.transform = 'none';
                   e.currentTarget.style.boxShadow = 'none';
                 }}
               >
@@ -228,27 +219,26 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  marginBottom: '10px'
+                  marginBottom: '8px'
                 }}>
-                  <span style={{
+                  <span className="mono-code" style={{
                     fontSize: '10px',
-                    fontFamily: '"IBM Plex Mono", monospace',
                     fontWeight: 700,
-                    color: '#6B7280',
+                    color: '#64748B',
                     textTransform: 'uppercase'
                   }}>
                     STAGE 0{index + 1}
                   </span>
                   {index < 4 && (
-                    <ArrowRight size={13} style={{ color: '#2F6F62' }} />
+                    <ArrowRight size={13} style={{ color: '#008E4F' }} />
                   )}
                 </div>
 
                 <div style={{
-                  fontFamily: '"Source Serif Pro", Georgia, serif',
+                  fontFamily: 'Inter, -apple-system, sans-serif',
                   fontSize: '26px',
-                  fontWeight: 700,
-                  color: '#16233A',
+                  fontWeight: 800,
+                  color: '#0F172A',
                   lineHeight: 1
                 }}>
                   {flow.count}
@@ -257,9 +247,9 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
                 <div style={{
                   fontSize: '12px',
                   fontWeight: 700,
-                  color: '#2F6F62',
+                  color: '#008E4F',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.04em',
+                  letterSpacing: '0.5px',
                   marginTop: '6px'
                 }}>
                   {flow.stage}
@@ -267,9 +257,9 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
 
                 <div style={{
                   fontSize: '11px',
-                  color: '#6B7280',
+                  color: '#64748B',
                   marginTop: '4px',
-                  lineHeight: 1.3
+                  lineHeight: 1.4
                 }}>
                   {flow.desc}
                 </div>
@@ -282,92 +272,90 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
       {/* 2-COLUMN SECTION: RFCTLARR COMPLIANCE (7.2) & SOCIAL IMPACT (7.3) */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '1.2fr 1fr',
-        gap: '24px',
-        marginBottom: '30px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(460px, 1fr))',
+        gap: '24px'
       }}>
         {/* 7.2 RFCTLARR COMPLIANCE SECTION */}
-        <div style={{
-          background: '#FFFFFF',
-          border: '1px solid #D8D5CB',
-          padding: '22px'
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-            <div>
-              <h4 style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '16px', fontWeight: 600, margin: '0 0 2px', color: '#16233A' }}>
-                RFCTLARR Statutory Compliance
-              </h4>
-              <p style={{ fontSize: '12px', color: '#3A4A63', margin: 0 }}>
-                Verification across 9 mandatory statutory sections under RFCTLARR Act 2013
-              </p>
-            </div>
-
-            <div style={{ textAlign: 'right' }}>
-              <div style={{
-                fontFamily: '"Source Serif Pro", Georgia, serif',
-                fontSize: '24px',
-                fontWeight: 700,
-                color: '#2F6F62'
-              }}>
-                88.4%
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <div className="card-header" style={{ marginBottom: '14px', paddingBottom: '12px' }}>
+              <div>
+                <div className="card-title">
+                  <FileCheck size={16} strokeWidth={2} style={{ color: '#0B4726' }} />
+                  RFCTLARR Statutory Compliance
+                </div>
+                <p style={{ fontSize: '12.5px', color: '#64748B', margin: '4px 0 0' }}>
+                  Verification across 9 mandatory statutory sections under RFCTLARR Act 2013
+                </p>
               </div>
-              <span style={{ fontSize: '10.5px', color: '#6B7280', textTransform: 'uppercase' }}>
-                National Average
-              </span>
+
+              <div style={{ textAlign: 'right' }}>
+                <div style={{
+                  fontFamily: 'Inter, -apple-system, sans-serif',
+                  fontSize: '26px',
+                  fontWeight: 800,
+                  color: '#059669',
+                  lineHeight: 1.1
+                }}>
+                  88.4%
+                </div>
+                <span style={{ fontSize: '10.5px', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.8px', fontWeight: 700 }}>
+                  National Average
+                </span>
+              </div>
+            </div>
+
+            {/* Compliance Breakdown Table */}
+            <div className="table-container" style={{ margin: 0, boxShadow: 'none' }}>
+              <table className="gov-table">
+                <thead>
+                  <tr>
+                    <th style={{ padding: '12px 14px' }}>Statutory Section</th>
+                    <th style={{ padding: '12px 14px' }}>Milestone Requirement</th>
+                    <th style={{ textAlign: 'right', padding: '12px 14px' }}>Compliance %</th>
+                    <th style={{ textAlign: 'right', padding: '12px 14px' }}>Pending</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {nationalRfctlarrCompliance.statutoryMilestones.slice(0, 5).map((row, idx) => (
+                    <tr key={row.section}>
+                      <td className="mono-code" style={{ padding: '12px 14px', color: '#0F172A' }}>
+                        {row.section}
+                      </td>
+                      <td style={{ padding: '12px 14px', color: '#334155' }}>
+                        {row.title}
+                      </td>
+                      <td className="mono-code" style={{ textAlign: 'right', padding: '12px 14px', color: row.complianceRate < 85 ? '#C5221F' : '#059669', fontWeight: 700 }}>
+                        {row.complianceRate}%
+                      </td>
+                      <td className="mono-code" style={{ textAlign: 'right', padding: '12px 14px', color: '#64748B' }}>
+                        {row.pendingCases} projects
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
 
-          {/* Compliance Breakdown Table */}
-          <div style={{ border: '1px solid #D8D5CB', overflow: 'hidden' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px' }}>
-              <thead>
-                <tr style={{ background: '#F2F1EC', borderBottom: '1px solid #D8D5CB' }}>
-                  <th style={{ textAlign: 'left', padding: '8px 12px', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>Statutory Section</th>
-                  <th style={{ textAlign: 'left', padding: '8px 12px', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>Milestone Requirement</th>
-                  <th style={{ textAlign: 'right', padding: '8px 12px', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>Compliance %</th>
-                  <th style={{ textAlign: 'right', padding: '8px 12px', fontSize: '11px', color: '#3A4A63', fontWeight: 600 }}>Pending</th>
-                </tr>
-              </thead>
-              <tbody>
-                {nationalRfctlarrCompliance.statutoryMilestones.slice(0, 5).map((row, idx) => (
-                  <tr key={row.section} style={{
-                    borderBottom: '1px solid #D8D5CB',
-                    background: idx % 2 === 0 ? '#FFFFFF' : '#FBFAF6'
-                  }}>
-                    <td style={{ padding: '8px 12px', fontFamily: '"IBM Plex Mono", monospace', fontWeight: 600, color: '#16233A' }}>
-                      {row.section}
-                    </td>
-                    <td style={{ padding: '8px 12px', color: '#3A4A63' }}>
-                      {row.title}
-                    </td>
-                    <td style={{ padding: '8px 12px', textAlign: 'right', fontFamily: '"IBM Plex Mono", monospace', fontWeight: 600, color: row.complianceRate < 85 ? '#A6432B' : '#2F6F62' }}>
-                      {row.complianceRate}%
-                    </td>
-                    <td style={{ padding: '8px 12px', textAlign: 'right', fontFamily: '"IBM Plex Mono", monospace', color: '#6B7280' }}>
-                      {row.pendingCases} projects
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '11.5px', color: '#6B7280' }}>
-              Showing top 5 of 9 statutory sections. Section 31 R&R has lowest compliance (79%).
+          <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '12px', color: '#64748B' }}>
+              Showing top 5 of 9 statutory sections. Section 31 R&amp;R has lowest compliance (79%).
             </span>
             <button
               onClick={() => onNavigate && onNavigate('reports')}
+              className="btn btn-secondary btn-sm"
               style={{
                 background: 'none',
                 border: 'none',
-                color: '#2F6F62',
-                fontSize: '12px',
+                color: '#008E4F',
+                fontSize: '12.5px',
                 fontWeight: 600,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px'
+                gap: '4px',
+                padding: '4px 0'
               }}
             >
               Full Compliance Audit <ChevronRight size={13} />
@@ -376,96 +364,142 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
         </div>
 
         {/* 7.3 AFFECTED FAMILIES / SOCIAL IMPACT SECTION */}
-        <div style={{
-          background: '#FFFFFF',
-          border: '1px solid #D8D5CB',
-          padding: '22px'
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-            <div>
-              <h4 style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '16px', fontWeight: 600, margin: '0 0 2px', color: '#16233A' }}>
-                Social Impact & Land Types
-              </h4>
-              <p style={{ fontSize: '12px', color: '#3A4A63', margin: 0 }}>
-                Displaced citizen demographic and parcel classification across projects
-              </p>
-            </div>
-            <Users size={20} style={{ color: '#2F6F62' }} />
-          </div>
-
-          {/* Families Category Breakdown */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '16px' }}>
-            <div
-              onClick={() => handleSocialImpactClick('all')}
-              style={{
-                background: '#F2F1EC',
-                border: '1px solid #D8D5CB',
-                padding: '10px 12px',
-                cursor: 'pointer'
-              }}
-            >
-              <div style={{ fontSize: '10.5px', color: '#6B7280', textTransform: 'uppercase' }}>Total Families</div>
-              <div style={{ fontFamily: '"Source Serif Pro", serif', fontSize: '18px', fontWeight: 700, color: '#16233A' }}>
-                84,320
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <div className="card-header" style={{ marginBottom: '14px', paddingBottom: '12px' }}>
+              <div>
+                <div className="card-title">
+                  <Users size={16} strokeWidth={2} style={{ color: '#0B4726' }} />
+                  Social Impact &amp; Land Types
+                </div>
+                <p style={{ fontSize: '12.5px', color: '#64748B', margin: '4px 0 0' }}>
+                  Displaced citizen demographic and parcel classification across projects
+                </p>
+              </div>
+              <div style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '10px',
+                background: '#E6F4EA',
+                color: '#008E4F',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                <Users size={18} />
               </div>
             </div>
 
-            <div
-              onClick={() => handleSocialImpactClick('tribal')}
-              style={{
-                background: '#F2ECDC',
-                border: '1px solid #8A6A1E',
-                padding: '10px 12px',
-                cursor: 'pointer'
-              }}
-            >
-              <div style={{ fontSize: '10.5px', color: '#8A6A1E', textTransform: 'uppercase', fontWeight: 600 }}>Tribal / PESA</div>
-              <div style={{ fontFamily: '"Source Serif Pro", serif', fontSize: '18px', fontWeight: 700, color: '#8A6A1E' }}>
-                14,850
+            {/* Families Category Breakdown */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
+              <div
+                onClick={() => handleSocialImpactClick('all')}
+                style={{
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '12px',
+                  padding: '12px 14px',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#CBD5E1';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#E2E8F0';
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <div style={{ fontSize: '11px', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 700 }}>Total Families</div>
+                <div style={{ fontFamily: 'Inter, -apple-system, sans-serif', fontSize: '20px', fontWeight: 800, color: '#0F172A', marginTop: '4px' }}>
+                  84,320
+                </div>
+              </div>
+
+              <div
+                onClick={() => handleSocialImpactClick('tribal')}
+                style={{
+                  background: '#FEF3C7',
+                  border: '1px solid #FDE68A',
+                  borderRadius: '12px',
+                  padding: '12px 14px',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#F59E0B';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(217, 119, 6, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#FDE68A';
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <div style={{ fontSize: '11px', color: '#92400E', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Tribal / PESA</div>
+                <div style={{ fontFamily: 'Inter, -apple-system, sans-serif', fontSize: '20px', fontWeight: 800, color: '#92400E', marginTop: '4px' }}>
+                  14,850
+                </div>
+              </div>
+
+              <div
+                onClick={() => handleSocialImpactClick('marginal')}
+                style={{
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '12px',
+                  padding: '12px 14px',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#CBD5E1';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#E2E8F0';
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <div style={{ fontSize: '11px', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 700 }}>Smallholder Farmers</div>
+                <div style={{ fontFamily: 'Inter, -apple-system, sans-serif', fontSize: '20px', fontWeight: 800, color: '#0F172A', marginTop: '4px' }}>
+                  42,100
+                </div>
               </div>
             </div>
 
-            <div
-              onClick={() => handleSocialImpactClick('marginal')}
-              style={{
-                background: '#F2F1EC',
-                border: '1px solid #D8D5CB',
-                padding: '10px 12px',
-                cursor: 'pointer'
-              }}
-            >
-              <div style={{ fontSize: '10.5px', color: '#6B7280', textTransform: 'uppercase' }}>Smallholder Farmers</div>
-              <div style={{ fontFamily: '"Source Serif Pro", serif', fontSize: '18px', fontWeight: 700, color: '#16233A' }}>
-                42,100
+            {/* Land Type Breakdown Matrix */}
+            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.7px', color: '#475569', fontWeight: 700, marginBottom: '10px' }}>
+              Land Type Distribution (Total: 38,420 Ha)
+            </div>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '10px'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px' }}>
+                <span style={{ color: '#334155', fontSize: '12px', fontWeight: 600 }}>Irrigated Agriculture:</span>
+                <strong className="mono-code" style={{ fontSize: '12px', color: '#0F172A' }}>16,240 Ha (42.3%)</strong>
               </div>
-            </div>
-          </div>
-
-          {/* Land Type Breakdown Matrix */}
-          <p style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.04em', color: '#6B7280', fontWeight: 600, margin: '0 0 6px' }}>
-            Land Type Distribution (Total: 38,420 Ha)
-          </p>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '8px',
-            fontSize: '12px'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 10px', background: '#FBFAF6', border: '1px solid #D8D5CB' }}>
-              <span style={{ color: '#3A4A63' }}>Irrigated Agriculture:</span>
-              <strong style={{ fontFamily: 'monospace' }}>16,240 Ha (42.3%)</strong>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 10px', background: '#FBFAF6', border: '1px solid #D8D5CB' }}>
-              <span style={{ color: '#3A4A63' }}>Unirrigated Farmland:</span>
-              <strong style={{ fontFamily: 'monospace' }}>9,810 Ha (25.5%)</strong>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 10px', background: '#FBFAF6', border: '1px solid #D8D5CB' }}>
-              <span style={{ color: '#3A4A63' }}>Forest Land (MoEF):</span>
-              <strong style={{ fontFamily: 'monospace', color: '#8A6A1E' }}>4,520 Ha (11.8%)</strong>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 10px', background: '#FBFAF6', border: '1px solid #D8D5CB' }}>
-              <span style={{ color: '#3A4A63' }}>Private NA Land:</span>
-              <strong style={{ fontFamily: 'monospace' }}>4,120 Ha (10.7%)</strong>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px' }}>
+                <span style={{ color: '#334155', fontSize: '12px', fontWeight: 600 }}>Unirrigated Farmland:</span>
+                <strong className="mono-code" style={{ fontSize: '12px', color: '#0F172A' }}>9,810 Ha (25.5%)</strong>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px' }}>
+                <span style={{ color: '#334155', fontSize: '12px', fontWeight: 600 }}>Forest Land (MoEF):</span>
+                <strong className="mono-code" style={{ fontSize: '12px', color: '#92400E' }}>4,520 Ha (11.8%)</strong>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px' }}>
+                <span style={{ color: '#334155', fontSize: '12px', fontWeight: 600 }}>Private NA Land:</span>
+                <strong className="mono-code" style={{ fontSize: '12px', color: '#0F172A' }}>4,120 Ha (10.7%)</strong>
+              </div>
             </div>
           </div>
         </div>
@@ -474,46 +508,33 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
       {/* 8. THE X-FACTOR — SWADESH TRANSFORMATION GRAPHICAL BENCHMARK & AUDIT TELEMETRY */}
       <MordTransformationSection onNavigate={onNavigate} />
 
-
       {/* 9. PRIORITY ALERTS & ACTIONABLE DIRECTIVES (WITH SYSTEM ANALYSIS TAGS) */}
-      <div style={{
-        background: '#FFFFFF',
-        border: '1px solid #D8D5CB',
-        padding: '24px'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+      <div className="card" style={{ borderLeft: '4px solid #C5221F' }}>
+        <div className="card-header" style={{ marginBottom: '18px', paddingBottom: '12px', flexWrap: 'wrap', gap: '12px' }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <h3 style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '18px', fontWeight: 600, margin: 0, color: '#16233A' }}>
-                Supervisory Priority Alerts & Administrative Interventions
-              </h3>
-              <span style={{
+            <div className="card-title">
+              <Shield size={16} strokeWidth={2} style={{ color: '#C5221F' }} />
+              Supervisory Priority Alerts &amp; Administrative Interventions
+              <span className="mono-code" style={{
                 fontSize: '10px',
-                fontFamily: '"IBM Plex Mono", monospace',
-                padding: '2px 6px',
-                background: '#F2ECDC',
-                color: '#8A6A1E',
-                border: '1px solid #8A6A1E',
-                fontWeight: 600
+                padding: '3px 8px',
+                background: '#FEF3C7',
+                color: '#92400E',
+                border: '1px solid #FDE68A',
+                borderRadius: '6px',
+                fontWeight: 700
               }}>
                 AI-ASSISTED SYSTEM ANALYSIS
               </span>
             </div>
-            <p style={{ fontSize: '12.5px', color: '#3A4A63', margin: '4px 0 0' }}>
+            <p style={{ fontSize: '12.5px', color: '#64748B', margin: '4px 0 0' }}>
               Analytical decision-support identifying delays, statutory risks, and recommending executive action.
             </p>
           </div>
 
           <button
+            className="btn btn-secondary btn-sm"
             onClick={() => onNavigate && onNavigate('alerts')}
-            style={{
-              background: 'none',
-              border: '1px solid #D8D5CB',
-              padding: '6px 12px',
-              fontSize: '12px',
-              color: '#3A4A63',
-              cursor: 'pointer'
-            }}
           >
             All Alerts ({delayedProjects.length})
           </button>
@@ -525,10 +546,11 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
             <div
               key={proj.id}
               style={{
-                border: '1px solid #D8D5CB',
-                borderLeft: '4px solid #A6432B',
-                background: '#FBFAF6',
-                padding: '14px 18px',
+                border: '1px solid #E2E8F0',
+                borderLeft: '4px solid #C5221F',
+                borderRadius: '12px',
+                background: '#F8FAFC',
+                padding: '16px 20px',
                 display: 'grid',
                 gridTemplateColumns: '1fr auto',
                 gap: '16px',
@@ -536,35 +558,35 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
               }}
             >
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
-                  <span style={{
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px', flexWrap: 'wrap' }}>
+                  <span className="mono-code" style={{
                     fontSize: '10px',
-                    fontFamily: '"IBM Plex Mono", monospace',
-                    background: '#F6E7E2',
-                    color: '#A6432B',
-                    border: '1px solid #A6432B',
-                    padding: '1px 6px',
+                    background: '#FEE2E2',
+                    color: '#C5221F',
+                    border: '1px solid #FCA5A5',
+                    borderRadius: '6px',
+                    padding: '2px 8px',
                     fontWeight: 700
                   }}>
                     HIGH RISK
                   </span>
-                  <strong style={{ fontSize: '14px', color: '#16233A' }}>
+                  <strong style={{ fontSize: '14px', color: '#0F172A' }}>
                     {proj.name}
                   </strong>
-                  <span style={{ fontSize: '12px', fontFamily: '"IBM Plex Mono", monospace', color: '#6B7280' }}>
+                  <span className="mono-code" style={{ fontSize: '12px', color: '#64748B' }}>
                     [{proj.id}] · {proj.state} ({proj.district})
                   </span>
                 </div>
 
-                <div style={{ fontSize: '12.5px', color: '#3A4A63', marginTop: '4px' }}>
+                <div style={{ fontSize: '12.5px', color: '#334155', marginTop: '4px' }}>
                   <strong>Stage:</strong> {proj.stage} &nbsp;|&nbsp;
                   <strong>Issue:</strong> {proj.pendingReason?.reason || 'Project stalled exceeding standard timeline'} &nbsp;|&nbsp;
-                  <strong>Idle Period:</strong> <span style={{ color: '#A6432B', fontWeight: 600 }}>{proj.pendingReason?.idleDays || proj.delayDays || 30} Days</span>
+                  <strong>Idle Period:</strong> <span style={{ color: '#C5221F', fontWeight: 600 }}>{proj.pendingReason?.idleDays || proj.delayDays || 30} Days</span>
                 </div>
 
                 <div style={{
                   fontSize: '11.5px',
-                  color: '#2F6F62',
+                  color: '#008E4F',
                   marginTop: '6px',
                   display: 'flex',
                   alignItems: 'center',
@@ -580,19 +602,14 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
               {/* Action Buttons */}
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 <button
+                  className="btn btn-primary btn-sm"
                   onClick={() => handleOpenDirective(proj)}
                   style={{
-                    background: '#2F6F62',
-                    color: '#FFFFFF',
-                    border: 'none',
-                    padding: '8px 14px',
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    borderRadius: '2px',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '6px'
+                    gap: '6px',
+                    fontSize: '12px',
+                    padding: '8px 14px'
                   }}
                   title="Demand formal explanation or issue guidance"
                 >
@@ -601,17 +618,9 @@ export default function MordDashboardView({ onNavigate, onFilterByStage }) {
                 </button>
 
                 <button
+                  className="btn btn-secondary btn-sm"
                   onClick={() => onNavigate && onNavigate('project-detail', proj.id)}
-                  style={{
-                    background: '#FFFFFF',
-                    color: '#16233A',
-                    border: '1px solid #D8D5CB',
-                    padding: '8px 12px',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    borderRadius: '2px'
-                  }}
+                  style={{ fontSize: '12px', padding: '8px 14px' }}
                 >
                   View Case
                 </button>

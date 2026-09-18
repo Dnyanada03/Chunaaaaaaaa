@@ -100,22 +100,12 @@ export default function MordMapView({ onNavigate }) {
   ];
 
   return (
-    <div style={{
-      maxWidth: '1440px',
-      margin: '0 auto',
-      padding: '24px 28px 80px',
-      fontFamily: 'Inter, sans-serif'
-    }}>
-      {/* Page Title */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {/* Page Title Banner */}
+      <div className="page-banner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <div>
-          <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#6B7280', fontWeight: 600 }}>
-            Geospatial Decision-Support Infrastructure
-          </div>
-          <h2 style={{ fontFamily: '"Source Serif Pro", Georgia, serif', fontSize: '24px', fontWeight: 600, margin: '2px 0 0', color: '#16233A' }}>
-            National Land Acquisition GIS Map
-          </h2>
-          <p style={{ fontSize: '13px', color: '#3A4A63', margin: '4px 0 0' }}>
+          <div className="page-banner-title">National Land Acquisition GIS Map</div>
+          <p className="page-banner-sub">
             Interactive national geospatial layer displaying corridors, parcels, statutory compliance and dynamic land aggregations.
           </p>
         </div>
@@ -126,21 +116,23 @@ export default function MordMapView({ onNavigate }) {
           alignItems: 'center',
           gap: '16px',
           background: '#FFFFFF',
-          border: '1px solid #D8D5CB',
-          padding: '6px 14px',
-          fontSize: '11.5px'
+          border: '1px solid #E2E8F0',
+          borderRadius: '12px',
+          padding: '8px 16px',
+          fontSize: '12px',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#2F6F62' }} />
-            <span>Healthy / Progressing</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#008E4F' }} />
+            <span style={{ color: '#4B5563', fontWeight: 500 }}>Healthy / Progressing</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#8A6A1E' }} />
-            <span>Needs Attention</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#D97706' }} />
+            <span style={{ color: '#4B5563', fontWeight: 500 }}>Needs Attention</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#A6432B' }} />
-            <span>Delayed / High Risk</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#DC2626' }} />
+            <span style={{ color: '#4B5563', fontWeight: 500 }}>Delayed / High Risk</span>
           </div>
         </div>
       </div>
@@ -149,12 +141,13 @@ export default function MordMapView({ onNavigate }) {
       <div style={{
         display: 'grid',
         gridTemplateColumns: '1fr 340px',
-        gap: '20px'
+        gap: '24px'
       }}>
         {/* LEFT: MAP CANVAS */}
-        <div style={{
-          background: '#FFFFFF',
-          border: '1px solid #D8D5CB',
+        <div className="card" style={{
+          padding: 0,
+          borderRadius: '16px',
+          border: '1px solid #E2E8F0',
           display: 'flex',
           flexDirection: 'column',
           minHeight: '680px',
@@ -163,18 +156,18 @@ export default function MordMapView({ onNavigate }) {
         }}>
           {/* Map Top Status Bar */}
           <div style={{
-            background: '#F2F1EC',
-            borderBottom: '1px solid #D8D5CB',
-            padding: '8px 16px',
+            background: '#F8FAFC',
+            borderBottom: '1px solid #E2E8F0',
+            padding: '10px 18px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             fontSize: '12px',
-            fontFamily: '"IBM Plex Mono", monospace',
-            color: '#3A4A63'
+            fontFamily: '"Roboto Mono", monospace',
+            color: '#475569'
           }}>
             <div>
-              ACTIVE GIS VIEW: <strong>INDIA NATIONAL CORRIDORS</strong> ({filteredProjects.length} Projects Displayed)
+              ACTIVE GIS VIEW: <strong style={{ color: '#0F172A' }}>INDIA NATIONAL CORRIDORS</strong> ({filteredProjects.length} Projects Displayed)
             </div>
             <div>
               COORDINATES: 20.5937° N, 78.9629° E | CADASTRAL CADRE V4
@@ -185,11 +178,11 @@ export default function MordMapView({ onNavigate }) {
           <div style={{
             flex: 1,
             position: 'relative',
-            background: '#F4F3F0',
+            background: '#F8FAFC',
             backgroundImage: `
-              radial-gradient(#D8D5CB 1px, transparent 1px),
-              linear-gradient(to right, #EFECE6 1px, transparent 1px),
-              linear-gradient(to bottom, #EFECE6 1px, transparent 1px)
+              radial-gradient(#CBD5E1 1px, transparent 1px),
+              linear-gradient(to right, #F1F5F9 1px, transparent 1px),
+              linear-gradient(to bottom, #F1F5F9 1px, transparent 1px)
             `,
             backgroundSize: '24px 24px, 120px 120px, 120px 120px',
             display: 'flex',
@@ -201,9 +194,9 @@ export default function MordMapView({ onNavigate }) {
               position: 'absolute',
               width: '420px',
               height: '460px',
-              border: '2px dashed #D8D5CB',
+              border: '2px dashed #CBD5E1',
               borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%',
-              opacity: 0.35,
+              opacity: 0.45,
               pointerEvents: 'none'
             }} />
 
@@ -225,28 +218,30 @@ export default function MordMapView({ onNavigate }) {
                   }}
                 >
                   <div style={{
-                    background: selectedState === pin.state ? '#16233A' : '#FFFFFF',
-                    color: selectedState === pin.state ? '#FFFFFF' : '#16233A',
-                    border: '1px solid #D8D5CB',
-                    padding: '4px 8px',
-                    fontSize: '11px',
-                    fontWeight: 700,
-                    boxShadow: '0 2px 8px rgba(22, 35, 58, 0.12)',
+                    background: selectedState === pin.state ? '#008E4F' : '#FFFFFF',
+                    color: selectedState === pin.state ? '#FFFFFF' : '#1E293B',
+                    border: selectedState === pin.state ? '1px solid #008E4F' : '1px solid #CBD5E1',
+                    padding: '5px 10px',
+                    fontSize: '11.5px',
+                    fontWeight: 600,
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '4px',
-                    borderRadius: '2px'
+                    gap: '6px',
+                    borderRadius: '8px'
                   }}>
-                    <MapPin size={11} style={{
-                      color: pin.state === 'Madhya Pradesh' || pin.state === 'Maharashtra' ? '#A6432B' : '#2F6F62'
+                    <MapPin size={12} style={{
+                      color: selectedState === pin.state ? '#FFFFFF' : (pin.state === 'Madhya Pradesh' || pin.state === 'Maharashtra' ? '#DC2626' : '#008E4F')
                     }} />
                     <span>{pin.state}</span>
                     <span style={{
-                      fontFamily: 'monospace',
-                      fontSize: '9.5px',
-                      background: selectedState === pin.state ? '#2F6F62' : '#F2F1EC',
-                      color: selectedState === pin.state ? '#FFFFFF' : '#3A4A63',
-                      padding: '0 4px'
+                      fontFamily: '"Roboto Mono", monospace',
+                      fontSize: '10px',
+                      background: selectedState === pin.state ? 'rgba(255,255,255,0.2)' : '#F1F5F9',
+                      color: selectedState === pin.state ? '#FFFFFF' : '#475569',
+                      padding: '1px 6px',
+                      borderRadius: '4px',
+                      fontWeight: 700
                     }}>
                       {pin.count}
                     </span>
@@ -281,12 +276,12 @@ export default function MordMapView({ onNavigate }) {
                   title={`${proj.name} (${proj.status})`}
                 >
                   <div style={{
-                    width: isSelected ? '18px' : '14px',
-                    height: isSelected ? '18px' : '14px',
+                    width: isSelected ? '20px' : '14px',
+                    height: isSelected ? '20px' : '14px',
                     borderRadius: '50%',
-                    background: isCrit ? '#A6432B' : proj.status === 'Completed' ? '#2F6F62' : '#8A6A1E',
+                    background: isCrit ? '#DC2626' : proj.status === 'Completed' ? '#008E4F' : '#D97706',
                     border: '2px solid #FFFFFF',
-                    boxShadow: '0 0 0 1px rgba(0,0,0,0.3)',
+                    boxShadow: '0 0 0 2px rgba(0,0,0,0.25)',
                     transition: 'all 0.15s ease'
                   }} />
                 </div>
@@ -304,9 +299,10 @@ export default function MordMapView({ onNavigate }) {
                   left: '16px',
                   right: '16px',
                   background: '#FFFFFF',
-                  border: '1px solid #D8D5CB',
-                  boxShadow: '0 6px 20px rgba(22, 35, 58, 0.15)',
-                  padding: '14px 18px',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '12px',
+                  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+                  padding: '16px 20px',
                   zIndex: 30,
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -315,62 +311,58 @@ export default function MordMapView({ onNavigate }) {
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{
-                        fontFamily: '"IBM Plex Mono", monospace',
+                        fontFamily: '"Roboto Mono", monospace',
                         fontSize: '11px',
-                        color: '#2F6F62',
+                        color: '#008E4F',
                         fontWeight: 700
                       }}>
                         {p.id}
                       </span>
                       <span style={{
-                        fontSize: '10px',
-                        fontFamily: '"IBM Plex Mono", monospace',
-                        padding: '1px 6px',
-                        background: p.status === 'Delayed' ? '#F6E7E2' : '#E4EEE9',
-                        color: p.status === 'Delayed' ? '#A6432B' : '#2F6F62',
-                        border: '1px solid'
+                        fontSize: '10.5px',
+                        fontFamily: '"Roboto Mono", monospace',
+                        padding: '2px 8px',
+                        borderRadius: '9999px',
+                        background: p.status === 'Delayed' ? '#FEF2F2' : '#ECFDF5',
+                        color: p.status === 'Delayed' ? '#991B1B' : '#065F46',
+                        border: p.status === 'Delayed' ? '1px solid #FECACA' : '1px solid #A7F3D0',
+                        fontWeight: 600
                       }}>
                         {p.status.toUpperCase()}
                       </span>
                     </div>
 
-                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#16233A', marginTop: '2px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: 600, color: '#1E293B', marginTop: '4px' }}>
                       {p.name}
                     </div>
 
-                    <div style={{ fontSize: '11.5px', color: '#6B7280', marginTop: '2px' }}>
+                    <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>
                       {p.district}, {p.state} &nbsp;|&nbsp;
-                      Req: <strong>{p.landRequiredHa} Ha</strong> &nbsp;|&nbsp;
-                      Acq: <strong>{p.landAcquiredHa} Ha</strong> &nbsp;|&nbsp;
-                      Budget: <strong>{p.estimatedBudget}</strong>
+                      Req: <strong style={{ color: '#1E293B' }}>{p.landRequiredHa} Ha</strong> &nbsp;|&nbsp;
+                      Acq: <strong style={{ color: '#008E4F' }}>{p.landAcquiredHa} Ha</strong> &nbsp;|&nbsp;
+                      Budget: <strong style={{ color: '#1E293B' }}>{p.estimatedBudget}</strong>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ display: 'flex', gap: '10px' }}>
                     <button
                       onClick={() => onNavigate && onNavigate('project-detail', p.id)}
+                      className="btn btn-primary btn-sm"
                       style={{
-                        background: '#2F6F62',
-                        color: '#FFFFFF',
-                        border: 'none',
-                        padding: '6px 14px',
+                        padding: '8px 16px',
                         fontSize: '12px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        borderRadius: '2px'
+                        borderRadius: '8px'
                       }}
                     >
                       Open Case File →
                     </button>
                     <button
                       onClick={() => setSelectedProject(null)}
+                      className="btn btn-secondary btn-sm"
                       style={{
-                        background: '#FFFFFF',
-                        border: '1px solid #D8D5CB',
-                        color: '#6B7280',
-                        padding: '6px 10px',
+                        padding: '8px 14px',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        borderRadius: '8px'
                       }}
                     >
                       Dismiss
@@ -383,188 +375,188 @@ export default function MordMapView({ onNavigate }) {
         </div>
 
         {/* RIGHT: MAP FILTER SIDEBAR & DYNAMIC LAND CALCULATIONS (Prompt 13.1 & 13.3) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* SECTION 13.3 & 13.4: DYNAMIC LAND CALCULATIONS & AGGREGATE SUMMARY */}
-          <div style={{
-            background: '#FFFFFF',
-            border: '1px solid #D8D5CB',
-            padding: '16px'
+          <div className="card" style={{
+            padding: '20px',
+            borderRadius: '16px',
+            border: '1px solid #E2E8F0'
           }}>
             <div style={{
-              fontSize: '10.5px',
+              fontSize: '11px',
               textTransform: 'uppercase',
               letterSpacing: '0.06em',
-              color: '#3A4A63',
+              color: '#64748B',
               fontWeight: 700,
-              marginBottom: '10px'
+              marginBottom: '12px'
             }}>
               Dynamic Land &amp; Value Aggregation
             </div>
 
             {/* Total Land Required vs Acquired */}
-            <div style={{ background: '#F2F1EC', border: '1px solid #D8D5CB', padding: '12px', marginBottom: '12px' }}>
-              <div style={{ fontSize: '11px', color: '#6B7280', textTransform: 'uppercase' }}>Filtered Projects Land Required</div>
-              <div style={{ fontFamily: '"Source Serif Pro", serif', fontSize: '20px', fontWeight: 700, color: '#16233A' }}>
-                {landCalculations.totalReq} <span style={{ fontSize: '13px', fontWeight: 400 }}>Ha</span>
+            <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '14px', marginBottom: '14px' }}>
+              <div style={{ fontSize: '11px', color: '#64748B', textTransform: 'uppercase', fontWeight: 600 }}>Filtered Projects Land Required</div>
+              <div style={{ fontFamily: 'Merriweather, Georgia, serif', fontSize: '22px', fontWeight: 700, color: '#1E293B', marginTop: '2px' }}>
+                {landCalculations.totalReq} <span style={{ fontSize: '14px', fontWeight: 500, color: '#64748B' }}>Ha</span>
               </div>
-              <div style={{ fontSize: '11px', color: '#2F6F62', marginTop: '2px' }}>
+              <div style={{ fontSize: '12px', color: '#008E4F', marginTop: '4px', fontWeight: 500 }}>
                 Acquired: <strong>{landCalculations.totalAcq} Ha</strong> ({landCalculations.totalReq ? Math.round((landCalculations.totalAcq / landCalculations.totalReq) * 100) : 0}%)
               </div>
             </div>
 
             {/* Dynamic Land Breakdown */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '11.5px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #EFECE6' }}>
-                <span style={{ color: '#6B7280' }}>Farming / Agricultural:</span>
-                <strong style={{ fontFamily: 'monospace' }}>{landCalculations.farming} Ha</strong>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #F1F5F9' }}>
+                <span style={{ color: '#64748B' }}>Farming / Agricultural:</span>
+                <strong style={{ fontFamily: '"Roboto Mono", monospace', color: '#1E293B' }}>{landCalculations.farming} Ha</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #EFECE6' }}>
-                <span style={{ color: '#6B7280' }}>Forest Land (MoEF):</span>
-                <strong style={{ fontFamily: 'monospace', color: '#8A6A1E' }}>{landCalculations.forest} Ha</strong>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #F1F5F9' }}>
+                <span style={{ color: '#64748B' }}>Forest Land (MoEF):</span>
+                <strong style={{ fontFamily: '"Roboto Mono", monospace', color: '#D97706' }}>{landCalculations.forest} Ha</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #EFECE6' }}>
-                <span style={{ color: '#6B7280' }}>Private NA Land:</span>
-                <strong style={{ fontFamily: 'monospace' }}>{landCalculations.privateLand} Ha</strong>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #F1F5F9' }}>
+                <span style={{ color: '#64748B' }}>Private NA Land:</span>
+                <strong style={{ fontFamily: '"Roboto Mono", monospace', color: '#1E293B' }}>{landCalculations.privateLand} Ha</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #EFECE6' }}>
-                <span style={{ color: '#6B7280' }}>Government Revenue:</span>
-                <strong style={{ fontFamily: 'monospace' }}>{landCalculations.govtLand} Ha</strong>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #F1F5F9' }}>
+                <span style={{ color: '#64748B' }}>Government Revenue:</span>
+                <strong style={{ fontFamily: '"Roboto Mono", monospace', color: '#1E293B' }}>{landCalculations.govtLand} Ha</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #EFECE6' }}>
-                <span style={{ color: '#6B7280' }}>Community / Gaothan:</span>
-                <strong style={{ fontFamily: 'monospace' }}>{landCalculations.communityLand} Ha</strong>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #F1F5F9' }}>
+                <span style={{ color: '#64748B' }}>Community / Gaothan:</span>
+                <strong style={{ fontFamily: '"Roboto Mono", monospace', color: '#1E293B' }}>{landCalculations.communityLand} Ha</strong>
               </div>
             </div>
 
             {/* Filter Summary Metrics (Prompt 13.4) */}
             <div style={{
-              marginTop: '12px',
-              paddingTop: '10px',
-              borderTop: '1px solid #D8D5CB',
+              marginTop: '14px',
+              paddingTop: '12px',
+              borderTop: '1px solid #E2E8F0',
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
-              gap: '8px',
+              gap: '10px',
               fontSize: '11px'
             }}>
               <div>
-                <span style={{ color: '#6B7280' }}>Projects:</span>
-                <div style={{ fontWeight: 700, fontSize: '13px', color: '#16233A' }}>{filteredProjects.length}</div>
+                <span style={{ color: '#64748B' }}>Projects:</span>
+                <div style={{ fontWeight: 700, fontSize: '14px', color: '#1E293B', marginTop: '2px' }}>{filteredProjects.length}</div>
               </div>
               <div>
-                <span style={{ color: '#6B7280' }}>Affected Families:</span>
-                <div style={{ fontWeight: 700, fontSize: '13px', color: '#16233A' }}>{landCalculations.totalFamilies}</div>
+                <span style={{ color: '#64748B' }}>Affected Families:</span>
+                <div style={{ fontWeight: 700, fontSize: '14px', color: '#1E293B', marginTop: '2px' }}>{landCalculations.totalFamilies}</div>
               </div>
               <div style={{ gridColumn: '1 / -1' }}>
-                <span style={{ color: '#6B7280' }}>Estimated Value:</span>
-                <div style={{ fontWeight: 700, fontSize: '13px', color: '#2F6F62' }}>₹ {landCalculations.totalCostCr} Cr</div>
+                <span style={{ color: '#64748B' }}>Estimated Value:</span>
+                <div style={{ fontWeight: 700, fontSize: '15px', color: '#008E4F', marginTop: '2px' }}>₹ {landCalculations.totalCostCr} Cr</div>
               </div>
             </div>
           </div>
 
           {/* SECTION 13.1: MAP FILTERS SIDEBAR */}
-          <div style={{
-            background: '#FFFFFF',
-            border: '1px solid #D8D5CB',
-            padding: '16px'
+          <div className="card" style={{
+            padding: '20px',
+            borderRadius: '16px',
+            border: '1px solid #E2E8F0'
           }}>
             <div style={{
-              fontSize: '10.5px',
+              fontSize: '11px',
               textTransform: 'uppercase',
               letterSpacing: '0.06em',
-              color: '#3A4A63',
+              color: '#64748B',
               fontWeight: 700,
-              marginBottom: '12px'
+              marginBottom: '14px'
             }}>
               Interactive Map Filters
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '10.5px', textTransform: 'uppercase', color: '#6B7280', marginBottom: '2px', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#64748B', marginBottom: '4px', fontWeight: 600 }}>
                   Project Type
                 </label>
                 <select
                   value={selectedProjectType}
                   onChange={(e) => setSelectedProjectType(e.target.value)}
-                  style={{ width: '100%', padding: '5px 8px', fontSize: '11.5px', border: '1px solid #D8D5CB' }}
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '12.5px', border: '1px solid #CBD5E1', borderRadius: '8px', background: '#FFFFFF', color: '#1E293B' }}
                 >
                   {projectTypes.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '10.5px', textTransform: 'uppercase', color: '#6B7280', marginBottom: '2px', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#64748B', marginBottom: '4px', fontWeight: 600 }}>
                   Ministry / Department
                 </label>
                 <select
                   value={selectedMinistry}
                   onChange={(e) => setSelectedMinistry(e.target.value)}
-                  style={{ width: '100%', padding: '5px 8px', fontSize: '11.5px', border: '1px solid #D8D5CB' }}
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '12.5px', border: '1px solid #CBD5E1', borderRadius: '8px', background: '#FFFFFF', color: '#1E293B' }}
                 >
                   {ministries.map(opt => <option key={opt} value={opt}>{opt.replace('Ministry of ', 'Mo ')}</option>)}
                 </select>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '10.5px', textTransform: 'uppercase', color: '#6B7280', marginBottom: '2px', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#64748B', marginBottom: '4px', fontWeight: 600 }}>
                   Category
                 </label>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  style={{ width: '100%', padding: '5px 8px', fontSize: '11.5px', border: '1px solid #D8D5CB' }}
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '12.5px', border: '1px solid #CBD5E1', borderRadius: '8px', background: '#FFFFFF', color: '#1E293B' }}
                 >
                   {categories.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '10.5px', textTransform: 'uppercase', color: '#6B7280', marginBottom: '2px', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#64748B', marginBottom: '4px', fontWeight: 600 }}>
                   State
                 </label>
                 <select
                   value={selectedState}
                   onChange={(e) => setSelectedState(e.target.value)}
-                  style={{ width: '100%', padding: '5px 8px', fontSize: '11.5px', border: '1px solid #D8D5CB' }}
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '12.5px', border: '1px solid #CBD5E1', borderRadius: '8px', background: '#FFFFFF', color: '#1E293B' }}
                 >
                   {states.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '10.5px', textTransform: 'uppercase', color: '#6B7280', marginBottom: '2px', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#64748B', marginBottom: '4px', fontWeight: 600 }}>
                   Status
                 </label>
                 <select
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
-                  style={{ width: '100%', padding: '5px 8px', fontSize: '11.5px', border: '1px solid #D8D5CB' }}
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '12.5px', border: '1px solid #CBD5E1', borderRadius: '8px', background: '#FFFFFF', color: '#1E293B' }}
                 >
                   {statuses.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '10.5px', textTransform: 'uppercase', color: '#6B7280', marginBottom: '2px', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#64748B', marginBottom: '4px', fontWeight: 600 }}>
                   Risk Rating
                 </label>
                 <select
                   value={selectedRisk}
                   onChange={(e) => setSelectedRisk(e.target.value)}
-                  style={{ width: '100%', padding: '5px 8px', fontSize: '11.5px', border: '1px solid #D8D5CB' }}
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '12.5px', border: '1px solid #CBD5E1', borderRadius: '8px', background: '#FFFFFF', color: '#1E293B' }}
                 >
                   {risks.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '10.5px', textTransform: 'uppercase', color: '#6B7280', marginBottom: '2px', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#64748B', marginBottom: '4px', fontWeight: 600 }}>
                   Land Type Filter
                 </label>
                 <select
                   value={selectedLandType}
                   onChange={(e) => setSelectedLandType(e.target.value)}
-                  style={{ width: '100%', padding: '5px 8px', fontSize: '11.5px', border: '1px solid #D8D5CB' }}
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '12.5px', border: '1px solid #CBD5E1', borderRadius: '8px', background: '#FFFFFF', color: '#1E293B' }}
                 >
                   {landTypes.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
