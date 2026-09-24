@@ -507,3 +507,215 @@ export const collectorEgazetteDrafts = [
     status: "Draft Ready for Collector Signature"
   }
 ];
+
+export const collectorGISParcels = [
+  {
+    id: "MH-PL-10234",
+    surveyNo: "142/1A",
+    village: "Wagholi",
+    taluka: "Haveli",
+    project: "Pune Ring Road Expressway",
+    landowner: "Rameshwar Dhondu Patil",
+    area: "0.85 Ha",
+    status: "Compensation Under Dispute",
+    statusCode: "Disputed",
+    compAmount: "₹ 1,35,00,000",
+    lat: 18.5793,
+    lng: 73.9814,
+    polygon: [
+      [18.5780, 73.9800],
+      [18.5805, 73.9805],
+      [18.5800, 73.9830],
+      [18.5775, 73.9825]
+    ]
+  },
+  {
+    id: "MH-PL-10235",
+    surveyNo: "142/1B",
+    village: "Wagholi",
+    taluka: "Haveli",
+    project: "Pune Ring Road Expressway",
+    landowner: "Shantabai Babanrao Shinde",
+    area: "1.12 Ha",
+    status: "Acquired & DBT Disbursed",
+    statusCode: "Acquired",
+    compAmount: "₹ 1,78,00,000",
+    lat: 18.5815,
+    lng: 73.9845,
+    polygon: [
+      [18.5805, 73.9830],
+      [18.5828, 73.9835],
+      [18.5822, 73.9860],
+      [18.5800, 73.9855]
+    ]
+  },
+  {
+    id: "MH-PL-10240",
+    surveyNo: "88/2B",
+    village: "Avalwadi",
+    taluka: "Haveli",
+    project: "Pune Ring Road Expressway",
+    landowner: "Kisan Mahadu Tupe",
+    area: "0.95 Ha",
+    status: "Pending Field Verification",
+    statusCode: "Pending",
+    compAmount: "₹ 1,12,00,000",
+    lat: 18.5710,
+    lng: 73.9920,
+    polygon: [
+      [18.5695, 73.9905],
+      [18.5722, 73.9910],
+      [18.5718, 73.9935],
+      [18.5690, 73.9930]
+    ]
+  },
+  {
+    id: "MH-PL-10248",
+    surveyNo: "210/4",
+    village: "Manjari Khurd",
+    taluka: "Haveli",
+    project: "Pune Ring Road Expressway",
+    landowner: "Genba Haribhau Jagtap",
+    area: "1.40 Ha",
+    status: "Acquired & DBT Disbursed",
+    statusCode: "Acquired",
+    compAmount: "₹ 2,10,00,000",
+    lat: 18.5320,
+    lng: 73.9870,
+    polygon: [
+      [18.5305, 73.9855],
+      [18.5335, 73.9860],
+      [18.5330, 73.9890],
+      [18.5300, 73.9885]
+    ]
+  },
+  {
+    id: "MH-PL-10310",
+    surveyNo: "95/1",
+    village: "Nighoje",
+    taluka: "Khed",
+    project: "MIDC Chakan Phase-V",
+    landowner: "Balkrishna Pandurang Thakar",
+    area: "2.30 Ha",
+    status: "Acquired & Possession Taken",
+    statusCode: "Acquired",
+    compAmount: "₹ 3,45,00,000",
+    lat: 18.7300,
+    lng: 73.8050,
+    polygon: [
+      [18.7285, 73.8030],
+      [18.7315, 73.8035],
+      [18.7310, 73.8070],
+      [18.7280, 73.8065]
+    ]
+  },
+  {
+    id: "MH-PL-10315",
+    surveyNo: "104/3A",
+    village: "Khed Shivapur",
+    taluka: "Haveli",
+    project: "NH-48 Highway Expansion",
+    landowner: "Ananda Sakharam Konde",
+    area: "0.68 Ha",
+    status: "Pending Field Verification",
+    statusCode: "Pending",
+    compAmount: "₹ 92,00,000",
+    lat: 18.3540,
+    lng: 73.8580,
+    polygon: [
+      [18.3525, 73.8565],
+      [18.3552, 73.8570],
+      [18.3548, 73.8598],
+      [18.3520, 73.8592]
+    ]
+  },
+  {
+    id: "MH-PL-10402",
+    surveyNo: "312/C",
+    village: "Male",
+    taluka: "Mulshi",
+    project: "Mulshi Dam Canal Project",
+    landowner: "Narayan Govind Marathe",
+    area: "1.75 Ha",
+    status: "Compensation Under Dispute",
+    statusCode: "Disputed",
+    compAmount: "₹ 1,85,00,000",
+    lat: 18.5080,
+    lng: 73.5350,
+    polygon: [
+      [18.5065, 73.5330],
+      [18.5098, 73.5335],
+      [18.5092, 73.5370],
+      [18.5060, 73.5365]
+    ]
+  },
+  {
+    id: "MH-PL-10520",
+    surveyNo: "55/2",
+    village: "Pargaon",
+    taluka: "Purandar",
+    project: "Purandar International Airport Express",
+    landowner: "Sopanrao Eknath Jagtap",
+    area: "3.50 Ha",
+    status: "Pending Field Verification",
+    statusCode: "Pending",
+    compAmount: "₹ 4,20,00,000",
+    lat: 18.2800,
+    lng: 74.0500,
+    polygon: [
+      [18.2780, 74.0475],
+      [18.2820, 74.0480],
+      [18.2815, 74.0525],
+      [18.2775, 74.0520]
+    ]
+  }
+];
+
+export const collectorProjectAlignments = [
+  {
+    id: "ALN-RING-ROAD",
+    name: "Pune Ring Road Expressway (East Corridor)",
+    project: "Pune Ring Road Expressway",
+    color: "#EF4444",
+    dashArray: "8, 6",
+    weight: 4,
+    coords: [
+      [18.7200, 73.8200],
+      [18.6600, 73.9100],
+      [18.5793, 73.9814],
+      [18.5320, 73.9870],
+      [18.4200, 73.9500],
+      [18.3540, 73.8580]
+    ]
+  },
+  {
+    id: "ALN-NH-48",
+    name: "NH-48 National Highway Expansion",
+    project: "NH-48 Highway Expansion",
+    color: "#3B82F6",
+    dashArray: null,
+    weight: 4,
+    coords: [
+      [18.6000, 73.7500],
+      [18.5204, 73.8567],
+      [18.4500, 73.8600],
+      [18.3540, 73.8580],
+      [18.2500, 73.8600]
+    ]
+  },
+  {
+    id: "ALN-PURANDAR",
+    name: "Purandar Airport Express Corridor",
+    project: "Purandar International Airport Express",
+    color: "#8B5CF6",
+    dashArray: "6, 6",
+    weight: 4,
+    coords: [
+      [18.5000, 73.9300],
+      [18.4100, 73.9800],
+      [18.3400, 74.0200],
+      [18.2800, 74.0500]
+    ]
+  }
+];
+

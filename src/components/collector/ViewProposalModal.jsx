@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import {
+  MapContainer,
+  TileLayer,
+  Polyline,
+  Polygon,
+  Tooltip,
+  Popup
+} from 'react-leaflet';
+import {
   FileText,
   X,
   Printer,
@@ -255,60 +263,217 @@ export default function ViewProposalModal({ isOpen, onClose, proposal }) {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0B4726', fontWeight: 800, fontSize: '13px', textTransform: 'uppercase' }}>
                     <Map size={16} /> 10. GIS MAP-BASED STATE REVENUE MAP VERIFICATION
                   </div>
-                  <div style={{ display: 'flex', background: '#E2E8F0', borderRadius: '6px', padding: '2px' }}>
-                    <button
-                      onClick={() => setMapMode('side-by-side')}
-                      style={{
-                        padding: '4px 10px',
-                        borderRadius: '4px',
-                        border: 'none',
-                        fontSize: '11px',
-                        fontWeight: 700,
-                        background: mapMode === 'side-by-side' ? '#0B4726' : 'transparent',
-                        color: mapMode === 'side-by-side' ? '#FFF' : '#475569',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Side-by-Side
-                    </button>
-                    <button
-                      onClick={() => setMapMode('overlay')}
-                      style={{
-                        padding: '4px 10px',
-                        borderRadius: '4px',
-                        border: 'none',
-                        fontSize: '11px',
-                        fontWeight: 700,
-                        background: mapMode === 'overlay' ? '#0B4726' : 'transparent',
-                        color: mapMode === 'overlay' ? '#FFF' : '#475569',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Overlay Mode
-                    </button>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    {mapMode === 'overlay' && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: '#475569' }}>
+                        <span>Overlay Alpha:</span>
+                        <input
+                          type="range"
+                          min="10"
+                          max="90"
+                          value={overlayAlpha}
+                          onChange={e => setOverlayAlpha(Number(e.target.value))}
+                          style={{ width: '80px', accentColor: '#008E4F' }}
+                        />
+                        <span>{overlayAlpha}%</span>
+                      </div>
+                    )}
+                    <div style={{ display: 'flex', background: '#E2E8F0', borderRadius: '6px', padding: '2px' }}>
+                      <button
+                        onClick={() => setMapMode('side-by-side')}
+                        style={{
+                          padding: '4px 10px',
+                          borderRadius: '4px',
+                          border: 'none',
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          background: mapMode === 'side-by-side' ? '#0B4726' : 'transparent',
+                          color: mapMode === 'side-by-side' ? '#FFF' : '#475569',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Side-by-Side
+                      </button>
+                      <button
+                        onClick={() => setMapMode('overlay')}
+                        style={{
+                          padding: '4px 10px',
+                          borderRadius: '4px',
+                          border: 'none',
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          background: mapMode === 'overlay' ? '#0B4726' : 'transparent',
+                          color: mapMode === 'overlay' ? '#FFF' : '#475569',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Overlay Mode
+                      </button>
+                    </div>
                   </div>
                 </div>
 
                 {mapMode === 'side-by-side' ? (
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                    {/* Left: Proposed Alignment Map */}
                     <div style={{ border: '2px solid #3B82F6', borderRadius: '8px', overflow: 'hidden' }}>
-                      <div style={{ background: '#3B82F6', color: '#FFF', padding: '4px 10px', fontSize: '11px', fontWeight: 800 }}>
-                        PROPOSED ALIGNMENT MAP (Proposing Body)
+                      <div style={{ background: '#3B82F6', color: '#FFF', padding: '4px 10px', fontSize: '11px', fontWeight: 800, display: 'flex', justifyContent: 'space-between' }}>
+                        <span>PROPOSED ALIGNMENT MAP (Proposing Body)</span>
+                        <span style={{ fontSize: '10px', opacity: 0.9 }}>Live Leaflet View</span>
                       </div>
-                      <img src={proposal.proposedMapUrl} alt="Proposed Map" style={{ width: '100%', height: '220px', objectFit: 'cover' }} />
+                      <div style={{ height: '240px', width: '100%', position: 'relative' }}>
+                        <MapContainer
+                          center={[18.5793, 73.9814]}
+                          zoom={14}
+                          scrollWheelZoom={false}
+                          style={{ width: '100%', height: '100%' }}
+                          zoomControl={false}
+                        >
+                          <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution="&copy; OpenStreetMap contributors"
+                          />
+                          {/* Proposed Corridor Buffer */}
+                          <Polyline
+                            positions={[
+                              [18.5750, 73.9780],
+                              [18.5780, 73.9810],
+                              [18.5815, 73.9845],
+                              [18.5850, 73.9880]
+                            ]}
+                            pathOptions={{ color: '#3B82F6', weight: 28, opacity: 0.25 }}
+                          />
+                          {/* Proposed Centerline */}
+                          <Polyline
+                            positions={[
+                              [18.5750, 73.9780],
+                              [18.5780, 73.9810],
+                              [18.5815, 73.9845],
+                              [18.5850, 73.9880]
+                            ]}
+                            pathOptions={{ color: '#2563EB', weight: 4, dashArray: '6, 6' }}
+                          >
+                            <Tooltip sticky>Proposing Body Alignment Pegs</Tooltip>
+                          </Polyline>
+                        </MapContainer>
+                      </div>
                     </div>
 
+                    {/* Right: Official State Revenue Cadastral Map */}
                     <div style={{ border: '2px solid #059669', borderRadius: '8px', overflow: 'hidden' }}>
-                      <div style={{ background: '#059669', color: '#FFF', padding: '4px 10px', fontSize: '11px', fontWeight: 800 }}>
-                        OFFICIAL STATE REVENUE CADASTRAL GIS MAP
+                      <div style={{ background: '#059669', color: '#FFF', padding: '4px 10px', fontSize: '11px', fontWeight: 800, display: 'flex', justifyContent: 'space-between' }}>
+                        <span>OFFICIAL STATE REVENUE CADASTRAL GIS MAP</span>
+                        <span style={{ fontSize: '10px', opacity: 0.9 }}>Bhunaksha RoR 7/12</span>
                       </div>
-                      <img src={proposal.officialGisMapUrl} alt="Official Map" style={{ width: '100%', height: '220px', objectFit: 'cover' }} />
+                      <div style={{ height: '240px', width: '100%', position: 'relative' }}>
+                        <MapContainer
+                          center={[18.5793, 73.9814]}
+                          zoom={14}
+                          scrollWheelZoom={false}
+                          style={{ width: '100%', height: '100%' }}
+                          zoomControl={false}
+                        >
+                          <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution="&copy; OpenStreetMap contributors"
+                          />
+                          {/* Disputed Parcel 142/1A */}
+                          <Polygon
+                            positions={[
+                              [18.5770, 73.9795],
+                              [18.5800, 73.9800],
+                              [18.5795, 73.9830],
+                              [18.5768, 73.9822]
+                            ]}
+                            pathOptions={{ color: '#DC2626', fillColor: '#EF4444', fillOpacity: 0.5, weight: 2.5 }}
+                          >
+                            <Tooltip sticky>Gat 142/1A (Boundary Discrepancy Flagged)</Tooltip>
+                          </Polygon>
+                          {/* Clear Parcel 142/1B */}
+                          <Polygon
+                            positions={[
+                              [18.5800, 73.9830],
+                              [18.5830, 73.9835],
+                              [18.5825, 73.9865],
+                              [18.5795, 73.9860]
+                            ]}
+                            pathOptions={{ color: '#16A34A', fillColor: '#22C55E', fillOpacity: 0.45, weight: 2 }}
+                          >
+                            <Tooltip sticky>Gat 142/1B (Revenue Verified)</Tooltip>
+                          </Polygon>
+                        </MapContainer>
+                      </div>
                     </div>
                   </div>
                 ) : (
-                  <div style={{ border: '2px solid #8B5CF6', borderRadius: '8px', overflow: 'hidden', position: 'relative', height: '250px' }}>
-                    <img src={proposal.officialGisMapUrl} alt="Base Map" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    <img src={proposal.proposedMapUrl} alt="Overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: overlayAlpha / 100, mixBlendMode: 'difference' }} />
+                  /* Overlay Mode: Single Unified Leaflet Map with Layer Overlap */
+                  <div style={{ border: '2px solid #8B5CF6', borderRadius: '8px', overflow: 'hidden', height: '280px', width: '100%', position: 'relative' }}>
+                    <MapContainer
+                      center={[18.5793, 73.9814]}
+                      zoom={14}
+                      scrollWheelZoom={false}
+                      style={{ width: '100%', height: '100%' }}
+                      zoomControl={false}
+                    >
+                      <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution="&copy; OpenStreetMap contributors"
+                      />
+                      {/* Official Cadastral Parcels */}
+                      <Polygon
+                        positions={[
+                          [18.5770, 73.9795],
+                          [18.5800, 73.9800],
+                          [18.5795, 73.9830],
+                          [18.5768, 73.9822]
+                        ]}
+                        pathOptions={{ color: '#DC2626', fillColor: '#EF4444', fillOpacity: 0.5, weight: 2.5 }}
+                      >
+                        <Tooltip sticky>Gat 142/1A (Official RoR Boundary)</Tooltip>
+                      </Polygon>
+                      <Polygon
+                        positions={[
+                          [18.5800, 73.9830],
+                          [18.5830, 73.9835],
+                          [18.5825, 73.9865],
+                          [18.5795, 73.9860]
+                        ]}
+                        pathOptions={{ color: '#16A34A', fillColor: '#22C55E', fillOpacity: 0.45, weight: 2 }}
+                      >
+                        <Tooltip sticky>Gat 142/1B (Official RoR Boundary)</Tooltip>
+                      </Polygon>
+
+                      {/* Superimposed Proposed Alignment with Alpha Slider */}
+                      <Polyline
+                        positions={[
+                          [18.5750, 73.9780],
+                          [18.5780, 73.9810],
+                          [18.5815, 73.9845],
+                          [18.5850, 73.9880]
+                        ]}
+                        pathOptions={{
+                          color: '#8B5CF6',
+                          weight: 30,
+                          opacity: overlayAlpha / 100
+                        }}
+                      />
+                      <Polyline
+                        positions={[
+                          [18.5750, 73.9780],
+                          [18.5780, 73.9810],
+                          [18.5815, 73.9845],
+                          [18.5850, 73.9880]
+                        ]}
+                        pathOptions={{
+                          color: '#F59E0B',
+                          weight: 4,
+                          dashArray: '8, 6',
+                          opacity: Math.min(1, (overlayAlpha + 20) / 100)
+                        }}
+                      >
+                        <Tooltip sticky>Proposed Corridor Overlap vs RoR Cadastral</Tooltip>
+                      </Polyline>
+                    </MapContainer>
                   </div>
                 )}
 

@@ -971,19 +971,316 @@ export const swadeshCadastralParcels = [
 ];
 
 export const initialParcelsCadastral = [
-  { id: "PARCEL-HAV-142-1", surveyNo: "142/1", village: "Charholi Budruk", taluka: "Haveli", district: "Pune", areaHa: 2.85, landType: "Private Agricultural", owners: 3, estimatedComp: 3.42, encumbrance: "None / Clear", package: "Package 1A" },
-  { id: "PARCEL-HAV-142-2", surveyNo: "142/2", village: "Charholi Budruk", taluka: "Haveli", district: "Pune", areaHa: 1.95, landType: "Private Agricultural", owners: 2, estimatedComp: 2.34, encumbrance: "None / Clear", package: "Package 1A" },
-  { id: "PARCEL-HAV-188-3", surveyNo: "188/3", village: "Dhanore", taluka: "Haveli", district: "Pune", areaHa: 3.40, landType: "Private Irrigated", owners: 5, estimatedComp: 4.80, encumbrance: "Multiple Co-Sharers", package: "Package 1A" },
-  { id: "PARCEL-KHD-412-1", surveyNo: "412/1", village: "Waki", taluka: "Khed", district: "Pune", areaHa: 4.20, landType: "Government Social Forestry", owners: 1, estimatedComp: 1.89, encumbrance: "None / Clear", package: "Package 1B" },
-  { id: "PARCEL-KHD-412-2", surveyNo: "412/2", village: "Waki", taluka: "Khed", district: "Pune", areaHa: 2.10, landType: "Private Agricultural", owners: 2, estimatedComp: 2.52, encumbrance: "None / Clear", package: "Package 1B" },
-  { id: "PARCEL-KHD-415", surveyNo: "415", village: "Waki", taluka: "Khed", district: "Pune", areaHa: 1.80, landType: "Community Gairan Land", owners: 1, estimatedComp: 0.95, encumbrance: "Gram Panchayat NOC Pending", package: "Package 1B" },
-  { id: "PARCEL-KHD-502", surveyNo: "502/A", village: "Chakan", taluka: "Khed", district: "Pune", areaHa: 5.50, landType: "Non-Agricultural Commercial", owners: 4, estimatedComp: 11.50, encumbrance: "Commercial Tenancies", package: "Package 2" },
-  { id: "PARCEL-KHD-503", surveyNo: "503/B", village: "Chakan", taluka: "Khed", district: "Pune", areaHa: 3.20, landType: "Private Agricultural", owners: 3, estimatedComp: 3.84, encumbrance: "None / Clear", package: "Package 2" },
-  { id: "PARCEL-SHR-204", surveyNo: "204/1", village: "Sanaswadi", taluka: "Shirur", district: "Pune", areaHa: 4.60, landType: "Private Agricultural", owners: 4, estimatedComp: 5.20, encumbrance: "None / Clear", package: "Package 2" },
-  { id: "PARCEL-SHR-208", surveyNo: "208/3", village: "Sanaswadi", taluka: "Shirur", district: "Pune", areaHa: 2.40, landType: "Barren / Industrial Buffer", owners: 2, estimatedComp: 2.88, encumbrance: "None / Clear", package: "Package 2" },
-  { id: "PARCEL-AMB-109", surveyNo: "109/2", village: "Manchar", taluka: "Ambegaon", district: "Pune", areaHa: 3.75, landType: "Private Irrigated", owners: 6, estimatedComp: 4.50, encumbrance: "Inheritance Mutation In Progress", package: "Package 3" },
-  { id: "PARCEL-AMB-114", surveyNo: "114/4", village: "Manchar", taluka: "Ambegaon", district: "Pune", areaHa: 1.65, landType: "Government Revenue Land", owners: 1, estimatedComp: 0.82, encumbrance: "None / Clear", package: "Package 3" },
-  { id: "PARCEL-JUN-301", surveyNo: "301/1", village: "Narayangaon", taluka: "Junnar", district: "Pune", areaHa: 4.10, landType: "Private Agricultural", owners: 3, estimatedComp: 4.92, encumbrance: "None / Clear", package: "Package 3" },
-  { id: "PARCEL-JUN-305", surveyNo: "305/A", village: "Narayangaon", taluka: "Junnar", district: "Pune", areaHa: 2.80, landType: "Forest Land Class-C", owners: 1, estimatedComp: 1.40, encumbrance: "Forest Stage-I Clearance Pending", package: "Package 3" }
+  {
+    id: "PARCEL-HAV-142-1",
+    surveyNo: "142/1",
+    village: "Charholi Budruk",
+    taluka: "Haveli",
+    district: "Pune",
+    areaHa: 2.85,
+    landType: "Private Agricultural",
+    owners: 3,
+    estimatedComp: 3.42,
+    encumbrance: "None / Clear",
+    package: "Package 1A",
+    lat: 18.6345,
+    lng: 73.8930,
+    polygon: [
+      [18.6335, 73.8918],
+      [18.6358, 73.8920],
+      [18.6355, 73.8942],
+      [18.6332, 73.8938]
+    ]
+  },
+  {
+    id: "PARCEL-HAV-142-2",
+    surveyNo: "142/2",
+    village: "Charholi Budruk",
+    taluka: "Haveli",
+    district: "Pune",
+    areaHa: 1.95,
+    landType: "Private Agricultural",
+    owners: 2,
+    estimatedComp: 2.34,
+    encumbrance: "None / Clear",
+    package: "Package 1A",
+    lat: 18.6365,
+    lng: 73.8960,
+    polygon: [
+      [18.6355, 73.8945],
+      [18.6378, 73.8950],
+      [18.6372, 73.8975],
+      [18.6350, 73.8970]
+    ]
+  },
+  {
+    id: "PARCEL-HAV-188-3",
+    surveyNo: "188/3",
+    village: "Dhanore",
+    taluka: "Haveli",
+    district: "Pune",
+    areaHa: 3.40,
+    landType: "Private Irrigated",
+    owners: 5,
+    estimatedComp: 4.80,
+    encumbrance: "Multiple Co-Sharers",
+    package: "Package 1A",
+    lat: 18.6520,
+    lng: 73.9180,
+    polygon: [
+      [18.6505, 73.9160],
+      [18.6535, 73.9165],
+      [18.6530, 73.9200],
+      [18.6500, 73.9195]
+    ]
+  },
+  {
+    id: "PARCEL-KHD-412-1",
+    surveyNo: "412/1",
+    village: "Waki",
+    taluka: "Khed",
+    district: "Pune",
+    areaHa: 4.20,
+    landType: "Government Social Forestry",
+    owners: 1,
+    estimatedComp: 1.89,
+    encumbrance: "None / Clear",
+    package: "Package 1B",
+    lat: 18.7330,
+    lng: 73.8730,
+    polygon: [
+      [18.7315, 73.8710],
+      [18.7348, 73.8715],
+      [18.7342, 73.8750],
+      [18.7310, 73.8745]
+    ]
+  },
+  {
+    id: "PARCEL-KHD-412-2",
+    surveyNo: "412/2",
+    village: "Waki",
+    taluka: "Khed",
+    district: "Pune",
+    areaHa: 2.10,
+    landType: "Private Agricultural",
+    owners: 2,
+    estimatedComp: 2.52,
+    encumbrance: "None / Clear",
+    package: "Package 1B",
+    lat: 18.7360,
+    lng: 73.8770,
+    polygon: [
+      [18.7345, 73.8752],
+      [18.7375, 73.8758],
+      [18.7370, 73.8790],
+      [18.7340, 73.8785]
+    ]
+  },
+  {
+    id: "PARCEL-KHD-415",
+    surveyNo: "415",
+    village: "Waki",
+    taluka: "Khed",
+    district: "Pune",
+    areaHa: 1.80,
+    landType: "Community Gairan Land",
+    owners: 1,
+    estimatedComp: 0.95,
+    encumbrance: "Gram Panchayat NOC Pending",
+    package: "Package 1B",
+    lat: 18.7390,
+    lng: 73.8820,
+    polygon: [
+      [18.7375, 73.8805],
+      [18.7405, 73.8810],
+      [18.7400, 73.8840],
+      [18.7370, 73.8835]
+    ]
+  },
+  {
+    id: "PARCEL-KHD-502",
+    surveyNo: "502/A",
+    village: "Chakan",
+    taluka: "Khed",
+    district: "Pune",
+    areaHa: 5.50,
+    landType: "Non-Agricultural Commercial",
+    owners: 4,
+    estimatedComp: 11.50,
+    encumbrance: "Commercial Tenancies",
+    package: "Package 2",
+    lat: 18.7610,
+    lng: 73.8560,
+    polygon: [
+      [18.7590, 73.8535],
+      [18.7630, 73.8540],
+      [18.7625, 73.8585],
+      [18.7585, 73.8580]
+    ]
+  },
+  {
+    id: "PARCEL-KHD-503",
+    surveyNo: "503/B",
+    village: "Chakan",
+    taluka: "Khed",
+    district: "Pune",
+    areaHa: 3.20,
+    landType: "Private Agricultural",
+    owners: 3,
+    estimatedComp: 3.84,
+    encumbrance: "None / Clear",
+    package: "Package 2",
+    lat: 18.7645,
+    lng: 73.8610,
+    polygon: [
+      [18.7630, 73.8590],
+      [18.7662, 73.8595],
+      [18.7658, 73.8630],
+      [18.7625, 73.8625]
+    ]
+  },
+  {
+    id: "PARCEL-SHR-204",
+    surveyNo: "204/1",
+    village: "Sanaswadi",
+    taluka: "Shirur",
+    district: "Pune",
+    areaHa: 4.60,
+    landType: "Private Agricultural",
+    owners: 4,
+    estimatedComp: 5.20,
+    encumbrance: "None / Clear",
+    package: "Package 2",
+    lat: 18.6710,
+    lng: 74.0720,
+    polygon: [
+      [18.6690, 74.0700],
+      [18.6730, 74.0705],
+      [18.6725, 74.0745],
+      [18.6685, 74.0740]
+    ]
+  },
+  {
+    id: "PARCEL-SHR-208",
+    surveyNo: "208/3",
+    village: "Sanaswadi",
+    taluka: "Shirur",
+    district: "Pune",
+    areaHa: 2.40,
+    landType: "Barren / Industrial Buffer",
+    owners: 2,
+    estimatedComp: 2.88,
+    encumbrance: "None / Clear",
+    package: "Package 2",
+    lat: 18.6740,
+    lng: 74.0770,
+    polygon: [
+      [18.6725, 74.0750],
+      [18.6755, 74.0755],
+      [18.6750, 74.0790],
+      [18.6720, 74.0785]
+    ]
+  },
+  {
+    id: "PARCEL-AMB-109",
+    surveyNo: "109/2",
+    village: "Manchar",
+    taluka: "Ambegaon",
+    district: "Pune",
+    areaHa: 3.75,
+    landType: "Private Irrigated",
+    owners: 6,
+    estimatedComp: 4.50,
+    encumbrance: "Inheritance Mutation In Progress",
+    package: "Package 3",
+    lat: 18.9930,
+    lng: 73.9430,
+    polygon: [
+      [18.9910, 73.9410],
+      [18.9950, 73.9415],
+      [18.9945, 73.9455],
+      [18.9905, 73.9450]
+    ]
+  },
+  {
+    id: "PARCEL-AMB-114",
+    surveyNo: "114/4",
+    village: "Manchar",
+    taluka: "Ambegaon",
+    district: "Pune",
+    areaHa: 1.65,
+    landType: "Government Revenue Land",
+    owners: 1,
+    estimatedComp: 0.82,
+    encumbrance: "None / Clear",
+    package: "Package 3",
+    lat: 18.9970,
+    lng: 73.9480,
+    polygon: [
+      [18.9955, 73.9465],
+      [18.9985, 73.9470],
+      [18.9980, 73.9500],
+      [18.9950, 73.9495]
+    ]
+  },
+  {
+    id: "PARCEL-JUN-301",
+    surveyNo: "301/1",
+    village: "Narayangaon",
+    taluka: "Junnar",
+    district: "Pune",
+    areaHa: 4.10,
+    landType: "Private Agricultural",
+    owners: 3,
+    estimatedComp: 4.92,
+    encumbrance: "None / Clear",
+    package: "Package 3",
+    lat: 19.1170,
+    lng: 73.9760,
+    polygon: [
+      [19.1150, 73.9740],
+      [19.1190, 73.9745],
+      [19.1185, 73.9785],
+      [19.1145, 73.9780]
+    ]
+  },
+  {
+    id: "PARCEL-JUN-305",
+    surveyNo: "305/A",
+    village: "Narayangaon",
+    taluka: "Junnar",
+    district: "Pune",
+    areaHa: 2.80,
+    landType: "Forest Land Class-C",
+    owners: 1,
+    estimatedComp: 1.40,
+    encumbrance: "Forest Stage-I Clearance Pending",
+    package: "Package 3",
+    lat: 19.1210,
+    lng: 73.9810,
+    polygon: [
+      [19.1195, 73.9795],
+      [19.1225, 73.9800],
+      [19.1220, 73.9830],
+      [19.1190, 73.9825]
+    ]
+  }
+];
+
+export const proposedCorridorAlignment = [
+  [18.6345, 73.8930],
+  [18.6520, 73.9180],
+  [18.7330, 73.8730],
+  [18.7610, 73.8560],
+  [18.9930, 73.9430],
+  [19.1170, 73.9760]
+];
+
+export const corridorMilestones = [
+  { label: 'CH 0+000 (Charholi / Haveli)', lat: 18.6345, lng: 73.8930 },
+  { label: 'CH 12+400 (Waki / Khed)', lat: 18.7330, lng: 73.8730 },
+  { label: 'CH 24+800 (Chakan Hub)', lat: 18.7610, lng: 73.8560 },
+  { label: 'CH 48+200 (Manchar / Ambegaon)', lat: 18.9930, lng: 73.9430 },
+  { label: 'CH 65+000 (Narayangaon / Junnar)', lat: 19.1170, lng: 73.9760 }
 ];
 

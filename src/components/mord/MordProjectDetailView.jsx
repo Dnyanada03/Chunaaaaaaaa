@@ -1,5 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Polyline,
+  Tooltip,
+  Popup
+} from 'react-leaflet';
+import {
   ArrowLeft,
   MapPin,
   Calendar,
@@ -23,6 +31,18 @@ import {
 import { getAllMordProjects, initialMordDirectives } from '../../data/mordData';
 import { useSwadesh } from '../../context/SwadeshContext';
 import MordIssueDirectiveModal from './MordIssueDirectiveModal';
+
+// Helper to invalidate Leaflet container dimensions when tab becomes active
+function MapTabResizeHelper() {
+  const map = useMap();
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [map]);
+  return null;
+}
 
 export default function MordProjectDetailView({ projectId, onBack, onNavigate }) {
   const { projects: contextProjects } = useSwadesh();
@@ -692,44 +712,137 @@ export default function MordProjectDetailView({ projectId, onBack, onNavigate })
           {/* TAB 2: MAP */}
           {activeSideTab === 'map' && (
             <div>
-              <h3 style={{ fontFamily: 'Merriweather, Georgia, serif', fontSize: '18px', color: '#111827', margin: '0 0 4px' }}>
-                Project Cadastral GIS Overlay
-              </h3>
-              <p style={{ fontSize: '13px', color: '#64748B', margin: '0 0 18px' }}>
-                Survey polygon boundary verified against state land records
-              </p>
-
-              <div style={{
-                height: '320px',
-                background: '#F8FAFC',
-                border: '1px solid #E2E8F0',
-                borderRadius: '12px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#334155',
-                position: 'relative'
-              }}>
-                <MapPin size={38} style={{ color: '#008E4F', marginBottom: '8px' }} />
-                <div style={{ fontSize: '15px', fontWeight: 700, color: '#1E293B' }}>
-                  GIS Map Viewer Active — {project.name}
-                </div>
-                <div style={{ fontSize: '12.5px', color: '#64748B', marginTop: '4px' }}>
-                  Coordinates: 18.5204° N, 73.8567° E | Buffer Zone: 30m | Cadastral Parcels: {project.totalLandowners}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 0 14px' }}>
+                <div>
+                  <h3 style={{ fontFamily: 'Merriweather, Georgia, serif', fontSize: '18px', color: '#111827', margin: '0 0 4px' }}>
+                    Project Cadastral GIS Demarcation
+                  </h3>
+                  <p style={{ fontSize: '13px', color: '#64748B', margin: 0 }}>
+                    Live satellite and revenue survey alignment verified against state land records
+                  </p>
                 </div>
                 <button
                   onClick={() => onNavigate && onNavigate('map')}
                   className="btn btn-primary"
                   style={{
-                    marginTop: '14px',
-                    padding: '8px 18px',
-                    fontSize: '12px',
-                    borderRadius: '8px'
+                    padding: '6px 14px',
+                    fontSize: '11.5px',
+                    borderRadius: '6px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
                   }}
                 >
-                  Open in National GIS Map →
+                  Open in National GIS Command →
                 </button>
+              </div>
+
+              <div style={{
+                height: '380px',
+                background: '#0F172A',
+                border: '1px solid #CBD5E1',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                position: 'relative'
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '12px',
+                  left: '12px',
+                  zIndex: 1000,
+                  background: 'rgba(15, 23, 42, 0.9)',
+                  backdropFilter: 'blur(6px)',
+                  color: '#FFFFFF',
+                  padding: '5px 12px',
+                  borderRadius: '6px',
+                  fontSize: '11.5px',
+                  fontWeight: 700,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                  border: '1px solid rgba(255,255,255,0.15)'
+                }}>
+                  <MapPin size={14} style={{ color: '#008E4F' }} />
+                  <span>{project.name} • {project.state || 'Maharashtra'}</span>
+                  <span style={{ color: '#FDE68A', fontSize: '10px' }}>Buffer: 30m RoR Corridor</span>
+                </div>
+
+                <MapContainer
+                  key={`${project.id}-map`}
+                  center={
+                    project.state === 'Gujarat' ? [23.0225, 72.5714] :
+                    project.state === 'Uttar Pradesh' ? [28.1500, 77.5500] :
+                    project.state === 'Karnataka' ? [12.9716, 77.5946] :
+                    [18.5204, 73.8567]
+                  }
+                  zoom={12}
+                  scrollWheelZoom={false}
+                  style={{ width: '100%', height: '100%' }}
+                  zoomControl={false}
+                >
+                  <MapTabResizeHelper />
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&copy; OpenStreetMap contributors"
+                  />
+                  {/* Corridor Buffer */}
+                  <Polyline
+                    positions={(() => {
+                      const base = project.state === 'Gujarat' ? [23.0225, 72.5714] :
+                                   project.state === 'Uttar Pradesh' ? [28.1500, 77.5500] :
+                                   project.state === 'Karnataka' ? [12.9716, 77.5946] :
+                                   [18.5204, 73.8567];
+                      return [
+                        [base[0] - 0.04, base[1] - 0.05],
+                        [base[0] - 0.01, base[1] - 0.02],
+                        [base[0] + 0.02, base[1] + 0.02],
+                        [base[0] + 0.05, base[1] + 0.06]
+                      ];
+                    })()}
+                    pathOptions={{ color: '#008E4F', weight: 24, opacity: 0.22 }}
+                  />
+                  {/* Centerline */}
+                  <Polyline
+                    positions={(() => {
+                      const base = project.state === 'Gujarat' ? [23.0225, 72.5714] :
+                                   project.state === 'Uttar Pradesh' ? [28.1500, 77.5500] :
+                                   project.state === 'Karnataka' ? [12.9716, 77.5946] :
+                                   [18.5204, 73.8567];
+                      return [
+                        [base[0] - 0.04, base[1] - 0.05],
+                        [base[0] - 0.01, base[1] - 0.02],
+                        [base[0] + 0.02, base[1] + 0.02],
+                        [base[0] + 0.05, base[1] + 0.06]
+                      ];
+                    })()}
+                    pathOptions={{ color: '#F59E0B', weight: 4, dashArray: '8, 6' }}
+                  >
+                    <Tooltip sticky>{project.name} Centerline Pegs</Tooltip>
+                  </Polyline>
+
+                  {/* Marker at Project Center */}
+                  <Marker
+                    position={
+                      project.state === 'Gujarat' ? [23.0225, 72.5714] :
+                      project.state === 'Uttar Pradesh' ? [28.1500, 77.5500] :
+                      project.state === 'Karnataka' ? [12.9716, 77.5946] :
+                      [18.5204, 73.8567]
+                    }
+                  >
+                    <Popup>
+                      <div style={{ padding: '6px', fontSize: '12px' }}>
+                        <strong style={{ color: '#0F172A' }}>{project.name}</strong>
+                        <div style={{ color: '#64748B', marginTop: '2px' }}>
+                          Authority: {project.implementingAgency || 'State Revenue / Proposing Body'}
+                        </div>
+                        <div style={{ marginTop: '4px', fontSize: '11px', color: '#008E4F', fontWeight: 700 }}>
+                          {project.totalLandowners ? `${project.totalLandowners} Landowners Mapped` : 'Survey Completed'}
+                        </div>
+                      </div>
+                    </Popup>
+                  </Marker>
+                </MapContainer>
               </div>
             </div>
           )}

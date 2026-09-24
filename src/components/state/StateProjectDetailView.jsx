@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Polyline,
+  Tooltip,
+  Popup
+} from 'react-leaflet';
+import {
   ArrowLeft,
   ChevronRight,
   MapPin,
@@ -409,21 +417,126 @@ function LandGisTab({ project }) {
         <InfoRow label="Acquisition Progress" value={`${Math.round(project.landAcquiredHa / project.landRequiredHa * 100)}%`} />
         <InfoRow label="Affected Landowners" value={project.totalLandowners.toLocaleString()} />
       </div>
-      {/* Map placeholder */}
+      {/* Live Leaflet Project Footprint Map */}
       <div style={{
         marginTop: '18px',
-        height: '280px',
-        background: '#F1F5F9',
-        border: '1px solid #E2E8F0',
+        height: '320px',
+        border: '1px solid #CBD5E1',
         borderRadius: '12px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#6B7280',
-        fontSize: '13px'
+        overflow: 'hidden',
+        position: 'relative'
       }}>
-        <MapPin size={18} style={{ marginRight: '8px' }} />
-        GIS Map — {project.district} District, {project.taluka} Taluka
+        <div style={{
+          position: 'absolute',
+          top: '10px',
+          left: '10px',
+          zIndex: 1000,
+          background: 'rgba(15, 23, 42, 0.88)',
+          backdropFilter: 'blur(6px)',
+          color: '#FFFFFF',
+          padding: '4px 10px',
+          borderRadius: '6px',
+          fontSize: '11px',
+          fontWeight: 700,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px'
+        }}>
+          <Map size={13} style={{ color: '#008E4F' }} />
+          <span>{project.district} District • {project.taluka} Taluka Corridor</span>
+        </div>
+        <MapContainer
+          center={
+            project.district === 'Mumbai' ? [18.96, 72.82] :
+            project.district === 'Pune' ? [18.52, 73.85] :
+            project.district === 'Nashik' ? [19.99, 73.78] :
+            project.district === 'Nagpur' ? [21.14, 79.08] :
+            project.district === 'Thane' ? [19.21, 72.97] :
+            project.district === 'Raigad' ? [18.51, 73.18] :
+            project.district === 'Satara' ? [17.68, 73.99] :
+            project.district === 'Kolhapur' ? [16.70, 74.24] :
+            [19.87, 75.34]
+          }
+          zoom={12}
+          scrollWheelZoom={false}
+          style={{ width: '100%', height: '100%' }}
+          zoomControl={false}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; OpenStreetMap contributors"
+          />
+          {/* Corridor Right of Way Buffer */}
+          <Polyline
+            positions={(() => {
+              const base = project.district === 'Mumbai' ? [18.96, 72.82] :
+                           project.district === 'Pune' ? [18.52, 73.85] :
+                           project.district === 'Nashik' ? [19.99, 73.78] :
+                           project.district === 'Nagpur' ? [21.14, 79.08] :
+                           project.district === 'Thane' ? [19.21, 72.97] :
+                           project.district === 'Raigad' ? [18.51, 73.18] :
+                           project.district === 'Satara' ? [17.68, 73.99] :
+                           [16.70, 74.24];
+              return [
+                [base[0] - 0.03, base[1] - 0.04],
+                [base[0] - 0.01, base[1] - 0.01],
+                [base[0] + 0.02, base[1] + 0.02],
+                [base[0] + 0.04, base[1] + 0.05]
+              ];
+            })()}
+            pathOptions={{ color: '#008E4F', weight: 18, opacity: 0.2 }}
+          />
+          {/* Alignment Centerline */}
+          <Polyline
+            positions={(() => {
+              const base = project.district === 'Mumbai' ? [18.96, 72.82] :
+                           project.district === 'Pune' ? [18.52, 73.85] :
+                           project.district === 'Nashik' ? [19.99, 73.78] :
+                           project.district === 'Nagpur' ? [21.14, 79.08] :
+                           project.district === 'Thane' ? [19.21, 72.97] :
+                           project.district === 'Raigad' ? [18.51, 73.18] :
+                           project.district === 'Satara' ? [17.68, 73.99] :
+                           [16.70, 74.24];
+              return [
+                [base[0] - 0.03, base[1] - 0.04],
+                [base[0] - 0.01, base[1] - 0.01],
+                [base[0] + 0.02, base[1] + 0.02],
+                [base[0] + 0.04, base[1] + 0.05]
+              ];
+            })()}
+            pathOptions={{ color: '#F59E0B', weight: 4, dashArray: '6, 6' }}
+          >
+            <Tooltip sticky>{project.name} (Alignment Corridor)</Tooltip>
+          </Polyline>
+
+          {/* Markers on Villages */}
+          {project.villages.map((v, i) => {
+            const base = project.district === 'Mumbai' ? [18.96, 72.82] :
+                         project.district === 'Pune' ? [18.52, 73.85] :
+                         project.district === 'Nashik' ? [19.99, 73.78] :
+                         project.district === 'Nagpur' ? [21.14, 79.08] :
+                         project.district === 'Thane' ? [19.21, 72.97] :
+                         project.district === 'Raigad' ? [18.51, 73.18] :
+                         project.district === 'Satara' ? [17.68, 73.99] :
+                         [16.70, 74.24];
+            const vPos = [base[0] + (i * 0.018 - 0.02), base[1] + (i * 0.018 - 0.02)];
+            return (
+              <Marker key={v} position={vPos}>
+                <Popup>
+                  <div style={{ padding: '4px 6px', fontSize: '12px' }}>
+                    <strong style={{ color: '#0F172A' }}>{v} Village</strong>
+                    <div style={{ color: '#64748B', marginTop: '2px' }}>
+                      {project.taluka} Taluka, {project.district}
+                    </div>
+                    <div style={{ marginTop: '4px', fontSize: '11px', color: '#008E4F', fontWeight: 700 }}>
+                      Corridor Survey Completed
+                    </div>
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          })}
+        </MapContainer>
       </div>
     </div>
   );
