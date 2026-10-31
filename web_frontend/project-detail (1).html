@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project detail — Mumbai-Nagpur expressway extension, phase 2</title>
+<style>
+  :root{
+    --ink:#16233A;
+    --ink-soft:#3A4A63;
+    --paper:#F2F1EC;
+    --panel:#FFFFFF;
+    --line:#D8D5CB;
+    --survey:#2F6F62;
+    --survey-tint:#E4EEE9;
+    --rust:#A6432B;
+    --rust-tint:#F6E7E2;
+    --ochre:#8A6A1E;
+    --ochre-tint:#F2ECDC;
+    --mono: "IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+    --serif: "Source Serif Pro","Georgia",serif;
+    --sans: "Inter","Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:14px;
+    line-height:1.55;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 24px 80px;}
+
+  /* ---- breadcrumb / file strip ---- */
+  .filestrip{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-soft);
+    letter-spacing:0.02em;
+    margin-bottom:18px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+  }
+  .filestrip .sep{color:var(--line);}
+  .filestrip .id{color:var(--survey);}
+
+  /* ---- hero band ---- */
+  .hero{
+    display:grid;
+    grid-template-columns:150px 1fr auto;
+    gap:24px;
+    align-items:start;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-thumb{
+    width:150px;height:110px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-soft);
+    font-family:var(--mono);
+    font-size:11px;
+  }
+  .hero-title{
+    font-family:var(--serif);
+    font-size:26px;
+    font-weight:600;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .hero-meta{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  .hero-desc{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    max-width:56ch;
+    margin:0;
+  }
+  .status-block{
+    text-align:right;
+    min-width:180px;
+  }
+  .status-pill{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:11px;
+    padding:4px 10px;
+    background:var(--survey-tint);
+    color:var(--survey);
+    border:1px solid var(--survey);
+  }
+  .status-sub{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:8px;
+  }
+
+  /* ---- KPI row ---- */
+  .kpis{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    border-bottom:1px solid var(--line);
+  }
+  .kpi{
+    padding:18px 20px;
+    border-right:1px solid var(--line);
+  }
+  .kpi:last-child{border-right:none;}
+  .kpi-label{
+    font-size:11px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin:0 0 6px;
+  }
+  .kpi-value{
+    font-family:var(--serif);
+    font-size:22px;
+    font-weight:600;
+    margin:0;
+  }
+  .kpi-value.small{font-size:14px;font-weight:500;font-family:var(--sans);}
+
+  /* ---- body layout: side tabs + content ---- */
+  .body-grid{
+    display:grid;
+    grid-template-columns:210px 1fr;
+    gap:0;
+    margin-top:0;
+  }
+  .side-tabs{
+    border-right:1px solid var(--line);
+    padding:18px 0;
+  }
+  .side-tabs button{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    border-left:3px solid transparent;
+    padding:11px 18px;
+    font-family:var(--sans);
+    font-size:13.5px;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .side-tabs button .count{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .side-tabs button.active{
+    border-left-color:var(--survey);
+    color:var(--ink);
+    background:var(--survey-tint);
+    font-weight:600;
+  }
+  .side-tabs button:hover:not(.active){background:var(--panel);}
+
+  .panel{
+    padding:24px 28px;
+    min-height:360px;
+  }
+  .panel h3{
+    font-family:var(--serif);
+    font-size:17px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .panel .panel-sub{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+  }
+  .panel-body{display:none;}
+  .panel-body.active{display:block;}
+
+  /* ---- proposals list ---- */
+  .row-list .row{
+    display:grid;
+    grid-template-columns:1fr 120px 140px;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid var(--line);
+    font-size:13.5px;
+  }
+  .row-list .row:last-child{border-bottom:none;}
+  .row-name{font-weight:500;}
+  .row-sub{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+  .row-land{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
+  .tag{font-family:var(--mono);font-size:11px;padding:3px 8px;border:1px solid; display:inline-block;}
+  .tag.on-track{color:var(--survey);border-color:var(--survey);background:var(--survey-tint);}
+  .tag.risk{color:var(--rust);border-color:var(--rust);background:var(--rust-tint);}
+  .tag.pending{color:var(--ochre);border-color:var(--ochre);background:var(--ochre-tint);}
+
+  /* ---- stakeholder summary ---- */
+  .stat-line{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:18px;}
+  .stat-line div{font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
+  .stat-line strong{display:block;font-family:var(--serif);font-size:20px;color:var(--ink);font-weight:600;}
+  .link-out{font-size:13px;color:var(--survey);text-decoration:none;border-bottom:1px solid var(--survey);}
+
+  /* ---- documents ---- */
+  .doc-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
+  .doc-row:last-child{border-bottom:none;}
+  .doc-icon{font-family:var(--mono);font-size:11px;color:var(--survey);border:1px solid var(--survey);width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+  /* ---- map ---- */
+  .map-slot{
+    height:340px;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 27px, var(--line) 28px),
+      repeating-linear-gradient(90deg, transparent, transparent 27px, var(--line) 28px),
+      var(--panel);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--ink-soft);
+    font-family:var(--mono);
+    font-size:12px;
+    text-align:center;
+    padding:20px;
+  }
+
+  /* ---- finance table ---- */
+  .fin-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:20px;border:1px solid var(--line);}
+  .fin-summary div{padding:14px 16px;border-right:1px solid var(--line);}
+  .fin-summary div:last-child{border-right:none;}
+  .fin-summary .flabel{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 4px;}
+  .fin-summary .fvalue{font-family:var(--serif);font-size:18px;font-weight:600;margin:0;}
+  table.ledger{width:100%;border-collapse:collapse;font-size:13px;}
+  table.ledger th{
+    text-align:left;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--ink-soft);
+    font-weight:500;
+    padding:8px 10px;
+    border-bottom:1px solid var(--ink);
+  }
+  table.ledger td{padding:10px 10px;border-bottom:1px solid var(--line);}
+  table.ledger td.mono{font-family:var(--mono);font-size:12px;}
+  table.ledger td.amount{font-family:var(--mono);text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="filestrip">
+    PROJECTS <span class="sep">/</span> NHAI <span class="sep">/</span> <span class="id">PRJ-2024-0118</span>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-thumb">project photo</div>
+    <div>
+      <p class="hero-title">Mumbai-Nagpur expressway extension, phase 2</p>
+      <p class="hero-meta">Proposed by National Highways Authority of India &nbsp;&middot;&nbsp; approved 12 Mar 2025</p>
+      <p class="hero-desc">Improves freight connectivity between Mumbai and Nagpur, reducing transit time by roughly six hours across the corridor.</p>
+    </div>
+    <div class="status-block">
+      <span class="status-pill">acquisition in progress</span>
+      <p class="status-sub">Last updated 2 days ago</p>
+    </div>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="kpis">
+    <div class="kpi">
+      <p class="kpi-label">Total land</p>
+      <p class="kpi-value">412 ha</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Total cost</p>
+      <p class="kpi-value">₹1,840 Cr</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Proposals</p>
+      <p class="kpi-value">6</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Latest update</p>
+      <p class="kpi-value small">Award passed for Wardha village</p>
+    </div>
+  </div>
+
+  <!-- SIDE TABS + CONTENT -->
+  <div class="body-grid">
+    <div class="side-tabs">
+      <button class="tab-btn active" data-tab="proposals">Proposals <span class="count">6</span></button>
+      <button class="tab-btn" data-tab="stakeholders">Authorities &amp; landowners</button>
+      <button class="tab-btn" data-tab="documents">Documents <span class="count">4</span></button>
+      <button class="tab-btn" data-tab="map">Map</button>
+      <button class="tab-btn" data-tab="finance">Finance</button>
+    </div>
+
+    <div>
+      <!-- PROPOSALS -->
+      <div class="panel panel-body active" id="panel-proposals">
+        <h3>Proposals under this project</h3>
+        <p class="panel-sub">Each proposal covers one variant or segment of the overall project.</p>
+        <div class="row-list">
+          <div class="row">
+            <div><div class="row-name">Wardha bypass segment</div><div class="row-sub">Wardha district</div></div>
+            <div class="row-land">88 ha</div>
+            <div><span class="tag on-track">award stage</span></div>
+          </div>
+          <div class="row">
+            <div><div class="row-name">Nagpur ring-road tie-in</div><div class="row-sub">Nagpur district</div></div>
+            <div class="row-land">61 ha</div>
+            <div><span class="tag risk">objections pending</span></div>
+          </div>
+          <div class="row">
+            <div><div class="row-name">Amravati interchange</div><div class="row-sub">Amravati district</div></div>
+            <div class="row-land">45 ha</div>
+            <div><span class="tag pending">pre-proposal</span></div>
+          </div>
+          <div class="row">
+            <div><div class="row-name">Katol village access road</div><div class="row-sub">Nagpur district</div></div>
+            <div class="row-land">32 ha</div>
+            <div><span class="tag on-track">survey stage</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAKEHOLDERS -->
+      <div class="panel panel-body" id="panel-stakeholders">
+        <h3>Authorities &amp; landowners</h3>
+        <p class="panel-sub">Summary only — open the register for the full record set.</p>
+        <div class="stat-line">
+          <div><strong>3</strong>states</div>
+          <div><strong>7</strong>districts</div>
+          <div><strong>19</strong>villages</div>
+          <div><strong>1,240</strong>owner-tenant records</div>
+        </div>
+        <a class="link-out" href="#">Open the full stakeholder register →</a>
+      </div>
+
+      <!-- DOCUMENTS -->
+      <div class="panel panel-body" id="panel-documents">
+        <h3>Documents</h3>
+        <p class="panel-sub">Uploaded at project creation and proposal stages.</p>
+        <div class="doc-row"><span class="doc-icon">PDF</span> Feasibility report.pdf</div>
+        <div class="doc-row"><span class="doc-icon">PDF</span> Administrator approval.pdf</div>
+        <div class="doc-row"><span class="doc-icon">PDF</span> Project detail report.pdf</div>
+        <div class="doc-row"><span class="doc-icon">PDF</span> PPP agreement — Wardha segment.pdf</div>
+      </div>
+
+      <!-- MAP -->
+      <div class="panel panel-body" id="panel-map">
+        <h3>Land parcel map</h3>
+        <p class="panel-sub">Mount your GIS library (e.g. Leaflet or Mapbox GL) into #gis-mount below.</p>
+        <div class="map-slot" id="gis-mount">
+          interactive GIS map mounts here — layer land parcels by proposal, color by acquisition status
+        </div>
+      </div>
+
+      <!-- FINANCE -->
+      <div class="panel panel-body" id="panel-finance">
+        <h3>Finance</h3>
+        <p class="panel-sub">Disbursement summary and full payment ledger for this project.</p>
+        <div class="fin-summary">
+          <div><p class="flabel">Total budget</p><p class="fvalue">₹1,840 Cr</p></div>
+          <div><p class="flabel">Disbursed</p><p class="fvalue">₹620 Cr</p></div>
+          <div><p class="flabel">Remaining</p><p class="fvalue">₹1,220 Cr</p></div>
+          <div><p class="flabel">Est. overrun</p><p class="fvalue">₹38 Cr</p></div>
+        </div>
+        <table class="ledger">
+          <thead>
+            <tr><th>Payment ID</th><th>Account</th><th>PFMS status</th><th>Date</th><th style="text-align:right;">Amount</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">PMT-2025-00931</td>
+              <td class="mono">HDFC-0044-WARDHA</td>
+              <td><span class="tag on-track">settled</span></td>
+              <td>04 Sep 2025</td>
+              <td class="amount">₹4.2 Cr</td>
+            </tr>
+            <tr>
+              <td class="mono">PMT-2025-00928</td>
+              <td class="mono">SBI-1187-NAGPUR</td>
+              <td><span class="tag pending">processing</span></td>
+              <td>29 Aug 2025</td>
+              <td class="amount">₹2.8 Cr</td>
+            </tr>
+            <tr>
+              <td class="mono">PMT-2025-00902</td>
+              <td class="mono">HDFC-0044-WARDHA</td>
+              <td><span class="tag risk">failed</span></td>
+              <td>14 Aug 2025</td>
+              <td class="amount">₹1.1 Cr</td>
+            </tr>
+            <tr>
+              <td class="mono">PMT-2025-00889</td>
+              <td class="mono">SBI-1187-NAGPUR</td>
+              <td><span class="tag on-track">settled</span></td>
+              <td>02 Aug 2025</td>
+              <td class="amount">₹6.5 Cr</td>
+            </tr>
+          </tbody>
+        </table>
+        <a class="link-out" href="#" style="display:inline-block;margin-top:14px;">View all 214 payments →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.panel-body').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

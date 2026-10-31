@@ -1,0 +1,453 @@
+import React, { useState, useEffect } from 'react';
+import { SwadeshProvider, useSwadesh } from './context/SwadeshContext';
+
+// Common Components
+import Header from './components/common/Header';
+import Sidebar from './components/common/Sidebar';
+import GlobalSearchModal from './components/common/GlobalSearchModal';
+import DigitalSignModal from './components/common/DigitalSignModal';
+import DocumentViewerModal from './components/common/DocumentViewerModal';
+import DocumentsView from './components/common/DocumentsView';
+import UnifiedLoginView from './components/common/UnifiedLoginView';
+import MordApp from './components/mord/MordApp';
+
+// Tahsildar Components
+import DashboardView from './components/tahsildar/DashboardView';
+import NotificationsView from './components/tahsildar/NotificationsView';
+import ObjectionListView from './components/tahsildar/ObjectionListView';
+import MyTasksView from './components/tahsildar/MyTasksView';
+import ProjectsView from './components/tahsildar/ProjectsView';
+import CompensationView from './components/tahsildar/CompensationView';
+import StatutoryNoticesView from './components/tahsildar/StatutoryNoticesView';
+import FinalMutationView from './components/tahsildar/FinalMutationView';
+import ProfileModal from './components/tahsildar/ProfileModal';
+
+// District Collector Components
+import CollectorHeader from './components/collector/CollectorHeader';
+import CollectorNav from './components/collector/CollectorNav';
+import CollectorGlobalSearchModal from './components/collector/CollectorGlobalSearchModal';
+import CollectorProfileModal from './components/collector/CollectorProfileModal';
+
+import CollectorDashboardView from './components/collector/CollectorDashboardView';
+import CollectorApprovalsView from './components/collector/CollectorApprovalsView';
+import CollectorProjectsView from './components/collector/CollectorProjectsView';
+import CollectorCompensationView from './components/collector/CollectorCompensationView';
+import CollectorAuditView from './components/collector/CollectorAuditView';
+import CollectorGISView from './components/collector/CollectorGISView';
+import CollectorReportsView from './components/collector/CollectorReportsView';
+import CollectorAdminView from './components/collector/CollectorAdminView';
+
+// State Government Components
+import StateHeader from './components/state/StateHeader';
+import StateNav from './components/state/StateNav';
+import StateDashboardView from './components/state/StateDashboardView';
+import StateProjectsView from './components/state/StateProjectsView';
+import StateProjectDetailView from './components/state/StateProjectDetailView';
+import StateApprovalsView from './components/state/StateApprovalsView';
+import StateDocumentsView from './components/state/StateDocumentsView';
+import StateGISView from './components/state/StateGISView';
+import StateReportsView from './components/state/StateReportsView';
+import StateResourcesView from './components/state/StateResourcesView';
+import StateNotificationsView from './components/state/StateNotificationsView';
+import StateDigitalSignaturesView from './components/state/StateDigitalSignaturesView';
+import StateProfileModal from './components/state/StateProfileModal';
+import StateGlobalSearchModal from './components/state/StateGlobalSearchModal';
+
+// Proposing Body Components
+import ProposingBodyHeader from './components/proposing/ProposingBodyHeader';
+import ProposingBodyNav from './components/proposing/ProposingBodyNav';
+import ProposingBodyDashboardView from './components/proposing/ProposingBodyDashboardView';
+import ProposingBodyProjectsView from './components/proposing/ProposingBodyProjectsView';
+import ProposingBodyAddProjectView from './components/proposing/ProposingBodyAddProjectView';
+import ProposingBodyProjectDetailView from './components/proposing/ProposingBodyProjectDetailView';
+import ProposingBodyCreateProposalView from './components/proposing/ProposingBodyCreateProposalView';
+import ProposingBodyAIPreProposalReportView from './components/proposing/ProposingBodyAIPreProposalReportView';
+import ProposingBodyProposalDetailView from './components/proposing/ProposingBodyProposalDetailView';
+import ProposingBodyGISView from './components/proposing/ProposingBodyGISView';
+import ProposingBodyDocumentsView from './components/proposing/ProposingBodyDocumentsView';
+import ProposingBodyReportsView from './components/proposing/ProposingBodyReportsView';
+import ProposingBodyNotificationsView from './components/proposing/ProposingBodyNotificationsView';
+import ProposingBodySettingsView from './components/proposing/ProposingBodySettingsView';
+import ProposingBodyProfileModal from './components/proposing/ProposingBodyProfileModal';
+import ProposingBodyGlobalSearchModal from './components/proposing/ProposingBodyGlobalSearchModal';
+
+const MainApp = () => {
+  const { isAuthenticated, userRole, activeTab } = useSwadesh();
+
+  // Collector Tab State
+  const [collectorTab, setCollectorTab] = useState('dashboard');
+
+  // Collector Modals
+  const [isCollectorProfileOpen, setIsCollectorProfileOpen] = useState(false);
+  const [isCollectorSearchOpen, setIsCollectorSearchOpen] = useState(false);
+
+  // State Tab State
+  const [stateTab, setStateTab] = useState('dashboard');
+  const [selectedStateProjectId, setSelectedStateProjectId] = useState(null);
+
+  // State Modals
+  const [isStateProfileOpen, setIsStateProfileOpen] = useState(false);
+  const [isStateSearchOpen, setIsStateSearchOpen] = useState(false);
+
+  // Proposing Body Tab State
+  const [proposingTab, setProposingTab] = useState('dashboard');
+  const [selectedProposingProjectId, setSelectedProposingProjectId] = useState(null);
+  const [selectedProposingProposalId, setSelectedProposingProposalId] = useState(null);
+  const [activeAIReportData, setActiveAIReportData] = useState(null);
+
+  // Proposing Body Modals
+  const [isProposingProfileOpen, setIsProposingProfileOpen] = useState(false);
+  const [isProposingSearchOpen, setIsProposingSearchOpen] = useState(false);
+
+  // Tahsildar Modal State
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
+  // Global Keyboard Shortcut (Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        if (userRole === 'state') {
+          setIsStateSearchOpen(prev => !prev);
+        } else if (userRole === 'collector') {
+          setIsCollectorSearchOpen(prev => !prev);
+        } else if (userRole === 'proposing_body') {
+          setIsProposingSearchOpen(prev => !prev);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [userRole]);
+
+  // Unauthenticated -> Render Unified Login Portal
+  if (!isAuthenticated) {
+    return <UnifiedLoginView />;
+  }
+
+  // 0. MORD National Supervisory Authority Logged In View
+  if (userRole === 'mord') {
+    return <MordApp />;
+  }
+
+  // 1. District Collector Logged In View
+  if (userRole === 'collector') {
+    const renderCollectorView = () => {
+      switch (collectorTab) {
+        case 'dashboard':
+          return <CollectorDashboardView onNavigate={(tab) => setCollectorTab(tab)} />;
+        case 'approvals':
+          return <CollectorApprovalsView />;
+        case 'projects':
+          return <CollectorProjectsView />;
+        case 'compensation':
+          return <CollectorCompensationView />;
+        case 'audit':
+          return <CollectorAuditView />;
+        case 'gis':
+          return <CollectorGISView />;
+        case 'documents':
+          return <DocumentsView />;
+        case 'reports':
+          return <CollectorReportsView />;
+        case 'admin':
+          return <CollectorAdminView />;
+        default:
+          return <CollectorDashboardView onNavigate={(tab) => setCollectorTab(tab)} />;
+      }
+    };
+
+    return (
+      <div className="app-container">
+        {/* District Collector Header */}
+        <CollectorHeader
+          activeRole="collector"
+          onOpenProfile={() => setIsCollectorProfileOpen(true)}
+          onOpenSearch={() => setIsCollectorSearchOpen(true)}
+        />
+
+        {/* Top Horizontal Navigation Bar */}
+        <CollectorNav
+          activeTab={collectorTab}
+          setActiveTab={setCollectorTab}
+        />
+
+        {/* Main Content Area */}
+        <main className="content-area">
+          {renderCollectorView()}
+        </main>
+
+        {/* Collector Modals & Shared Modals */}
+        <CollectorGlobalSearchModal
+          isOpen={isCollectorSearchOpen}
+          onClose={() => setIsCollectorSearchOpen(false)}
+          onSelectResult={(category) => {
+            if (category === 'projects') setCollectorTab('projects');
+            if (category === 'taluka' || category === 'village') setCollectorTab('dashboard');
+            if (category === 'parcel' || category === 'landowner') setCollectorTab('compensation');
+          }}
+        />
+        <CollectorProfileModal
+          isOpen={isCollectorProfileOpen}
+          onClose={() => setIsCollectorProfileOpen(false)}
+        />
+        <DocumentViewerModal />
+      </div>
+    );
+  }
+
+  // 2. State Government Logged In View
+  if (userRole === 'state') {
+    const handleStateNavigate = (tab, projectId = null) => {
+      if (projectId) {
+        setSelectedStateProjectId(projectId);
+      }
+      setStateTab(tab);
+    };
+
+    const renderStateView = () => {
+      if (stateTab === 'project-detail' && selectedStateProjectId) {
+        return (
+          <StateProjectDetailView
+            projectId={selectedStateProjectId}
+            onBack={() => {
+              setStateTab('projects');
+              setSelectedStateProjectId(null);
+            }}
+          />
+        );
+      }
+
+      switch (stateTab) {
+        case 'dashboard':
+          return <StateDashboardView onNavigate={handleStateNavigate} />;
+        case 'projects':
+          return <StateProjectsView onNavigate={handleStateNavigate} />;
+        case 'approvals':
+          return <StateApprovalsView />;
+        case 'documents':
+          return <StateDocumentsView />;
+        case 'map':
+          return <StateGISView onNavigate={handleStateNavigate} />;
+        case 'reports':
+          return <StateReportsView />;
+        case 'resources':
+          return <StateResourcesView />;
+        case 'notifications':
+          return <StateNotificationsView onNavigate={handleStateNavigate} />;
+        case 'signatures':
+          return <StateDigitalSignaturesView onNavigate={handleStateNavigate} />;
+        default:
+          return <StateDashboardView onNavigate={handleStateNavigate} />;
+      }
+    };
+
+    return (
+      <div className="app-container">
+        {/* State Government Header */}
+        <StateHeader
+          onOpenProfile={() => setIsStateProfileOpen(true)}
+          onOpenSearch={() => setIsStateSearchOpen(true)}
+          onNavigate={handleStateNavigate}
+        />
+
+        {/* Top Horizontal Navigation Bar */}
+        <StateNav
+          activeTab={stateTab}
+          setActiveTab={(tab) => {
+            setSelectedStateProjectId(null);
+            setStateTab(tab);
+          }}
+        />
+
+        {/* Main Content Area */}
+        <main className="content-area">
+          {renderStateView()}
+        </main>
+
+        {/* State Modals & Shared Modals */}
+        <StateGlobalSearchModal
+          isOpen={isStateSearchOpen}
+          onClose={() => setIsStateSearchOpen(false)}
+          onNavigate={handleStateNavigate}
+        />
+        <StateProfileModal
+          isOpen={isStateProfileOpen}
+          onClose={() => setIsStateProfileOpen(false)}
+        />
+        <DocumentViewerModal />
+      </div>
+    );
+  }
+
+  // 3. Project Authority / Proposing Body Logged In View
+  if (userRole === 'proposing_body') {
+    const handleProposingNavigate = (tab, projectId = null, extraData = null) => {
+      if (projectId) {
+        setSelectedProposingProjectId(projectId);
+      }
+      if (tab === 'proposal-detail' && extraData) {
+        setSelectedProposingProposalId(extraData);
+      } else if (tab === 'ai-pre-proposal' && extraData) {
+        setActiveAIReportData(extraData);
+      }
+      setProposingTab(tab);
+    };
+
+    const renderProposingView = () => {
+      if (proposingTab === 'project-detail' && selectedProposingProjectId) {
+        return (
+          <ProposingBodyProjectDetailView
+            projectId={selectedProposingProjectId}
+            onBack={() => {
+              setProposingTab('projects');
+              setSelectedProposingProjectId(null);
+            }}
+            onNavigate={handleProposingNavigate}
+          />
+        );
+      }
+
+      if (proposingTab === 'proposal-detail' && selectedProposingProposalId) {
+        return (
+          <ProposingBodyProposalDetailView
+            proposalId={selectedProposingProposalId}
+            onBack={() => {
+              setProposingTab('proposals');
+              setSelectedProposingProposalId(null);
+            }}
+            onNavigate={handleProposingNavigate}
+          />
+        );
+      }
+
+      if (proposingTab === 'ai-pre-proposal') {
+        return (
+          <ProposingBodyAIPreProposalReportView
+            projectId={selectedProposingProjectId}
+            proposalData={activeAIReportData}
+            onBack={() => setProposingTab('proposals')}
+            onNavigate={handleProposingNavigate}
+          />
+        );
+      }
+
+      switch (proposingTab) {
+        case 'dashboard':
+          return <ProposingBodyDashboardView onNavigate={handleProposingNavigate} />;
+        case 'projects':
+          return <ProposingBodyProjectsView onNavigate={handleProposingNavigate} />;
+        case 'add-project':
+          return <ProposingBodyAddProjectView onNavigate={handleProposingNavigate} />;
+        case 'proposals':
+        case 'create-proposal':
+          return <ProposingBodyCreateProposalView onNavigate={handleProposingNavigate} />;
+        case 'documents':
+          return <ProposingBodyDocumentsView onNavigate={handleProposingNavigate} />;
+        case 'map':
+          return <ProposingBodyGISView onNavigate={handleProposingNavigate} />;
+        case 'reports':
+          return <ProposingBodyReportsView onNavigate={handleProposingNavigate} />;
+        case 'notifications':
+          return <ProposingBodyNotificationsView onNavigate={handleProposingNavigate} />;
+        case 'settings':
+          return <ProposingBodySettingsView onNavigate={handleProposingNavigate} />;
+        default:
+          return <ProposingBodyDashboardView onNavigate={handleProposingNavigate} />;
+      }
+    };
+
+    return (
+      <div className="app-container">
+        {/* Proposing Body Official Header */}
+        <ProposingBodyHeader
+          onOpenProfile={() => setIsProposingProfileOpen(true)}
+          onOpenSearch={() => setIsProposingSearchOpen(true)}
+          onNavigate={handleProposingNavigate}
+        />
+
+        {/* Top Horizontal Navigation Bar */}
+        <ProposingBodyNav
+          activeTab={proposingTab}
+          setActiveTab={(tab) => {
+            setSelectedProposingProjectId(null);
+            setSelectedProposingProposalId(null);
+            setProposingTab(tab);
+          }}
+        />
+
+        {/* Main Content Area */}
+        <main className="content-area">
+          {renderProposingView()}
+        </main>
+
+        {/* Proposing Body Modals & Shared Modals */}
+        <ProposingBodyGlobalSearchModal
+          isOpen={isProposingSearchOpen}
+          onClose={() => setIsProposingSearchOpen(false)}
+          onNavigate={handleProposingNavigate}
+        />
+        <ProposingBodyProfileModal
+          isOpen={isProposingProfileOpen}
+          onClose={() => setIsProposingProfileOpen(false)}
+        />
+        <DocumentViewerModal />
+      </div>
+    );
+  }
+
+  // 4. Tahsildar Logged In View
+  const renderTahsildarView = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <DashboardView />;
+      case 'notifications':
+        return <NotificationsView />;
+      case 'objections':
+        return <ObjectionListView />;
+      case 'tasks':
+        return <MyTasksView />;
+      case 'projects':
+        return <ProjectsView />;
+      case 'compensation':
+        return <CompensationView />;
+      case 'notices':
+        return <StatutoryNoticesView />;
+      case 'mutation':
+        return <FinalMutationView />;
+      case 'gis':
+        return <CollectorGISView />;
+      case 'documents':
+        return <DocumentsView />;
+      default:
+        return <DashboardView />;
+    }
+  };
+
+  return (
+    <div className="app-container">
+      <Header onOpenProfile={() => setIsProfileModalOpen(true)} />
+      <Sidebar />
+
+      <main className="content-area">
+        {renderTahsildarView()}
+      </main>
+
+      <GlobalSearchModal />
+      <DigitalSignModal />
+      <DocumentViewerModal />
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
+    </div>
+  );
+};
+
+export default function App() {
+  return (
+    <SwadeshProvider>
+      <MainApp />
+    </SwadeshProvider>
+  );
+}
